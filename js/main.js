@@ -17,7 +17,9 @@
 
   /* Переключение экранов по нажатию на клавиши */
   const onKeyDown = (evtDown) => {
-    if (evtDown.altKey && evtDown.keyCode === RIGHTARROW_KEYCODE) {
+    if (!evtDown.altKey) {
+      return;
+    } else if (evtDown.altKey && evtDown.keyCode === RIGHTARROW_KEYCODE) {
       if (currentPage < (templatesPages.length - 1)) {
         currentPage++;
         showPage(currentPage);
@@ -30,9 +32,10 @@
     }
   };
 
-  let app = document.querySelector(`.app`);
-  let templates = document.querySelector(`#templates`).content;
-  let templatesPages = templates.querySelectorAll(`.main`);
+  const app = document.querySelector(`.app`);
+  const templates = document.querySelector(`#templates`).content;
+  const templatesPages = templates.querySelectorAll(`.main`);
+
   let buffer;
   let currentPage;
 
