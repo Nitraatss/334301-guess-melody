@@ -19,12 +19,14 @@
   const onKeyDown = (evtDown) => {
     if (!evtDown.altKey) {
       return;
-    } else if (evtDown.altKey && evtDown.keyCode === RIGHTARROW_KEYCODE) {
+    }
+
+    if (evtDown.keyCode === RIGHTARROW_KEYCODE) {
       if (currentPage < (templatesPages.length - 1)) {
         currentPage++;
         showPage(currentPage);
       }
-    } else if (evtDown.altKey && evtDown.keyCode === LEFTARROW_KEYCODE) {
+    } else if (evtDown.keyCode === LEFTARROW_KEYCODE) {
       if (currentPage > 0) {
         currentPage--;
         showPage(currentPage);
