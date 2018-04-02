@@ -1,21 +1,35 @@
-import creatDOMElement, {templatesPages} from '../js/templateDOM.js';
+import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {levelArtist, onMainAnswerClick} from '../js/level-artist.js';
+import {levelArtist, levelArtistInit} from '../js/level-artist.js';
 
 /* 1 отображение страницы с артистом при клике на плей */
+const welcomeInit = () => {
+  const mainPlay = app.querySelector(`.main-play`);
+
+  mainPlay.addEventListener(`click`, onMainPlayClick);
+};
+
 const onMainPlayClick = () => {
-  let i;
   showPage(levelArtist);
 
-  const mainAnswer = app.querySelectorAll(`.main-answer`);
-
-  for (i = 0; i < mainAnswer.length; i++) {
-    mainAnswer[i].addEventListener(`click`, onMainAnswerClick);
-  }
+  levelArtistInit();
 };
 
 const app = document.querySelector(`.app`);
 
-const welcome = creatDOMElement(templatesPages[0].innerHTML, templatesPages[0].classList);
+const welcomeMarkup = `
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+  <button class="main-play">Начать игру</button>
+  <h2 class="title main-title">Правила игры</h2>
+  <p class="text main-text">
+    Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.<br>
+    Ошибиться можно 3 раза.<br>
+    Удачи!
+  </p>
+`;
 
-export {welcome, onMainPlayClick};
+const welcomeClassName = `main main--welcome`;
+
+const welcome = creatDOMElement(welcomeMarkup, welcomeClassName);
+
+export {welcome, welcomeInit};

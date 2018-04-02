@@ -1,17 +1,34 @@
-import creatDOMElement, {templatesPages} from '../js/templateDOM.js';
+import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {welcome, onMainPlayClick} from '../js/welcome.js';
+import {welcome, welcomeInit} from '../js/welcome.js';
 
-const resultWin = creatDOMElement(templatesPages[3].innerHTML, templatesPages[3].classList);
+const resultWinInit = () => {
+  const onMainReplayClickWin = () => {
+    showPage(welcome);
 
-const onMainReplayClickWin = () => {
-  showPage(welcome);
+    welcomeInit();
+  };
 
-  const mainPlay = app.querySelector(`.main-play`);
+  const mainReplayWin = app.querySelector(`.main-replay`);
 
-  mainPlay.addEventListener(`click`, onMainPlayClick);
+  mainReplayWin.addEventListener(`click`, onMainReplayClickWin);
 };
 
 const app = document.querySelector(`.app`);
 
-export {resultWin, onMainReplayClickWin};
+const resultWinMarkup = `
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+
+  <h2 class="title">Вы настоящий меломан!</h2>
+  <div class="main-stat">За&nbsp;3&nbsp;минуты и 25&nbsp;секунд
+    <br>вы&nbsp;набрали 12 баллов (8 быстрых)
+    <br>совершив 3 ошибки</div>
+  <span class="main-comparison">Вы заняли 2 место из 10. Это&nbsp;лучше чем у&nbsp;80%&nbsp;игроков</span>
+  <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
+`;
+
+const resultWinClassName = `main main--result`;
+
+const resultWin = creatDOMElement(resultWinMarkup, resultWinClassName);
+
+export {resultWin, resultWinInit};

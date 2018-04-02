@@ -1,47 +1,146 @@
-import creatDOMElement, {templatesPages} from '../js/templateDOM.js';
+import {getRandomInt} from '../js/utils.js';
+import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {resultWin, onMainReplayClickWin} from '../js/result-win.js';
-import {resultTimeout, onMainReplayClickTime} from '../js/result-timeout.js';
-import {resultZeroTries, onMainReplayClickTry} from '../js/result-zerotries.js';
-
-/* Вычисление случайного целого числа */
-const randomInteger = (min, max) => {
-  let rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
-};
+import {resultWin, resultWinInit} from '../js/result-win.js';
+import {resultTimeout, resultTimeoutInit} from '../js/result-timeout.js';
+import {resultZeroTries, resultZeroTriesInit} from '../js/result-zerotries.js';
 
 /* 3 Отображение случайной страницы с результатами после выбора жанра*/
-const onGenreAnswerSendClick = () => {
-  const genreInputs = app.querySelectorAll(`input`);
-  const random = randomInteger(1, 3);
-  let i;
+const levelGenreInit = () => {
+  /* Проверка отметки жанра */
+  const onGenreInputsChange = () => {
+    check = [...genreInputs].some((item) => item.checked === true);
 
-  for (i = 0; i < genreInputs.length; i++) {
-    genreInputs[i].checked = false;
-  }
+    if (check) {
+      genreAnswerSend.disabled = false;
+    } else {
+      genreAnswerSend.disabled = true;
+    }
+  };
 
-  switch (random) {
-    case 1:
+  const onGenreAnswerSendClick = () => {
+    const random = getRandomInt(1, 3);
+
+    genreInputs.forEach((item) => {
+      item.checked = false;
+    });
+
+    if (random === 1) {
       showPage(resultWin);
-      const mainReplayWin = app.querySelector(`.main-replay`);
-      mainReplayWin.addEventListener(`click`, onMainReplayClickWin);
-      break;
-    case 2:
+
+      resultWinInit();
+    } else if (random === 2) {
       showPage(resultTimeout);
-      const mainReplayTime = app.querySelector(`.main-replay`);
-      mainReplayTime.addEventListener(`click`, onMainReplayClickTime);
-      break;
-    case 3:
+
+      resultTimeoutInit();
+    } else if (random === 3) {
       showPage(resultZeroTries);
-      const mainReplayTry = app.querySelector(`.main-replay`);
-      mainReplayTry.addEventListener(`click`, onMainReplayClickTry);
-      break;
-  }
+
+      resultZeroTriesInit();
+    }
+  };
+
+  let check;
+
+  const genreAnswerSend = app.querySelector(`.genre-answer-send`);
+  const genreInputs = app.querySelectorAll(`input`);
+
+  genreAnswerSend.disabled = true;
+
+  genreAnswerSend.addEventListener(`click`, onGenreAnswerSendClick);
+
+  genreInputs.forEach((item) => {
+    item.addEventListener(`change`, onGenreInputsChange);
+  });
 };
 
 const app = document.querySelector(`.app`);
 
-const levelGenre = creatDOMElement(templatesPages[1].innerHTML, templatesPages[1].classList);
+const levelGenreMarkup = `
+  <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
+    <circle
+      cx="390" cy="390" r="370"
+      class="timer-line"
+      style="filter: url(#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
 
-export {levelGenre, onGenreAnswerSendClick};
+    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
+      <span class="timer-value-mins">05</span><!--
+      --><span class="timer-value-dots">:</span><!--
+      --><span class="timer-value-secs">00</span>
+    </div>
+  </svg>
+  <div class="main-mistakes">
+    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
+    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
+    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
+  </div>
+
+  <div class="main-wrap">
+    <h2 class="title">Выберите инди-рок треки</h2>
+    <form class="genre">
+      <div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio></audio>
+            <button class="player-control player-control--pause"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-1" id="a-1">
+        <label class="genre-answer-check" for="a-1"></label>
+      </div>
+
+      <div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio></audio>
+            <button class="player-control player-control--play"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-1" id="a-2">
+        <label class="genre-answer-check" for="a-2"></label>
+      </div>
+
+      <div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio></audio>
+            <button class="player-control player-control--play"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-1" id="a-3">
+        <label class="genre-answer-check" for="a-3"></label>
+      </div>
+
+      <div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <audio></audio>
+            <button class="player-control player-control--play"></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-1" id="a-4">
+        <label class="genre-answer-check" for="a-4"></label>
+      </div>
+
+      <button class="genre-answer-send" type="submit">Ответить</button>
+    </form>
+  </div>
+`;
+
+const levelGenreClassName = `main main--level main--level-genre`;
+
+const levelGenre = creatDOMElement(levelGenreMarkup, levelGenreClassName);
+
+export {levelGenre, levelGenreInit};

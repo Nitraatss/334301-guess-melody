@@ -1,17 +1,31 @@
-import creatDOMElement, {templatesPages} from '../js/templateDOM.js';
+import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {welcome, onMainPlayClick} from '../js/welcome.js';
+import {welcome, welcomeInit} from '../js/welcome.js';
 
-const onMainReplayClickTry = () => {
-  showPage(welcome);
+const resultZeroTriesInit = () => {
+  const onMainReplayClickTry = () => {
+    showPage(welcome);
 
-  const mainPlay = app.querySelector(`.main-play`);
+    welcomeInit();
+  };
 
-  mainPlay.addEventListener(`click`, onMainPlayClick);
+  const mainReplayTry = app.querySelector(`.main-replay`);
+
+  mainReplayTry.addEventListener(`click`, onMainReplayClickTry);
 };
 
 const app = document.querySelector(`.app`);
 
-const resultZeroTries = creatDOMElement(templatesPages[5].innerHTML, templatesPages[5].classList);
+const resultZeroTriesMarkup = `
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
-export {resultZeroTries, onMainReplayClickTry};
+  <h2 class="title">Какая жалость!</h2>
+  <div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>
+  <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
+`;
+
+const resultZeroTriesClassName = `main main--result`;
+
+const resultZeroTries = creatDOMElement(resultZeroTriesMarkup, resultZeroTriesClassName);
+
+export {resultZeroTries, resultZeroTriesInit};

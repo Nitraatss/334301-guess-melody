@@ -1,18 +1,31 @@
-import creatDOMElement, {templatesPages} from '../js/templateDOM.js';
+import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {welcome, onMainPlayClick} from '../js/welcome.js';
+import {welcome, welcomeInit} from '../js/welcome.js';
 
-const resultTimeout = creatDOMElement(templatesPages[4].innerHTML, templatesPages[4].classList);
+const resultTimeoutInit = () => {
+  const onMainReplayClickTime = () => {
+    showPage(welcome);
 
-const onMainReplayClickTime = () => {
-  showPage(welcome);
+    welcomeInit();
+  };
 
-  const mainPlay = app.querySelector(`.main-play`);
+  const mainReplayTime = app.querySelector(`.main-replay`);
 
-  mainPlay.addEventListener(`click`, onMainPlayClick);
+  mainReplayTime.addEventListener(`click`, onMainReplayClickTime);
 };
 
 const app = document.querySelector(`.app`);
 
+const resultTimeoutMarkup = `
+  <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
-export {resultTimeout, onMainReplayClickTime};
+  <h2 class="title">Увы и ах!</h2>
+  <div class="main-stat">Время вышло!<br>Вы не успели отгадать все мелодии</div>
+  <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
+`;
+
+const resultTimeoutClassName = `main main--result`;
+
+const resultTimeout = creatDOMElement(resultTimeoutMarkup, resultTimeoutClassName);
+
+export {resultTimeout, resultTimeoutInit};
