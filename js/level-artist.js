@@ -1,24 +1,8 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {levelGenre, levelGenreInit} from '../js/level-genre.js';
+import {levelGenre} from '../js/level-genre.js';
 
 /* 2 Отображение страницы с жанром после выбора артиста */
-const levelArtistInit = () => {
-  const onMainAnswerClick = () => {
-    showPage(levelGenre);
-
-    levelGenreInit();
-  };
-
-  const mainAnswer = app.querySelectorAll(`.main-answer`);
-
-  mainAnswer.forEach((item) => {
-    item.addEventListener(`click`, onMainAnswerClick);
-  });
-};
-
-const app = document.querySelector(`.app`);
-
 const levelArtistMarkup = `
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
@@ -78,9 +62,23 @@ const levelArtistMarkup = `
     </form>
   </div>
 `;
-
 const levelArtistClassName = `main main--level main--level-artist`;
 
-const levelArtist = creatDOMElement(levelArtistMarkup, levelArtistClassName);
+const app = document.querySelector(`.app`);
 
-export {levelArtist, levelArtistInit};
+const levelArtist = {
+  page: creatDOMElement(levelArtistMarkup, levelArtistClassName),
+  init: () => {
+    const onMainAnswerClick = () => {
+      showPage(levelGenre.page, levelGenre.init);
+    };
+
+    const mainAnswer = app.querySelectorAll(`.main-answer`);
+
+    mainAnswer.forEach((item) => {
+      item.addEventListener(`click`, onMainAnswerClick);
+    });
+  }
+};
+
+export {levelArtist};

@@ -1,61 +1,15 @@
 import {getRandomInt} from '../js/utils.js';
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {resultWin, resultWinInit} from '../js/result-win.js';
-import {resultTimeout, resultTimeoutInit} from '../js/result-timeout.js';
-import {resultZeroTries, resultZeroTriesInit} from '../js/result-zerotries.js';
+import {resultWin} from '../js/result-win.js';
+import {resultTimeout} from '../js/result-timeout.js';
+import {resultZeroTries} from '../js/result-zerotries.js';
+
+const RESULT_WIN_SCREEN_INDEX = 1;
+const RESULT_LOST_TIME_SCREEN_INDEX = 2;
+const RESULT_LOST_TRIES_SCREEN_INDEX = 3;
 
 /* 3 Отображение случайной страницы с результатами после выбора жанра*/
-const levelGenreInit = () => {
-  /* Проверка отметки жанра */
-  const onGenreInputsChange = () => {
-    check = [...genreInputs].some((item) => item.checked === true);
-
-    if (check) {
-      genreAnswerSend.disabled = false;
-    } else {
-      genreAnswerSend.disabled = true;
-    }
-  };
-
-  const onGenreAnswerSendClick = () => {
-    const random = getRandomInt(1, 3);
-
-    genreInputs.forEach((item) => {
-      item.checked = false;
-    });
-
-    if (random === 1) {
-      showPage(resultWin);
-
-      resultWinInit();
-    } else if (random === 2) {
-      showPage(resultTimeout);
-
-      resultTimeoutInit();
-    } else if (random === 3) {
-      showPage(resultZeroTries);
-
-      resultZeroTriesInit();
-    }
-  };
-
-  let check;
-
-  const genreAnswerSend = app.querySelector(`.genre-answer-send`);
-  const genreInputs = app.querySelectorAll(`input`);
-
-  genreAnswerSend.disabled = true;
-
-  genreAnswerSend.addEventListener(`click`, onGenreAnswerSendClick);
-
-  genreInputs.forEach((item) => {
-    item.addEventListener(`change`, onGenreInputsChange);
-  });
-};
-
-const app = document.querySelector(`.app`);
-
 const levelGenreMarkup = `
   <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
     <circle
@@ -138,9 +92,53 @@ const levelGenreMarkup = `
     </form>
   </div>
 `;
-
 const levelGenreClassName = `main main--level main--level-genre`;
 
-const levelGenre = creatDOMElement(levelGenreMarkup, levelGenreClassName);
+const app = document.querySelector(`.app`);
 
-export {levelGenre, levelGenreInit};
+const levelGenre = {
+  page: creatDOMElement(levelGenreMarkup, levelGenreClassName),
+  init: () => {
+    /* Проверка отметки жанра */
+    const onGenreInputsChange = () => {
+      check = [...genreInputs].some((item) => item.checked === true);
+
+      genreAnswerSend.disabled = !check;
+    };
+
+    const onGenreAnswerSendClick = () => {
+      const random = getRandomInt(1, 3);
+
+      genreInputs.forEach((item) => {
+        item.checked = false;
+      });
+
+      switch (random) {
+        case RESULT_WIN_SCREEN_INDEX:
+          showPage(resultWin.page, resultWin.init);
+          break;
+        case RESULT_LOST_TIME_SCREEN_INDEX:
+          showPage(resultTimeout.page, resultTimeout.init);
+          break;
+        case RESULT_LOST_TRIES_SCREEN_INDEX:
+          showPage(resultZeroTries.page, resultZeroTries.init);
+          break;
+      }
+    };
+
+    let check;
+
+    const genreAnswerSend = app.querySelector(`.genre-answer-send`);
+    const genreInputs = app.querySelectorAll(`input`);
+
+    genreAnswerSend.disabled = true;
+
+    genreAnswerSend.addEventListener(`click`, onGenreAnswerSendClick);
+
+    genreInputs.forEach((item) => {
+      item.addEventListener(`change`, onGenreInputsChange);
+    });
+  }
+};
+
+export {levelGenre};
