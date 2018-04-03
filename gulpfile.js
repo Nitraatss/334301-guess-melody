@@ -107,3 +107,13 @@ gulp.task('assemble', ['clean'], function () {
 gulp.task('build', ['assemble'], function () {
   gulp.start('imagemin');
 });
+
+const mocha = require('gulp-mocha'); // Добавим установленный gulp-mocha плагин
+gulp.task('test', function () {
+  return gulp
+    .src(['js/**/*.test.js'], { read: false })
+    .pipe(mocha({
+      compilers: ['js:babel-register'], // Включим поддержку "import/export" в Mocha тестах
+      reporter: 'spec'       // Вид в котором я хочу отображать результаты тестирования
+    }));
+});
