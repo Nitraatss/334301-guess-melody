@@ -1,8 +1,10 @@
 const app = document.querySelector(`.app`);
 
 /* Отображение определьной страницы */
-const showPage = (newPage, pageInit) => {
-  app.replaceChild(newPage, app.firstChild);
+const showPage = (pageObject) => {
+  const {page: pageDOME, init: pageInit} = pageObject;
+
+  app.replaceChild(pageDOME, app.firstChild);
 
   pageInit();
 };

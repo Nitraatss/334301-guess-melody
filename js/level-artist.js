@@ -70,7 +70,7 @@ const levelArtist = {
   page: creatDOMElement(levelArtistMarkup, levelArtistClassName),
   init: () => {
     const onMainAnswerClick = () => {
-      showPage(levelGenre.page, levelGenre.init);
+      showPage(levelGenre);
     };
 
     const mainAnswer = app.querySelectorAll(`.main-answer`);

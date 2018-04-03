@@ -17,7 +17,7 @@ const resultTimeout = {
   page: creatDOMElement(resultTimeoutMarkup, resultTimeoutClassName),
   init: () => {
     const onMainReplayClickTime = () => {
-      showPage(welcome.page, welcome.init);
+      showPage(welcome);
     };
 
     const mainReplayTime = app.querySelector(`.main-replay`);

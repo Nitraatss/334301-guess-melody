@@ -20,7 +20,7 @@ const resultWin = {
   page: creatDOMElement(resultWinMarkup, resultWinClassName),
   init: () => {
     const onMainReplayClickWin = () => {
-      showPage(welcome.page, welcome.init);
+      showPage(welcome);
     };
 
     const mainReplayWin = app.querySelector(`.main-replay`);

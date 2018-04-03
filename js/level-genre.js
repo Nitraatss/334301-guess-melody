@@ -115,13 +115,13 @@ const levelGenre = {
 
       switch (random) {
         case RESULT_WIN_SCREEN_INDEX:
-          showPage(resultWin.page, resultWin.init);
+          showPage(resultWin);
           break;
         case RESULT_LOST_TIME_SCREEN_INDEX:
-          showPage(resultTimeout.page, resultTimeout.init);
+          showPage(resultTimeout);
           break;
         case RESULT_LOST_TRIES_SCREEN_INDEX:
-          showPage(resultZeroTries.page, resultZeroTries.init);
+          showPage(resultZeroTries);
           break;
       }
     };

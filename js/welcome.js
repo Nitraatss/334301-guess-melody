@@ -21,7 +21,7 @@ const welcome = {
   page: creatDOMElement(welcomeMarkup, welcomeClassName),
   init: () => {
     const onMainPlayClick = () => {
-      showPage(levelArtist.page, levelArtist.init);
+      showPage(levelArtist);
     };
 
     const mainPlay = app.querySelector(`.main-play`);

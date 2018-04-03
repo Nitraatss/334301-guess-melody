@@ -3,7 +3,7 @@ import {welcome} from '../js/welcome.js';
 
 /* Формирование стартовой страницы */
 const showWelcomePage = () => {
-  showPage(welcome.page, welcome.init);
+  showPage(welcome);
 };
 
 showWelcomePage();

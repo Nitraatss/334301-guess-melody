@@ -17,7 +17,7 @@ const resultZeroTries = {
   page: creatDOMElement(resultZeroTriesMarkup, resultZeroTriesClassName),
   init: () => {
     const onMainReplayClickTry = () => {
-      showPage(welcome.page, welcome.init);
+      showPage(welcome);
     };
 
     const mainReplayTry = app.querySelector(`.main-replay`);
