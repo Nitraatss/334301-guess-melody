@@ -11,6 +11,6 @@ describe(`Timer tick test`, () => {
 
   it(`Time out`, () => {
     creatNewTimer(1);
-    assert.equal(tick(), 0);
+    assert.equal(tick(), `Ваше время вышло`);
   });
 });

@@ -1,10 +1,13 @@
-export const creatOtherPlayerResult = (totalScore, leftNotes, leftTime) => {
-  otherPlayersResults.push(creatPlayerResult(totalScore, leftNotes, leftTime));
+const MINIMUM_LIVES = 0;
+const MINIMUM_TIME = 0;
+const MINIMUM_SCORE = 10;
+
+export const creatOtherPlayerResult = (totalScore, leftLives, leftTime) => {
+  otherPlayersResults.push(creatPlayerResult(totalScore, leftLives, leftTime));
 };
 
-
-export const creatCurrentPlayerResult = (totalScore, leftNotes, leftTime) => {
-  currentPlayerResults = creatPlayerResult(totalScore, leftNotes, leftTime);
+export const creatCurrentPlayerResult = (totalScore, leftLives, leftTime) => {
+  currentPlayerResults = creatPlayerResult(totalScore, leftLives, leftTime);
 };
 
 export const clearAllResults = () => {
@@ -12,9 +15,9 @@ export const clearAllResults = () => {
   currentPlayerResults = 0;
 };
 
-const creatPlayerResult = (totalScore, leftNotes, leftTime) => ({
+const creatPlayerResult = (totalScore, leftLives, leftTime) => ({
   score: totalScore,
-  notes: leftNotes,
+  lives: leftLives,
   time: leftTime
 });
 
@@ -23,37 +26,44 @@ const calculatePlayerSuccess = (playerPlace, totalPlayers) => {
 };
 
 export const showResults = () => {
+  let totalPlayers;
+  let playerPlace;
+  let playerSuccess;
+
   otherPlayersResults.sort();
 
-  if (currentPlayerResults.notes <= 0) {
+
+  if (otherPlayersResults.length === 0) {
+    otherPlayersResults.push(currentPlayerResults);
+    playerPlace = 1;
+
+    return `Поздравляем вы заняли ${playerPlace} место. Вы первый игрок, сыгравший в эту игру`;
+  } else if (currentPlayerResults.lives <= MINIMUM_LIVES) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
-  } else if (currentPlayerResults.time <= 0) {
+  } else if (currentPlayerResults.time <= MINIMUM_TIME) {
     return `Время вышло! Вы не успели отгадать все мелодии`;
-  } else if (currentPlayerResults.score >= 10) {
+  } else if (currentPlayerResults.score >= MINIMUM_SCORE) {
     /* игрок прошел планку в 10 вопросов */
-    let totalPlayers;
-    let playerPlace;
-    let playerSuccess;
-    let i;
+    const showWinnerPlayerResult = (positionInArray) => {
+      otherPlayersResults.push(currentPlayerResults);
+      otherPlayersResults.sort();
 
-    for (i = 0; i < otherPlayersResults.length; i++) {
+      totalPlayers = otherPlayersResults.length;
+      playerPlace = positionInArray + 1;
+      playerSuccess = calculatePlayerSuccess(playerPlace, totalPlayers);
+
+      return `Вы заняли ${playerPlace} место из ${totalPlayers} игроков. Это лучше, чем у ${playerSuccess}% игроков`;
+    };
+
+    for (let i = 0; i < otherPlayersResults.length; i++) {
       if (otherPlayersResults[i].score <= currentPlayerResults.score && i !== otherPlayersResults.length - 1) {
-        otherPlayersResults.push(currentPlayerResults);
-        otherPlayersResults.sort();
-
-        totalPlayers = otherPlayersResults.length;
-        playerPlace = i + 1;
-        playerSuccess = calculatePlayerSuccess(playerPlace, totalPlayers);
-
-        return `Вы заняли ${playerPlace} место из ${totalPlayers} игроков. Это лучше, чем у ${playerSuccess}% игроков`;
+        return showWinnerPlayerResult(i);
       }
     }
-
-    otherPlayersResults.push(currentPlayerResults);
-    return `Вы заняли последнее место`;
-  } else {
-    return `Вы не смогли набрать достаточно балов`;
   }
+
+  otherPlayersResults.push(currentPlayerResults);
+  return `Вы заняли последнее место`;
 };
 
 export let otherPlayersResults = [];

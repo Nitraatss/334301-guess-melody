@@ -1,9 +1,22 @@
-export const creatTestAnswer = (playerAnswers, answerResult, timeSpend) => {
+const QUICK_ANSWER_TIME_LIMIT = 30;
+const FAST_ANSWER_SCORE = 2;
+const RIGHT_ANSWER_SCORE = 1;
+const INCORRECT_ANSWER_SCORE = -2;
+const MINIMUM_CORRECT_ANSWERS = 10;
+const MINIMUM_LIVES = 0;
+const LOOSER_SCORE = -1;
+const FAST_WINNER_SCORE = 20;
+const ALL_COORECT_WINNER_SCORE = 10;
+
+export const creatTestAnswer = (answerResult, timeSpend) => {
   playerAnswers.push(setAnswerResults(answerResult, timeSpend));
 };
 
 export const clearAnswers = () => {
   playerAnswers = [];
+  userResult = 0;
+  correctAnswersCounter = 0;
+  answersPoints = 0;
 };
 
 const setAnswerResults = (answerResult, timeSpend) => ({
@@ -13,41 +26,40 @@ const setAnswerResults = (answerResult, timeSpend) => ({
 });
 
 const countAnswerScore = (correct, time) => {
-  if (correct && time < 30) {
-    return 2;
+  if (correct && time < QUICK_ANSWER_TIME_LIMIT) {
+    return FAST_ANSWER_SCORE;
   } else if (correct) {
-    return 1;
-  } else {
-    return -2;
+    return RIGHT_ANSWER_SCORE;
   }
+
+  return INCORRECT_ANSWER_SCORE;
 };
 
-const checkAnswers = (playerAnswers) => {
+const checkAnswers = () => {
   playerAnswers.forEach((item) => {
-    /* totalTime = totalTime + answer.time;*/
-
     if (item.correct) {
       correctAnswersCounter++;
       answersPoints = answersPoints + item.answerScore;
     } else {
       allAnswersCorrect = false;
+      answersPoints = answersPoints + item.answerScore;
     }
 
-    if (item.time >= 30) {
+    if (item.time >= QUICK_ANSWER_TIME_LIMIT) {
       allAnswersFast = false;
     }
   });
 };
 
-export const calculateScore = (playerAnswers, notes) => {
+export const calculateScore = (lives) => {
   checkAnswers(playerAnswers);
 
-  if (correctAnswersCounter < 10 || notes <= 0) {
-    userResult = -1;
+  if (correctAnswersCounter < MINIMUM_CORRECT_ANSWERS || lives <= MINIMUM_LIVES) {
+    userResult = LOOSER_SCORE;
   } else if (allAnswersCorrect && allAnswersFast) {
-    userResult = 20;
+    userResult = FAST_WINNER_SCORE;
   } else if (allAnswersCorrect && !allAnswersFast) {
-    userResult = 10;
+    userResult = ALL_COORECT_WINNER_SCORE;
   } else {
     userResult = answersPoints;
   }
@@ -55,12 +67,10 @@ export const calculateScore = (playerAnswers, notes) => {
   return userResult;
 };
 
-export let playerAnswers = [];
-export const notes = 3;
+let playerAnswers = [];
 
 let userResult = 0;
 let correctAnswersCounter = 0;
-/* let totalTime = 0;*/
 let answersPoints = 0;
 let allAnswersCorrect = true;
 let allAnswersFast = true;
