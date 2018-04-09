@@ -1,5 +1,8 @@
 import {assert} from 'chai';
-import {calculateScore, creatTestAnswer, clearAnswers} from '../js/calculate-score.js';
+import {playerAnswers, initiatePlayerAnswerArray, setAnswerResults, calculateScore, clearAnswers} from '../js/calculate-score.js';
+import {creatTestAnswer} from '../js/test-utils.js';
+
+initiatePlayerAnswerArray();
 
 describe(`Score test`, () => {
   let i;
@@ -7,7 +10,7 @@ describe(`Score test`, () => {
 
   it(`Less then 10 answers are correct`, () => {
     for (i = 0; i < 8; i++) {
-      creatTestAnswer(true, 10);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 10);
     }
 
     lives = 3;
@@ -18,7 +21,7 @@ describe(`Score test`, () => {
 
   it(`All answers correct and fast`, () => {
     for (i = 0; i < 12; i++) {
-      creatTestAnswer(true, 20);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 20);
     }
 
     lives = 3;
@@ -29,7 +32,7 @@ describe(`Score test`, () => {
 
   it(`All answers correct but not fast`, () => {
     for (i = 0; i < 12; i++) {
-      creatTestAnswer(true, 40);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
     lives = 3;
@@ -40,11 +43,11 @@ describe(`Score test`, () => {
 
   it(`Mixed answers: all correct but not all fast`, () => {
     for (i = 0; i < 8; i++) {
-      creatTestAnswer(true, 1);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 1);
     }
 
     for (i = 0; i < 12; i++) {
-      creatTestAnswer(true, 40);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
     lives = 3;
@@ -55,15 +58,15 @@ describe(`Score test`, () => {
 
   it(`Mixed answers: Win. Some correct, some incorrect`, () => {
     for (i = 0; i < 14; i++) {
-      creatTestAnswer(true, 40);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
     for (i = 0; i < 2; i++) {
-      creatTestAnswer(true, 5);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 5);
     }
 
     for (i = 0; i < 2; i++) {
-      creatTestAnswer(false, 40);
+      creatTestAnswer(playerAnswers, setAnswerResults, false, 40);
     }
 
     lives = 3;

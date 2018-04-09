@@ -8,10 +8,6 @@ const LOOSER_SCORE = -1;
 const FAST_WINNER_SCORE = 20;
 const ALL_COORECT_WINNER_SCORE = 10;
 
-export const creatTestAnswer = (answerResult, timeSpend) => {
-  playerAnswers.push(setAnswerResults(answerResult, timeSpend));
-};
-
 export const clearAnswers = () => {
   playerAnswers = [];
   userResult = 0;
@@ -19,7 +15,7 @@ export const clearAnswers = () => {
   answersPoints = 0;
 };
 
-const setAnswerResults = (answerResult, timeSpend) => ({
+export const setAnswerResults = (answerResult, timeSpend) => ({
   correct: answerResult,
   time: timeSpend,
   answerScore: countAnswerScore(answerResult, timeSpend)
@@ -67,7 +63,11 @@ export const calculateScore = (lives) => {
   return userResult;
 };
 
-let playerAnswers = [];
+export const initiatePlayerAnswerArray = () => {
+  playerAnswers = [];
+};
+
+export let playerAnswers;
 
 let userResult = 0;
 let correctAnswersCounter = 0;
