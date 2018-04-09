@@ -35,7 +35,7 @@ describe(`Show results test`, () => {
     clearAllResults();
   });
 
-  it(`You achived some place`, () => {
+  it(`You achieved some place`, () => {
     creatOtherPlayerResult(30, 3, 10);
     creatOtherPlayerResult(25, 3, 10);
     creatOtherPlayerResult(20, 3, 10);
