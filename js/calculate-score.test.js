@@ -14,7 +14,7 @@ describe(`Score test`, () => {
     }
 
     lives = 3;
-    assert.equal(calculateScore(lives), -1);
+    assert.equal(calculateScore(playerAnswers, lives), -1);
 
     clearAnswers();
   });
@@ -25,7 +25,7 @@ describe(`Score test`, () => {
     }
 
     lives = 3;
-    assert.equal(calculateScore(lives), 20);
+    assert.equal(calculateScore(playerAnswers, lives), 20);
 
     clearAnswers();
   });
@@ -36,7 +36,7 @@ describe(`Score test`, () => {
     }
 
     lives = 3;
-    assert.equal(calculateScore(lives), 10);
+    assert.equal(calculateScore(playerAnswers, lives), 10);
 
     clearAnswers();
   });
@@ -51,7 +51,7 @@ describe(`Score test`, () => {
     }
 
     lives = 3;
-    assert.equal(calculateScore(lives), 10);
+    assert.equal(calculateScore(playerAnswers, lives), 10);
 
     clearAnswers();
   });
@@ -70,7 +70,7 @@ describe(`Score test`, () => {
     }
 
     lives = 3;
-    assert.equal(calculateScore(lives), 14);
+    assert.equal(calculateScore(playerAnswers, lives), 14);
 
     clearAnswers();
   });

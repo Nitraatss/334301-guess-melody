@@ -2,7 +2,7 @@ const MINIMUM_LIVES = 0;
 const MINIMUM_TIME = 0;
 const MINIMUM_SCORE = 10;
 
-export const creatOtherPlayerResult = (totalScore, leftLives, leftTime) => {
+export const creatOtherPlayerResult = (otherPlayersResults, totalScore, leftLives, leftTime) => {
   otherPlayersResults.push(creatPlayerResult(totalScore, leftLives, leftTime));
 };
 
@@ -25,7 +25,7 @@ const calculatePlayerSuccess = (playerPlace, totalPlayers) => {
   return Math.floor(((totalPlayers - playerPlace) / totalPlayers) * 100);
 };
 
-export const showResults = () => {
+export const showResults = (otherPlayersResults) => {
   let totalPlayers;
   let playerPlace;
   let playerSuccess;
@@ -66,5 +66,9 @@ export const showResults = () => {
   return `Вы заняли последнее место`;
 };
 
-export let otherPlayersResults = [];
-export let currentPlayerResults;
+export const initiateOtherPlayersResults = () => {
+  otherPlayersResults = [];
+};
+
+export let otherPlayersResults;
+let currentPlayerResults;

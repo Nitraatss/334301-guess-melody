@@ -31,7 +31,7 @@ const countAnswerScore = (correct, time) => {
   return INCORRECT_ANSWER_SCORE;
 };
 
-const checkAnswers = () => {
+const checkAnswers = (playerAnswers) => {
   playerAnswers.forEach((item) => {
     if (item.correct) {
       correctAnswersCounter++;
@@ -47,7 +47,7 @@ const checkAnswers = () => {
   });
 };
 
-export const calculateScore = (lives) => {
+export const calculateScore = (playerAnswers, lives) => {
   checkAnswers(playerAnswers);
 
   if (correctAnswersCounter < MINIMUM_CORRECT_ANSWERS || lives <= MINIMUM_LIVES) {
