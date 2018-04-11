@@ -1,12 +1,11 @@
 import {assert} from 'chai';
-import {playerAnswers, initiatePlayerAnswerArray, setAnswerResults, calculateScore, clearAnswers} from '../js/calculate-score.js';
+import {initiatePlayerAnswersArray, setAnswerResults, calculateScore} from '../js/calculate-score.js';
 import {creatTestAnswer} from '../js/test-utils.js';
-
-initiatePlayerAnswerArray();
 
 describe(`Score test`, () => {
   let i;
   let lives;
+  let playerAnswers = initiatePlayerAnswersArray();
 
   it(`Less then 10 answers are correct`, () => {
     for (i = 0; i < 8; i++) {
@@ -16,29 +15,29 @@ describe(`Score test`, () => {
     lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), -1);
 
-    clearAnswers();
+    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`All answers correct and fast`, () => {
     for (i = 0; i < 12; i++) {
-      creatTestAnswer(playerAnswers, setAnswerResults, true, 20);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 10);
     }
 
     lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 20);
 
-    clearAnswers();
+    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`All answers correct but not fast`, () => {
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < 10; i++) {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
     lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 10);
 
-    clearAnswers();
+    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`Mixed answers: all correct but not all fast`, () => {
@@ -53,7 +52,7 @@ describe(`Score test`, () => {
     lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 10);
 
-    clearAnswers();
+    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`Mixed answers: Win. Some correct, some incorrect`, () => {
@@ -72,6 +71,6 @@ describe(`Score test`, () => {
     lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 14);
 
-    clearAnswers();
+    playerAnswers = initiatePlayerAnswersArray();
   });
 });
