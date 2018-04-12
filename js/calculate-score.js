@@ -25,37 +25,18 @@ const countAnswerScore = (playerAnswer) => {
 
 export const calculateScore = (playerAnswers, lives) => {
   let score = 0;
-  let correctAnswers = 0;
-  let allCorrect = true;
-  let allFast = true;
 
-  score = playerAnswers.reduce(function (sum, current) {
-    /* все вопросы правильные, подсчет правильных вопросов */
-    if (current.correct) {
-      correctAnswers++;
-    } else {
-      allCorrect = false;
-    }
-
-    /* все вопросы ответы были быстрыми */
-    if (current.time > QUICK_ANSWER_TIME_LIMIT) {
-      allFast = false;
-    }
-
+  score = playerAnswers.reduce((sum, current) => {
     return sum + countAnswerScore(current);
   }, 0);
 
-  if (correctAnswers < MINIMUM_CORRECT_ANSWERS || lives <= MINIMUM_LIVES) {
+  if (score < MINIMUM_CORRECT_ANSWERS || lives <= MINIMUM_LIVES) {
     return LOOSER_SCORE;
-  } else if (allFast) {
+  } else if (score === FAST_WINNER_SCORE) {
     return FAST_WINNER_SCORE;
-  } else if (allCorrect) {
+  } else if (score === ALL_COORECT_WINNER_SCORE) {
     return ALL_COORECT_WINNER_SCORE;
   } else {
     return score;
   }
-};
-
-export const initiatePlayerAnswersArray = () => {
-  return [];
 };

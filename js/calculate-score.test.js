@@ -1,32 +1,31 @@
 import {assert} from 'chai';
-import {initiatePlayerAnswersArray, setAnswerResults, calculateScore} from '../js/calculate-score.js';
+import {setAnswerResults, calculateScore} from '../js/calculate-score.js';
 import {creatTestAnswer} from '../js/test-utils.js';
 
 describe(`Score test`, () => {
   let i;
   let lives;
-  let playerAnswers = initiatePlayerAnswersArray();
+  let playerAnswers;
+
+  beforeEach(() => {
+    playerAnswers = [];
+    lives = 3;
+  });
 
   it(`Less then 10 answers are correct`, () => {
     for (i = 0; i < 8; i++) {
-      creatTestAnswer(playerAnswers, setAnswerResults, true, 10);
+      creatTestAnswer(playerAnswers, setAnswerResults, true, 30);
     }
 
-    lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), -1);
-
-    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`All answers correct and fast`, () => {
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < 10; i++) {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 10);
     }
 
-    lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 20);
-
-    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`All answers correct but not fast`, () => {
@@ -34,25 +33,19 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
-    lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 10);
-
-    playerAnswers = initiatePlayerAnswersArray();
   });
 
   it(`Mixed answers: all correct but not all fast`, () => {
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < 5; i++) {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 1);
     }
 
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < 5; i++) {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
-    lives = 3;
-    assert.equal(calculateScore(playerAnswers, lives), 10);
-
-    playerAnswers = initiatePlayerAnswersArray();
+    assert.equal(calculateScore(playerAnswers, lives), 15);
   });
 
   it(`Mixed answers: Win. Some correct, some incorrect`, () => {
@@ -68,9 +61,6 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, false, 40);
     }
 
-    lives = 3;
     assert.equal(calculateScore(playerAnswers, lives), 14);
-
-    playerAnswers = initiatePlayerAnswersArray();
   });
 });
