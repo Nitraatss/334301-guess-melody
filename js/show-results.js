@@ -82,8 +82,7 @@ export const showResults = (otherPlayersResults, currentPlayerResults) => {
   if (index > -1) {
     return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
   } else {
-    index = playersNumber;
-    return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
+    return showWinnerPlayerResult(playersResults, currentPlayerResults, playersNumber);
   }
 };
 
