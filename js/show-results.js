@@ -2,22 +2,45 @@ const MINIMUM_LIVES = 0;
 const MINIMUM_TIME = 0;
 const QUESTIONS_COUNT = 10;
 
-export const creatOtherPlayerResult = (otherPlayersResults, totalScore, leftLives, leftTime) => {
-  otherPlayersResults.push(creatPlayerResult(totalScore, leftLives, leftTime));
+export const creatOtherPlayersResults = (otherPlayersNumber, totalScore, leftLives, leftTime) => {
+  let otherPlayersResults = [];
+  let i;
+  let scoreStep = 0;
+  let somePlayer;
+
+  if (otherPlayersNumber === 1) {
+    somePlayer = creatPlayerResult(totalScore, leftLives, leftTime);
+    otherPlayersResults.push(somePlayer);
+  } else {
+    for (i = 0; i < otherPlayersNumber; i++) {
+      if (i) {
+        scoreStep = scoreStep + 2;
+      }
+
+      somePlayer = creatPlayerResult(totalScore - scoreStep, leftLives, leftTime);
+      otherPlayersResults.push(somePlayer);
+    }
+  }
+
+  return otherPlayersResults;
 };
 
 export const creatCurrentPlayerResult = (totalScore, leftLives, leftTime) => {
   return creatPlayerResult(totalScore, leftLives, leftTime);
 };
 
-const creatPlayerResult = (totalScore, leftLives, leftTime) => ({
-  score: totalScore,
-  lives: leftLives,
-  time: leftTime
+const creatPlayerResult = (score, lives, time) => ({
+  score,
+  lives,
+  time
 });
 
 const calculatePlayerSuccess = (playerPlace, totalPlayers) => {
   return Math.floor(((totalPlayers - playerPlace) / totalPlayers) * 100);
+};
+
+const comparePlayersScore = (leftPlayer, rightPlayer) => {
+  return leftPlayer.score > rightPlayer.score ? 1 : -1;
 };
 
 const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInArray) => {
@@ -27,7 +50,7 @@ const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInAr
   let playersResults = resultsArray.slice();
 
   playersResults.push(currentPlayerResults);
-  playersResults.sort();
+  playersResults.sort(comparePlayersScore);
 
   totalPlayers = playersResults.length;
   playerPlace = positionInArray + 1;
@@ -42,31 +65,25 @@ const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInAr
 };
 
 export const showResults = (otherPlayersResults, currentPlayerResults) => {
-  let index = 0;
+  let index = -1;
   let playersResults = otherPlayersResults.slice();
-  let playersLength = playersResults.length;
+  let playersNumber = playersResults.length;
 
   if (currentPlayerResults.lives <= MINIMUM_LIVES) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   } else if (currentPlayerResults.time <= MINIMUM_TIME) {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   } else if (currentPlayerResults.score >= QUESTIONS_COUNT) {
-    if (playersLength > 1) {
-      index = playersResults.findIndex((otherPlayer) => {
-        return otherPlayer.score <= currentPlayerResults.score;
-      });
-
-      if (index !== playersLength - 1) {
-        return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
-      }
-    } else if (playersLength === 1 && playersResults[0].score < currentPlayerResults.score) {
-      return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
-    } else if (playersLength === 0) {
-      return showWinnerPlayerResult(playersResults, currentPlayerResults, 0);
-    }
+    index = playersResults.findIndex((otherPlayer) => {
+      return otherPlayer.score <= currentPlayerResults.score;
+    });
   }
 
-  playersResults.push(currentPlayerResults);
-  return `Вы заняли последнее место`;
+  if (index > -1) {
+    return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
+  } else {
+    index = playersNumber;
+    return showWinnerPlayerResult(playersResults, currentPlayerResults, index);
+  }
 };
 

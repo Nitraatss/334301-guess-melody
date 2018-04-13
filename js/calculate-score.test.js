@@ -4,12 +4,10 @@ import {creatTestAnswer} from '../js/test-utils.js';
 
 describe(`Score test`, () => {
   let i;
-  let lives;
   let playerAnswers;
 
   beforeEach(() => {
     playerAnswers = [];
-    lives = 3;
   });
 
   it(`Less then 10 answers are correct`, () => {
@@ -17,7 +15,7 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 30);
     }
 
-    assert.equal(calculateScore(playerAnswers, lives), -1);
+    assert.equal(calculateScore(playerAnswers), 8);
   });
 
   it(`All answers correct and fast`, () => {
@@ -25,7 +23,7 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 10);
     }
 
-    assert.equal(calculateScore(playerAnswers, lives), 20);
+    assert.equal(calculateScore(playerAnswers), 20);
   });
 
   it(`All answers correct but not fast`, () => {
@@ -33,7 +31,7 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
-    assert.equal(calculateScore(playerAnswers, lives), 10);
+    assert.equal(calculateScore(playerAnswers), 10);
   });
 
   it(`Mixed answers: all correct but not all fast`, () => {
@@ -45,7 +43,7 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, true, 40);
     }
 
-    assert.equal(calculateScore(playerAnswers, lives), 15);
+    assert.equal(calculateScore(playerAnswers), 15);
   });
 
   it(`Mixed answers: Win. Some correct, some incorrect`, () => {
@@ -61,6 +59,6 @@ describe(`Score test`, () => {
       creatTestAnswer(playerAnswers, setAnswerResults, false, 40);
     }
 
-    assert.equal(calculateScore(playerAnswers, lives), 14);
+    assert.equal(calculateScore(playerAnswers), 14);
   });
 });
