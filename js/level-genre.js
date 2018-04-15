@@ -1,135 +1,163 @@
-import {getRandomInt} from '../js/utils.js';
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {resultWin} from '../js/result-win.js';
-import {resultTimeout} from '../js/result-timeout.js';
 import {resultZeroTries} from '../js/result-zerotries.js';
+import {timerMarkup} from '../js/timer.js';
+import {mistakes} from '../js/mistakes.js';
+import {actualPlayer} from '../js/player.js';
+import {gameData, page, addPlayerResult} from '../js/game.js';
+import {creatGenreQuestion} from '../js/creat-genre-question';
+import {setAnswerResults} from '../js/calculate-score.js';
 
-const RESULT_WIN_SCREEN_INDEX = 1;
-const RESULT_LOST_TIME_SCREEN_INDEX = 2;
-const RESULT_LOST_TRIES_SCREEN_INDEX = 3;
+let genreQuestion;
+let correctGenre;
+let genreCorrectAnswer;
+let genreIncorrectAnswers;
 
-/* 3 Отображение случайной страницы с результатами после выбора жанра*/
-const levelGenreMarkup = `
-  <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-    <circle
-      cx="390" cy="390" r="370"
-      class="timer-line"
-      style="filter: url(#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+const checkAnswer = (inputs, correctAnswer) => {
+  let answerResult = true;
 
-    <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-      <span class="timer-value-mins">05</span><!--
-      --><span class="timer-value-dots">:</span><!--
-      --><span class="timer-value-secs">00</span>
+  inputs.forEach((element) => {
+    if (element.checked && element.value !== correctAnswer) {
+      answerResult = false;
+    }
+  });
+
+  return answerResult;
+};
+
+const levelGenreMarkup = (time, mistake) => {
+  let answerID = 1;
+
+  genreQuestion = creatGenreQuestion(gameData);
+  correctGenre = genreQuestion.genre;
+  genreCorrectAnswer = genreQuestion.correctAnswer;
+  genreIncorrectAnswers = genreQuestion.incorrectAnswers;
+
+  let genreCorrectAnswerMarkup = `
+      <div class="genre-answer">
+      <div class="player-wrapper">
+        <div class="player">
+          <audio src="${genreCorrectAnswer.src}"></audio>
+          <button class="player-control player-control--pause" type="button"></button>
+          <div class="player-track">
+            <span class="player-status"></span>
+          </div>
+        </div>
+      </div>
+      <input type="checkbox" name="answer" value="${genreCorrectAnswer.genre}" id="a-${answerID}">
+      <label class="genre-answer-check" for="a-${answerID}"></label>
     </div>
-  </svg>
-  <div class="main-mistakes">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-    <img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">
-  </div>
+  `;
 
-  <div class="main-wrap">
-    <h2 class="title">Выберите инди-рок треки</h2>
-    <form class="genre">
+  let wrongAnswersMarkup = ``;
+
+  for (let i = 0; i < genreIncorrectAnswers.length; i++) {
+    answerID++;
+
+    let wrongMarkup = `
       <div class="genre-answer">
         <div class="player-wrapper">
           <div class="player">
-            <audio></audio>
-            <button class="player-control player-control--pause"></button>
+            <audio src="${genreIncorrectAnswers[i].src}"></audio>
+            <button class="player-control player-control--play" type="button"></button>
             <div class="player-track">
               <span class="player-status"></span>
             </div>
           </div>
         </div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-1">
-        <label class="genre-answer-check" for="a-1"></label>
+        <input type="checkbox" name="answer" value="${genreIncorrectAnswers[i].genre}" id="a-${answerID}">
+        <label class="genre-answer-check" for="a-${answerID}"></label>
       </div>
+    `;
 
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <audio></audio>
-            <button class="player-control player-control--play"></button>
-            <div class="player-track">
-              <span class="player-status"></span>
-            </div>
-          </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-2">
-        <label class="genre-answer-check" for="a-2"></label>
-      </div>
+    wrongAnswersMarkup = wrongAnswersMarkup + wrongMarkup;
+  }
 
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <audio></audio>
-            <button class="player-control player-control--play"></button>
-            <div class="player-track">
-              <span class="player-status"></span>
-            </div>
-          </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-3">
-        <label class="genre-answer-check" for="a-3"></label>
-      </div>
+  return `
+    ${time}
+    ${mistake}
 
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <audio></audio>
-            <button class="player-control player-control--play"></button>
-            <div class="player-track">
-              <span class="player-status"></span>
-            </div>
-          </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-4">
-        <label class="genre-answer-check" for="a-4"></label>
-      </div>
+    <div class="main-wrap">
+      <h2 class="title">Выберите ${correctGenre} треки</h2>
+      <form class="genre">
+        ${genreCorrectAnswerMarkup}
 
-      <button class="genre-answer-send" type="submit">Ответить</button>
-    </form>
-  </div>
-`;
+        ${wrongAnswersMarkup}
+
+        <button class="genre-answer-send" type="submit">Ответить</button>
+      </form>
+    </div>
+  `;
+};
+
 const levelGenreClassName = `main main--level main--level-genre`;
 
 const app = document.querySelector(`.app`);
 
 const levelGenre = {
-  page: creatDOMElement(levelGenreMarkup, levelGenreClassName),
+  page: () => creatDOMElement(levelGenreMarkup(timerMarkup, mistakes(actualPlayer.lives)), levelGenreClassName),
   init: () => {
-    /* Проверка отметки жанра */
     const onGenreInputsChange = () => {
       check = [...genreInputs].some((item) => item.checked === true);
 
       genreAnswerSend.disabled = !check;
     };
 
+    const onPlayClick = (evt) => {
+      if (evt.target.previousElementSibling.paused) {
+        audio.forEach((item) => {
+          item.pause();
+        });
+
+        evt.target.previousElementSibling.play();
+      } else {
+        evt.target.previousElementSibling.pause();
+        evt.target.previousElementSibling.currentTime = 0;
+      }
+    };
+
     const onGenreAnswerSendClick = () => {
-      const random = getRandomInt(1, 3);
+      if (!checkAnswer(genreInputs, correctGenre)) {
+        addPlayerResult(actualPlayer.answersResuls, setAnswerResults(false, 31));
+        actualPlayer.lives--;
+      } else {
+        addPlayerResult(actualPlayer.answersResuls, setAnswerResults(true, 31));
+      }
+
+      if (actualPlayer.lives <= 0) {
+        removeEventListeners();
+
+        page.number = 1;
+        showPage(resultZeroTries);
+      } else if (page.number < 10) {
+        page.number = page.number + 1;
+        removeEventListeners();
+        showPage(levelGenre);
+      } else {
+        removeEventListeners();
+        showPage(resultWin);
+      }
+    };
+
+    const removeEventListeners = () => {
+      genreAnswerSend.removeEventListener(`click`, onGenreAnswerSendClick);
 
       genreInputs.forEach((item) => {
-        item.checked = false;
+        item.removeEventListener(`change`, onGenreInputsChange);
       });
 
-      switch (random) {
-        case RESULT_WIN_SCREEN_INDEX:
-          showPage(resultWin);
-          break;
-        case RESULT_LOST_TIME_SCREEN_INDEX:
-          showPage(resultTimeout);
-          break;
-        case RESULT_LOST_TRIES_SCREEN_INDEX:
-          showPage(resultZeroTries);
-          break;
-      }
+      playerControls.forEach((item) => {
+        item.removeEventListener(`click`, onPlayClick);
+      });
     };
 
     let check;
 
     const genreAnswerSend = app.querySelector(`.genre-answer-send`);
     const genreInputs = app.querySelectorAll(`input`);
+    const playerControls = app.querySelectorAll(`.player-control`);
+    const audio = app.querySelectorAll(`audio`);
 
     genreAnswerSend.disabled = true;
 
@@ -137,6 +165,10 @@ const levelGenre = {
 
     genreInputs.forEach((item) => {
       item.addEventListener(`change`, onGenreInputsChange);
+    });
+
+    playerControls.forEach((item) => {
+      item.addEventListener(`click`, onPlayClick);
     });
   }
 };

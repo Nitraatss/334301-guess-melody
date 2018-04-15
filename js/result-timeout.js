@@ -1,6 +1,7 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {welcome} from '../js/welcome.js';
+import {setPlayerInitialState} from '../js/player.js';
 
 const resultTimeoutMarkup = `
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
@@ -17,6 +18,7 @@ const resultTimeout = {
   page: creatDOMElement(resultTimeoutMarkup, resultTimeoutClassName),
   init: () => {
     const onMainReplayClickTime = () => {
+      setPlayerInitialState();
       showPage(welcome);
     };
 
