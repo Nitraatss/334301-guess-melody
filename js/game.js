@@ -43,10 +43,12 @@ export const gameData = [
   }
 ];
 
-export const addPlayerResult = (playerAnswers, newAnswer) => {
-  playerAnswers.push(newAnswer);
-};
+export const DEFAULT_PLAYER_TIME = 31;
 
 export const page = {
   number: 1
+};
+
+export const formHeaderMarkup = (timerMarkup, mistakesMarkup) => {
+  return timerMarkup + mistakesMarkup;
 };
