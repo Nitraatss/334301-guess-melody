@@ -1,13 +1,15 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {levelGenre} from '../js/level-genre.js';
-import {resultZeroTries} from '../js/result.js';
+import {finalResult} from '../js/result.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {creatArtistQuestion} from '../js/creat-artist-question';
-import {currentGame} from '../js/player.js';
-import {page, formHeaderMarkup, DEFAULT_PLAYER_TIME} from '../js/game.js';
+import {currentGame, ROUNDS} from '../js/player.js';
+import {DEFAULT_PLAYER_TIME, MINIMUM_PLAYERS_LIVES} from '../js/game.js';
+import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {setAnswerResults} from '../js/calculate-score.js';
+import {shuffleArray} from '../js/shuffle-array.js';
 
 let artistQuestion;
 let correctArtistName;
@@ -30,11 +32,11 @@ const levelArtistMarkup = (timer, mist) => {
 
 
   let {correctAnswer, incorrectAnswers} = artistQuestion;
-  let answersMakup = incorrectAnswers.concat(correctAnswer).map((item) => {
+  let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
     answerID++;
     return `
         <div class="main-answer-wrapper">
-        <input class="main-answer-r" type="radio" id="answer-${answerID}" name="answer" value="${correctArtistName}"/>
+        <input class="main-answer-r" type="radio" id="answer-${answerID}" name="answer" value="${item.artist}"/>
         <label class="main-answer" for="answer-${answerID}">
           <img class="main-answer-preview" src="${item.image}"
                 alt="${item.artist}" width="134" height="134">
@@ -73,24 +75,23 @@ const levelArtist = {
   page: () => creatDOMElement(levelArtistMarkup(timerMarkup, mistakes(currentGame.state.lives)), levelArtistClassName),
   init: () => {
     const onMainAnswerClick = (evt) => {
-      let currentAnswer;
-      let correctAnswer = correctArtistName.replace(/\s+/g, ``);
-
-      for (let i = 0; i < evt.path.length; i++) {
-        if (evt.path[i].className === `main-answer-wrapper`) {
-          currentAnswer = evt.path[i].innerText.replace(/\s+/g, ``);
-          break;
-        }
+      let inputID;
+      if (evt.target.parentElement.htmlFor) {
+        inputID = evt.target.parentElement.htmlFor;
+      } else {
+        inputID = evt.target.htmlFor;
       }
 
-      checkAnswer(currentAnswer, correctAnswer);
+      let changedInput = document.querySelector(`#${inputID}`);
+      let currentAnswer = changedInput.value;
+
+      checkAnswer(currentAnswer, correctArtistName);
 
       removeEventListeners();
-      if (currentGame.state.lives <= 0) {
-        page.number = 1;
-        showPage(resultZeroTries);
-      } else if (page.number < 6) {
-        page.number = page.number + 1;
+      if (currentGame.state.lives === MINIMUM_PLAYERS_LIVES) {
+        showPage(finalResult);
+      } else if (currentGame.state.round < ROUNDS.CHANGE_INDEX) {
+        currentGame.nextRound();
         showPage(levelArtist);
       } else {
         showPage(levelGenre);
@@ -114,7 +115,7 @@ const levelArtist = {
       playerControl.removeEventListener(`click`, onPlayerControlClick);
     };
 
-    const mainAnswer = app.querySelectorAll(`.main-answer`);
+    const mainAnswer = app.querySelectorAll(`.main-answer-wrapper`);
     const player = app.querySelector(`.player`);
     const playerControl = player.querySelector(`.player-control`);
     const audio = player.querySelector(`audio`);

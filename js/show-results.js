@@ -1,4 +1,4 @@
-const MINIMUM_LIVES = 0;
+const MINIMUM_LIVES = 3;
 const MINIMUM_TIME = 0;
 const QUESTIONS_COUNT = 10;
 
@@ -69,10 +69,10 @@ export const showResults = (otherPlayersResults, currentPlayerResults) => {
   let playersResults = otherPlayersResults.slice();
   let playersNumber = playersResults.length;
 
-  if (currentPlayerResults.lives <= MINIMUM_LIVES) {
-    return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
+  if (currentPlayerResults.lives === MINIMUM_LIVES) {
+    return `У вас закончились все попытки.<br> Ничего, повезёт в следующий раз!`;
   } else if (currentPlayerResults.time <= MINIMUM_TIME) {
-    return `Время вышло! Вы не успели отгадать все мелодии`;
+    return `Время вышло!<br> Вы не успели отгадать все мелодии`;
   } else if (currentPlayerResults.score >= QUESTIONS_COUNT) {
     index = playersResults.findIndex((otherPlayer) => {
       return otherPlayer.score <= currentPlayerResults.score;

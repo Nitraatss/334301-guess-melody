@@ -1,24 +1,39 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
-import {resultZeroTries, resultWin} from '../js/result.js';
+import {finalResult} from '../js/result.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
-import {currentGame} from '../js/player.js';
-import {gameData, page, formHeaderMarkup, DEFAULT_PLAYER_TIME} from '../js/game.js';
+import {currentGame, ROUNDS} from '../js/player.js';
+import {gameData, DEFAULT_PLAYER_TIME, MINIMUM_PLAYERS_LIVES} from '../js/game.js';
+import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {creatGenreQuestion} from '../js/creat-genre-question';
 import {setAnswerResults} from '../js/calculate-score.js';
+import {shuffleArray} from '../js/shuffle-array.js';
 
 let genreQuestion;
 let correctGenre;
 
 const checkAnswer = (inputs, correctAnswer) => {
+  let trueAnswers = [];
+  trueAnswers.push(correctAnswer);
   let answerResult = true;
+  let checkedInputsCounter = 0;
 
-  inputs.forEach((element) => {
-    if (element.checked && element.value !== correctAnswer) {
-      answerResult = false;
+  inputs.forEach((item) => {
+    if (item.checked) {
+      checkedInputsCounter++;
     }
   });
+
+  if (trueAnswers.length === checkedInputsCounter) {
+    for (const item of trueAnswers) {
+      inputs.forEach((element) => {
+        if (element.checked && element.value !== item) {
+          answerResult = false;
+        }
+      });
+    }
+  }
 
   return answerResult;
 };
@@ -31,7 +46,7 @@ const levelGenreMarkup = (time, mistake) => {
 
   let {correctAnswer, incorrectAnswers} = genreQuestion;
 
-  let answersMakup = incorrectAnswers.concat(correctAnswer).map((item) => {
+  let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
     answerID++;
     return `
       <div class="genre-answer">
@@ -77,19 +92,6 @@ const levelGenre = {
       genreAnswerSend.disabled = !check;
     };
 
-    const onPlayClick = (evt) => {
-      if (evt.target.previousElementSibling.paused) {
-        audio.forEach((item) => {
-          item.pause();
-        });
-
-        evt.target.previousElementSibling.play();
-      } else {
-        evt.target.previousElementSibling.pause();
-        evt.target.previousElementSibling.currentTime = 0;
-      }
-    };
-
     const onGenreAnswerSendClick = () => {
       if (!checkAnswer(genreInputs, correctGenre)) {
         currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
@@ -99,14 +101,14 @@ const levelGenre = {
       }
 
       removeEventListeners();
-      if (currentGame.state.lives <= 0) {
-        page.number = 1;
-        showPage(resultZeroTries);
-      } else if (page.number < 10) {
-        page.number = page.number + 1;
+      if (currentGame.state.lives === MINIMUM_PLAYERS_LIVES) {
+        currentGame.state.round = ROUNDS.STARTING_INDEX;
+        showPage(finalResult);
+      } else if (currentGame.state.round < ROUNDS.LAST_INDEX) {
+        currentGame.nextRound();
         showPage(levelGenre);
       } else {
-        showPage(resultWin);
+        showPage(finalResult);
       }
     };
 
@@ -116,18 +118,34 @@ const levelGenre = {
       genreInputs.forEach((item) => {
         item.removeEventListener(`change`, onGenreInputsChange);
       });
-
-      playerControls.forEach((item) => {
-        item.removeEventListener(`click`, onPlayClick);
-      });
     };
 
     let check;
 
     const genreAnswerSend = app.querySelector(`.genre-answer-send`);
     const genreInputs = app.querySelectorAll(`input`);
-    const playerControls = app.querySelectorAll(`.player-control`);
-    const audio = app.querySelectorAll(`audio`);
+    const allAudioPlayers = app.querySelectorAll(`audio`);
+    const audioPlayers = document.querySelectorAll(`.player`);
+
+    audioPlayers.forEach((item) => {
+      const onPlayButton = () => {
+        if (singleAudioPlayer.paused) {
+          allAudioPlayers.forEach((element) => {
+            element.pause();
+          });
+
+          singleAudioPlayer.play();
+        } else {
+          singleAudioPlayer.pause();
+          singleAudioPlayer.currentTime = 0;
+        }
+      };
+
+      let singleAudioPlayer = item.querySelector(`audio`);
+      let playButton = item.querySelector(`.player-control`);
+
+      playButton.addEventListener(`click`, onPlayButton);
+    });
 
     genreAnswerSend.disabled = true;
 
@@ -135,10 +153,6 @@ const levelGenre = {
 
     genreInputs.forEach((item) => {
       item.addEventListener(`change`, onGenreInputsChange);
-    });
-
-    playerControls.forEach((item) => {
-      item.addEventListener(`click`, onPlayClick);
     });
   }
 };

@@ -1,12 +1,18 @@
-export const allPlayers = [];
+export const ROUNDS = {
+  STARTING_INDEX: 1,
+  CHANGE_INDEX: 5,
+  LAST_INDEX: 9
+};
 
 class GameStore {
   constructor() {
     this.state = {
       answersResuls: [],
       totalScore: 0,
-      lives: 4,
-      totalTime: 0
+      lives: 0,
+      totalTime: 0,
+      allPlayers: [],
+      round: 1
     };
   }
 
@@ -15,7 +21,11 @@ class GameStore {
   }
 
   decreaseLives() {
-    this.state.lives--;
+    this.state.lives++;
+  }
+
+  nextRound() {
+    this.state.round++;
   }
 
   setTotalScore(calculatedScore) {
@@ -29,7 +39,7 @@ class GameStore {
   setInitialParams() {
     this.state.answersResuls = [];
     this.state.totalScore = 0;
-    this.state.lives = 4;
+    this.state.lives = 0;
     this.state.totalTime = 0;
   }
 }

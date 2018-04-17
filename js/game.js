@@ -1,3 +1,12 @@
+export const DEFAULT_PLAYER_TIME = 31;
+export const MINIMUM_PLAYERS_LIVES = 3;
+
+export const ROUNDS = {
+  STARTING_INDEX: 1,
+  CHANGE_INDEX: 6,
+  LAST_INDEX: 10
+};
+
 export const gameData = [
   {
     artist: `Kevin MacLeod`,
@@ -43,12 +52,7 @@ export const gameData = [
   }
 ];
 
-export const DEFAULT_PLAYER_TIME = 31;
-
 export const page = {
-  number: 1
+  number: ROUNDS.STARTING_INDEX
 };
 
-export const formHeaderMarkup = (timerMarkup, mistakesMarkup) => {
-  return timerMarkup + mistakesMarkup;
-};
