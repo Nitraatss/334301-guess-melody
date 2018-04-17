@@ -70,9 +70,9 @@ export const showResults = (otherPlayersResults, currentPlayerResults) => {
   let playersNumber = playersResults.length;
 
   if (currentPlayerResults.lives === MINIMUM_LIVES) {
-    return `У вас закончились все попытки.<br> Ничего, повезёт в следующий раз!`;
+    return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
   } else if (currentPlayerResults.time <= MINIMUM_TIME) {
-    return `Время вышло!<br> Вы не успели отгадать все мелодии`;
+    return `Время вышло! Вы не успели отгадать все мелодии`;
   } else if (currentPlayerResults.score >= QUESTIONS_COUNT) {
     index = playersResults.findIndex((otherPlayer) => {
       return otherPlayer.score <= currentPlayerResults.score;

@@ -10,33 +10,33 @@ describe(`Show results test`, () => {
   });
 
   it(`Out of lives`, () => {
-    currentPlayerResults = creatCurrentPlayerResult(9, 0, 0);
+    currentPlayerResults = creatCurrentPlayerResult(9, 3, 0);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `У вас закончились все попытки. Ничего, повезёт в следующий раз!`);
   });
 
   it(`Out of time`, () => {
-    currentPlayerResults = creatCurrentPlayerResult(9, 3, 0);
+    currentPlayerResults = creatCurrentPlayerResult(9, 2, 0);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Время вышло! Вы не успели отгадать все мелодии`);
   });
 
   it(`Last place`, () => {
-    otherPlayersResults = creatOtherPlayersResults(3, 25, 3, 10);
-    currentPlayerResults = creatCurrentPlayerResult(10, 3, 2);
+    otherPlayersResults = creatOtherPlayersResults(3, 25, 2, 10);
+    currentPlayerResults = creatCurrentPlayerResult(10, 2, 2);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 4 место из 4 игроков. Это лучше, чем у 0% игроков`);
   });
 
   it(`You achieved some place`, () => {
     otherPlayersResults = creatOtherPlayersResults(5, 20, 3, 10);
-    currentPlayerResults = creatCurrentPlayerResult(17, 3, 2);
+    currentPlayerResults = creatCurrentPlayerResult(17, 2, 2);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 3 место из 6 игроков. Это лучше, чем у 50% игроков`);
   });
 
   it(`You are first player of the game`, () => {
-    creatCurrentPlayerResult(29, 3, 2);
+    creatCurrentPlayerResult(29, 2, 2);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 1 место из 1 игроков. Это лучше, чем у 100% игроков`);
   });
