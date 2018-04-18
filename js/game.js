@@ -1,5 +1,6 @@
 export const DEFAULT_PLAYER_TIME = 31;
 export const MINIMUM_PLAYERS_LIVES = 3;
+export const MINIMUM_PLAYER_TIME = 0;
 
 export const ROUNDS = {
   STARTING_INDEX: 1,

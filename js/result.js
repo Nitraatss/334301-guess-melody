@@ -2,8 +2,10 @@ import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {welcome} from '../js/welcome.js';
 import {currentGame, ROUNDS} from '../js/player.js';
-import {calculateScore, calculateTime, calculateFastAnswers} from '../js/calculate-score.js';
+import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
+import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game.js';
+import {ResultMarkup} from '../js/result-markup.js';
 
 const formResultsMarkup = (resultsMarkup) => {
   return resultsMarkup();
@@ -24,72 +26,11 @@ const finalResultMarkup = () => {
 
   let result = showResults(currentGame.state.allPlayers, currentPlayerResult);
 
-  if (currentPlayerResult.lives !== 3 && currentPlayerResult.totalTime !== 0) {
+  if (currentPlayerResult.lives !== MINIMUM_PLAYERS_LIVES && currentPlayerResult.totalTime !== MINIMUM_PLAYER_TIME) {
     currentGame.state.allPlayers.push(currentPlayerResult);
   }
 
-  class Markup {
-    constructor(player, resultText) {
-      this.header = `<section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>`;
-      this.titleOptions = {
-        winner: `Вы настоящий меломан!`,
-        zeroTries: `Какая жалость!`,
-        zeroTime: `Увы и ах!`
-      };
-      this.buttonOptions = {
-        winner: `Сыграть ещё раз`,
-        looser: `Попробовать ещё раз`
-      };
-      this.resultText = resultText;
-      this.player = player;
-    }
-
-    formTitleMarkup() {
-      let markupTitle = this.titleOptions.winner;
-
-      if (this.player.totalTime === 0) {
-        markupTitle = this.titleOptions.zeroTime;
-      } else if (this.player.lives === 3) {
-        markupTitle = this.titleOptions.zeroTries;
-      }
-
-      return markupTitle;
-    }
-
-    formResultInfoMarkup() {
-      let fastAnswersNumber = calculateFastAnswers(this.player.answersResuls);
-      let playerMistakes = this.player.lives;
-      let finalTime = this.player.totalTime;
-      let finalTimeMinutes = Math.floor(finalTime / 60);
-      let finalTimeSeconds = finalTime - Math.floor(finalTime / 60) * 60;
-
-      let markupInfoResult = `
-        <div class="main-stat">За&nbsp;${finalTimeMinutes}&nbsp;минуты и ${finalTimeSeconds}&nbsp;секунд
-          <br>вы&nbsp;набрали ${currentPlayerResult.totalScore} баллов (${fastAnswersNumber} быстрых)
-          <br>совершив ${playerMistakes} ошибки
-        </div>
-        <span class="main-comparison">${this.resultText}</span>
-      `;
-
-      if (playerMistakes >= 3 || finalTime === 0) {
-        markupInfoResult = `<div class="main-stat">${this.resultText}</div>`;
-      }
-
-      return markupInfoResult;
-    }
-
-    formButtonMarkup() {
-      let markupButton = this.buttonOptions.winner;
-
-      if (this.player.lives === 3 || this.player.totalTime === 0) {
-        markupButton = this.titleOptions.zeroTries;
-      }
-
-      return markupButton;
-    }
-  }
-
-  const resultMarkupParts = new Markup(currentPlayerResult, result);
+  const resultMarkupParts = new ResultMarkup(currentPlayerResult, result);
 
   return `
   ${resultMarkupParts.header}

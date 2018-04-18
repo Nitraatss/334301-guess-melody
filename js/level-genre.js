@@ -1,14 +1,13 @@
 import creatDOMElement from '../js/create-dom-element.js';
-import showPage from '../js/show-page.js';
-import {finalResult} from '../js/result.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
-import {currentGame, ROUNDS} from '../js/player.js';
-import {gameData, DEFAULT_PLAYER_TIME, MINIMUM_PLAYERS_LIVES} from '../js/game.js';
+import {currentGame} from '../js/player.js';
+import {gameData, DEFAULT_PLAYER_TIME} from '../js/game.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {creatGenreQuestion} from '../js/creat-genre-question';
 import {setAnswerResults} from '../js/calculate-score.js';
-import {shuffleArray} from '../js/shuffle-array.js';
+import {showRandomPage} from '../js/show-random-page.js';
+import {shuffleArray} from '../js/utils.js';
 
 let genreQuestion;
 let correctGenre;
@@ -16,7 +15,7 @@ let correctGenre;
 const checkAnswer = (inputs, correctAnswer) => {
   let trueAnswers = [];
   trueAnswers.push(correctAnswer);
-  let answerResult = true;
+  let answerResult = false;
   let checkedInputsCounter = 0;
 
   inputs.forEach((item) => {
@@ -26,13 +25,11 @@ const checkAnswer = (inputs, correctAnswer) => {
   });
 
   if (trueAnswers.length === checkedInputsCounter) {
-    for (const item of trueAnswers) {
-      inputs.forEach((element) => {
-        if (element.checked && element.value !== item) {
-          answerResult = false;
-        }
-      });
-    }
+    inputs.forEach((element) => {
+      if (element.checked && trueAnswers.indexOf(element.value) > -1) {
+        answerResult = true;
+      }
+    });
   }
 
   return answerResult;
@@ -101,15 +98,7 @@ const levelGenre = {
       }
 
       removeEventListeners();
-      if (currentGame.state.lives === MINIMUM_PLAYERS_LIVES) {
-        currentGame.state.round = ROUNDS.STARTING_INDEX;
-        showPage(finalResult);
-      } else if (currentGame.state.round < ROUNDS.LAST_INDEX) {
-        currentGame.nextRound();
-        showPage(levelGenre);
-      } else {
-        showPage(finalResult);
-      }
+      showRandomPage();
     };
 
     const removeEventListeners = () => {

@@ -1,15 +1,13 @@
 import creatDOMElement from '../js/create-dom-element.js';
-import showPage from '../js/show-page.js';
-import {levelGenre} from '../js/level-genre.js';
-import {finalResult} from '../js/result.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {creatArtistQuestion} from '../js/creat-artist-question';
-import {currentGame, ROUNDS} from '../js/player.js';
-import {DEFAULT_PLAYER_TIME, MINIMUM_PLAYERS_LIVES} from '../js/game.js';
+import {currentGame} from '../js/player.js';
+import {DEFAULT_PLAYER_TIME} from '../js/game.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {setAnswerResults} from '../js/calculate-score.js';
-import {shuffleArray} from '../js/shuffle-array.js';
+import {showRandomPage} from '../js/show-random-page.js';
+import {shuffleArray} from '../js/utils.js';
 
 let artistQuestion;
 let correctArtistName;
@@ -75,27 +73,12 @@ const levelArtist = {
   page: () => creatDOMElement(levelArtistMarkup(timerMarkup, mistakes(currentGame.state.lives)), levelArtistClassName),
   init: () => {
     const onMainAnswerClick = (evt) => {
-      let inputID;
-      if (evt.target.parentElement.htmlFor) {
-        inputID = evt.target.parentElement.htmlFor;
-      } else {
-        inputID = evt.target.htmlFor;
-      }
-
-      let changedInput = document.querySelector(`#${inputID}`);
-      let currentAnswer = changedInput.value;
+      let currentAnswer = evt.path[0].value;
 
       checkAnswer(currentAnswer, correctArtistName);
 
       removeEventListeners();
-      if (currentGame.state.lives === MINIMUM_PLAYERS_LIVES) {
-        showPage(finalResult);
-      } else if (currentGame.state.round < ROUNDS.CHANGE_INDEX) {
-        currentGame.nextRound();
-        showPage(levelArtist);
-      } else {
-        showPage(levelGenre);
-      }
+      showRandomPage();
     };
 
     const onPlayerControlClick = () => {
@@ -108,19 +91,19 @@ const levelArtist = {
     };
 
     const removeEventListeners = () => {
-      mainAnswer.forEach((item) => {
+      mainAnswers.forEach((item) => {
         item.removeEventListener(`click`, onMainAnswerClick);
       });
 
       playerControl.removeEventListener(`click`, onPlayerControlClick);
     };
 
-    const mainAnswer = app.querySelectorAll(`.main-answer-wrapper`);
+    const mainAnswers = app.querySelectorAll(`.main-answer-r`);
     const player = app.querySelector(`.player`);
     const playerControl = player.querySelector(`.player-control`);
     const audio = player.querySelector(`audio`);
 
-    mainAnswer.forEach((item) => {
+    mainAnswers.forEach((item) => {
       item.addEventListener(`click`, onMainAnswerClick);
     });
 

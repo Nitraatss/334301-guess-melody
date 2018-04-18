@@ -1,7 +1,6 @@
 export const ROUNDS = {
   STARTING_INDEX: 1,
-  CHANGE_INDEX: 5,
-  LAST_INDEX: 9
+  LAST_INDEX: 11
 };
 
 class GameStore {
