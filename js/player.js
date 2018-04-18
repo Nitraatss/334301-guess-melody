@@ -1,8 +1,3 @@
-export const ROUNDS = {
-  STARTING_INDEX: 1,
-  LAST_INDEX: 11
-};
-
 class GameStore {
   constructor() {
     this.state = {

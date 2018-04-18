@@ -1,11 +1,13 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {welcome} from '../js/welcome.js';
-import {currentGame, ROUNDS} from '../js/player.js';
+import {currentGame} from '../js/player.js';
 import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
 import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game.js';
 import {ResultMarkup} from '../js/result-markup.js';
+
+const STARTING_INDEX = 1;
 
 const formResultsMarkup = (resultsMarkup) => {
   return resultsMarkup();
@@ -46,7 +48,7 @@ const results = (resultMarkup, resultClassname) => ({
   page: () => creatDOMElement(formResultsMarkup(resultMarkup), resultClassname),
   init: () => {
     const onMainReplayClickTry = () => {
-      currentGame.state.round = ROUNDS.STARTING_INDEX;
+      currentGame.state.round = STARTING_INDEX;
       currentGame.setInitialParams();
       showPage(welcome);
     };

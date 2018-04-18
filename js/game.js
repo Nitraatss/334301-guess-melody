@@ -2,12 +2,6 @@ export const DEFAULT_PLAYER_TIME = 31;
 export const MINIMUM_PLAYERS_LIVES = 3;
 export const MINIMUM_PLAYER_TIME = 0;
 
-export const ROUNDS = {
-  STARTING_INDEX: 1,
-  CHANGE_INDEX: 6,
-  LAST_INDEX: 10
-};
-
 export const gameData = [
   {
     artist: `Kevin MacLeod`,
@@ -52,8 +46,4 @@ export const gameData = [
     genre: `Electronic`
   }
 ];
-
-export const page = {
-  number: ROUNDS.STARTING_INDEX
-};
 

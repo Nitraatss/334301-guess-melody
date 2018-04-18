@@ -73,7 +73,7 @@ const levelArtist = {
   page: () => creatDOMElement(levelArtistMarkup(timerMarkup, mistakes(currentGame.state.lives)), levelArtistClassName),
   init: () => {
     const onMainAnswerClick = (evt) => {
-      let currentAnswer = evt.path[0].value;
+      let currentAnswer = evt.target.value;
 
       checkAnswer(currentAnswer, correctArtistName);
 
