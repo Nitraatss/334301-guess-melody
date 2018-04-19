@@ -1,6 +1,6 @@
 import {getRandomInt} from '../js/utils.js';
 import {MINIMUM_PLAYERS_LIVES} from '../js/game.js';
-import {currentGame} from '../js/player.js';
+import {currentGame} from '../js/game-store.js';
 import showPage from '../js/show-page.js';
 import {levelGenre} from '../js/level-genre.js';
 import {levelArtist} from '../js/level-artist.js';

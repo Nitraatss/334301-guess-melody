@@ -14,6 +14,10 @@ class GameStore {
     this.state.answersResuls.push(newAnswer);
   }
 
+  addPlayerResult(newPlayer) {
+    this.allPlayers.push(newPlayer);
+  }
+
   decreaseLives() {
     this.state.lives++;
   }

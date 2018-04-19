@@ -1,7 +1,7 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {welcome} from '../js/welcome.js';
-import {currentGame} from '../js/player.js';
+import {currentGame} from '../js/game-store.js';
 import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
 import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game.js';
@@ -29,7 +29,7 @@ const finalResultMarkup = () => {
   let result = showResults(currentGame.state.allPlayers, currentPlayerResult);
 
   if (currentPlayerResult.lives !== MINIMUM_PLAYERS_LIVES && currentPlayerResult.totalTime !== MINIMUM_PLAYER_TIME) {
-    currentGame.state.allPlayers.push(currentPlayerResult);
+    currentGame.addPlayerResult(currentPlayerResult);
   }
 
   const resultMarkupParts = new ResultMarkup(currentPlayerResult, result);

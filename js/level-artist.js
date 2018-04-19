@@ -2,7 +2,7 @@ import creatDOMElement from '../js/create-dom-element.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {creatArtistQuestion} from '../js/creat-artist-question';
-import {currentGame} from '../js/player.js';
+import {currentGame} from '../js/game-store.js';
 import {DEFAULT_PLAYER_TIME} from '../js/game.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {setAnswerResults} from '../js/calculate-score.js';

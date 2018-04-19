@@ -1,7 +1,7 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
-import {currentGame} from '../js/player.js';
+import {currentGame} from '../js/game-store.js';
 import {gameData, DEFAULT_PLAYER_TIME} from '../js/game.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {creatGenreQuestion} from '../js/creat-genre-question';
