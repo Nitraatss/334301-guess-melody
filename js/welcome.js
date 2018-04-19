@@ -1,6 +1,7 @@
 import creatDOMElement from '../js/create-dom-element.js';
 import showPage from '../js/show-page.js';
 import {levelArtist} from '../js/level-artist.js';
+import {showRandomPage} from '../js/show-random-page.js';
 
 /* 1 отображение страницы с артистом при клике на плей */
 const welcomeMarkup = `
@@ -18,9 +19,10 @@ const welcomeClassName = `main main--welcome`;
 const app = document.querySelector(`.app`);
 
 const welcome = {
-  page: creatDOMElement(welcomeMarkup, welcomeClassName),
+  page: () => creatDOMElement(welcomeMarkup, welcomeClassName),
   init: () => {
     const onMainPlayClick = () => {
+      showRandomPage();
       showPage(levelArtist);
     };
 

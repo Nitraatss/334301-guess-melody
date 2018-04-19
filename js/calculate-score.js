@@ -27,3 +27,25 @@ export const calculateScore = (playerAnswers) => {
 
   return score;
 };
+
+export const calculateTime = (playerAnswers) => {
+  let calculatedTime = 0;
+
+  calculatedTime = playerAnswers.reduce((sum, current) => {
+    return sum + current.time;
+  }, 0);
+
+  return calculatedTime;
+};
+
+export const calculateFastAnswers = (playerAnswers) => {
+  let fastAnswersCounter = 0;
+
+  playerAnswers.forEach((item) => {
+    if (item.time < 30) {
+      fastAnswersCounter++;
+    }
+  });
+
+  return fastAnswersCounter;
+};
