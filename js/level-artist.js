@@ -47,7 +47,7 @@ const removeEventListeners = (mainAnswers, playerControl) => {
   playerControl.removeEventListener(`click`, onPlayerControlClick);
 };
 
-const levelArtistMarkup = (timer, mist) => {
+const levelArtistMarkup = (timer, mistake) => {
   artistQuestion = creatArtistQuestion();
   let songLocation = artistQuestion.correctAnswer.src;
   let answerID = 0;
@@ -69,7 +69,7 @@ const levelArtistMarkup = (timer, mist) => {
   }).join(` `);
 
   return `
-    ${formHeaderMarkup(timer, mist)}
+    ${formHeaderMarkup(timer, mistake)}
 
     <div class="main-wrap">
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
