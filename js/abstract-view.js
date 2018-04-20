@@ -1,26 +1,24 @@
-export default class AbstractView {
+export class AbstractView {
   constructor() {
-    this.app = document.querySelector(`.app`);
   }
 
-  get template() {}
-
-  render() {
-    let newElement;
-
-    newElement = document.createElement(`section`);
-
-    newElement.className = this.className;
-    newElement.innerHTML = this.template;
-
-    return newElement;
+  get template() {
+    throw new Error(`This method should be overriden`);
   }
-
-  bind() {}
 
   get element() {
-    this.app.replaceChild(this.render(), this.app.querySelector(`.main`));
+    if (!this._element) {
+      this.render();
 
-    this.bind();
+      this.bind();
+    }
+
+    return this._element;
+  }
+
+  render() {
+  }
+
+  bind() {
   }
 }

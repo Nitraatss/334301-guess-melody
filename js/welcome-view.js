@@ -1,32 +1,29 @@
-import AbstractView from '../js/abstract-view.js';
-import {showRandomPage} from '../js/show-random-page.js';
+import {AbstractView} from '../js/abstract-view.js';
+import {creatDOMElement} from "../js/create-dom-element.js";
 
-export default class WelcomeView extends AbstractView {
-  constructor(className = `main main--welcome`) {
+const className = `main main--welcome`;
+
+export class WelcomeView extends AbstractView {
+  constructor(welcomeMarkup, onMainPlayClick) {
     super();
-    this.className = className;
+    this.welcomeMarkup = welcomeMarkup;
+    this.onMainPlayClick = onMainPlayClick;
   }
 
   get template() {
-    return `
-      <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-      <button class="main-play">Начать игру</button>
-      <h2 class="title main-title">Правила игры</h2>
-      <p class="text main-text">
-        Правила просты&nbsp;— за&nbsp;5 минут ответить на все вопросы.<br>
-        Ошибиться можно 3 раза.<br>
-        Удачи!
-      </p>
-    `;
+    return this.welcomeMarkup;
+  }
+
+  render() {
+    this._element = creatDOMElement(this.template, className);
   }
 
   bind() {
-    const onMainPlayClick = () => {
-      showRandomPage();
-    };
+    const mainPlay = this._element.querySelector(`.main-play`);
 
-    const mainPlay = this.app.querySelector(`.main-play`);
 
-    mainPlay.addEventListener(`click`, onMainPlayClick);
+    mainPlay.addEventListener(`click`, () => {
+      this.onMainPlayClick();
+    });
   }
 }
