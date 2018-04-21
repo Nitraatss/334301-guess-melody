@@ -4,14 +4,14 @@ import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {shuffleArray} from '../js/utils.js';
-import {currentGame} from '../js/game-store.js';
 
 const className = `main main--level main--level-artist`;
 
 export class LevelArtistView extends AbstractView {
-  constructor(artistQuestion) {
+  constructor(artistQuestion, currentGame) {
     super();
     this.artistQuestion = artistQuestion;
+    this.currentGame = currentGame;
   }
 
   get template() {
@@ -36,7 +36,7 @@ export class LevelArtistView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timerMarkup, mistakes(currentGame.state.lives))}
+      ${formHeaderMarkup(timerMarkup, mistakes(this.currentGame.state.lives))}
       <div class="main-wrap">
         <h2 class="title main-title">Кто исполняет эту песню?</h2>
         <div class="player-wrapper">

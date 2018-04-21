@@ -7,7 +7,7 @@ import {showRandomPage} from '../js/show-random-page.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 
 export const levelGenre = () => {
-  const pageLevelGenre = new LevelGenreView(creatGenreQuestion(gameData));
+  const pageLevelGenre = new LevelGenreView(creatGenreQuestion(gameData), currentGame);
 
   pageLevelGenre.checkAnswer = (inputs, correctAnswer) => {
     let trueAnswers = [];
@@ -40,10 +40,10 @@ export const levelGenre = () => {
 
   pageLevelGenre.onGenreAnswerSendClick = (genreInputs, genreAnswerSend) => {
     if (!pageLevelGenre.checkAnswer(genreInputs, pageLevelGenre.genreQuestion)) {
-      currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
-      currentGame.decreaseLives();
+      pageLevelGenre.currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
+      pageLevelGenre.currentGame.decreaseLives();
     } else {
-      currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
+      pageLevelGenre.currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
     }
 
     pageLevelGenre.removeEventListeners(genreAnswerSend, genreInputs);

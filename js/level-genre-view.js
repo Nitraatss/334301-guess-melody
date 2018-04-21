@@ -4,22 +4,20 @@ import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {shuffleArray} from '../js/utils.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
-import {currentGame} from '../js/game-store.js';
 
 let className = `main main--level main--level-genre`;
 
 export class LevelGenreView extends AbstractView {
-  constructor(genreQuestion) {
+  constructor(genreQuestion, currentGame) {
     super();
     this.genreQuestion = genreQuestion;
+    this.currentGame = currentGame;
   }
 
   get template() {
     let answerID = 0;
 
-    let correctGenre = this.genreQuestion.genre;
-
-    let {correctAnswer, incorrectAnswers} = this.genreQuestion;
+    let {correctAnswer, incorrectAnswers, genre: correctGenre} = this.genreQuestion;
 
     let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
       answerID++;
@@ -41,7 +39,7 @@ export class LevelGenreView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timerMarkup, mistakes(currentGame.state.lives))}
+      ${formHeaderMarkup(timerMarkup, mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
         <h2 class="title">Выберите ${correctGenre} треки</h2>
@@ -62,7 +60,7 @@ export class LevelGenreView extends AbstractView {
     const genreAnswerSend = this._element.querySelector(`.genre-answer-send`);
     const genreInputs = this._element.querySelectorAll(`input`);
     const allAudioPlayers = this._element.querySelectorAll(`audio`);
-    const audioPlayers = document.querySelectorAll(`.player`);
+    const audioPlayers = this._element.querySelectorAll(`.player`);
 
     audioPlayers.forEach((item) => {
       let singleAudioPlayer = item.querySelector(`audio`);

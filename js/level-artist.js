@@ -5,15 +5,16 @@ import {showRandomPage} from '../js/show-random-page.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 import {currentGame} from '../js/game-store.js';
 
+
 export const levelArtist = () => {
-  const levelArtistPage = new LevelArtistView(creatArtistQuestion());
+  const levelArtistPage = new LevelArtistView(creatArtistQuestion(currentGame), currentGame);
 
   levelArtistPage.checkAnswer = (answer, correctAnswer) => {
     if (answer === correctAnswer) {
-      currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
+      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
     } else {
-      currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
-      currentGame.decreaseLives();
+      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
+      levelArtistPage.currentGame.decreaseLives();
     }
   };
 
