@@ -5,9 +5,6 @@ import {mistakes} from '../js/mistakes.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {shuffleArray} from '../js/utils.js';
 import {currentGame} from '../js/game-store.js';
-import {DEFAULT_PLAYER_TIME} from '../js/game.js';
-import {showRandomPage} from '../js/show-random-page.js';
-import {setAnswerResults} from '../js/calculate-score.js';
 
 const className = `main main--level main--level-artist`;
 
@@ -78,39 +75,15 @@ export class LevelArtistView extends AbstractView {
     });
   }
 
-  checkAnswer(answer, correctAnswer) {
-    if (answer === correctAnswer) {
-      currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
-    } else {
-      currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
-      currentGame.decreaseLives();
-    }
+  checkAnswer() {
   }
 
-  onPlayerControlClick(audio) {
-    if (audio.paused) {
-      audio.play();
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-    }
+  onPlayerControlClick() {
   }
 
-  onMainAnswerClick(evt, mainAnswers, playerControl) {
-    let currentAnswer = evt.target.value;
-    let correctAnswer = this.artistQuestion.correctAnswer.artist;
-
-    this.checkAnswer(currentAnswer, correctAnswer);
-
-    this.removeEventListeners(mainAnswers, playerControl);
-    showRandomPage();
+  onMainAnswerClick() {
   }
 
-  removeEventListeners(mainAnswers, playerControl) {
-    mainAnswers.forEach((item) => {
-      item.removeEventListener(`click`, this.onMainAnswerClick);
-    });
-
-    playerControl.removeEventListener(`click`, this.onPlayerControlClick);
+  removeEventListeners() {
   }
 }

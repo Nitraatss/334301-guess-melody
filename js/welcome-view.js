@@ -1,6 +1,5 @@
 import {AbstractView} from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
-import {showRandomPage} from '../js/show-random-page.js';
 
 const className = `main main--welcome`;
 
@@ -22,6 +21,7 @@ export class WelcomeView extends AbstractView {
     `;
   }
 
+
   render() {
     this._element = creatDOMElement(this.template, className);
   }
@@ -36,6 +36,5 @@ export class WelcomeView extends AbstractView {
   }
 
   onMainPlayClick() {
-    showRandomPage();
   }
 }

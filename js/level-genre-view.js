@@ -5,9 +5,6 @@ import {shuffleArray} from '../js/utils.js';
 import {timerMarkup} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {currentGame} from '../js/game-store.js';
-import {DEFAULT_PLAYER_TIME} from '../js/game.js';
-import {showRandomPage} from '../js/show-random-page.js';
-import {setAnswerResults} from '../js/calculate-score.js';
 
 let className = `main main--level main--level-genre`;
 
@@ -89,65 +86,18 @@ export class LevelGenreView extends AbstractView {
     });
   }
 
-  checkAnswer(inputs, correctAnswer) {
-    let trueAnswers = [];
-    trueAnswers.push(correctAnswer);
-    let answerResult = false;
-    let checkedInputsCounter = 0;
-
-    inputs.forEach((item) => {
-      if (item.checked) {
-        checkedInputsCounter++;
-      }
-    });
-
-    if (trueAnswers.length === checkedInputsCounter) {
-      inputs.forEach((element) => {
-        if (element.checked && trueAnswers.indexOf(element.value) > -1) {
-          answerResult = true;
-        }
-      });
-    }
-
-    return answerResult;
+  checkAnswer() {
   }
 
-  onGenreInputsChange(genreInputs, genreAnswerSend) {
-    let check = [...genreInputs].some((item) => item.checked === true);
-
-    genreAnswerSend.disabled = !check;
+  onGenreInputsChange() {
   }
 
-  onGenreAnswerSendClick(genreInputs, genreAnswerSend) {
-    if (!this.checkAnswer(genreInputs, this.genreQuestion)) {
-      currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
-      currentGame.decreaseLives();
-    } else {
-      currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
-    }
-
-    this.removeEventListeners(genreAnswerSend, genreInputs);
-    showRandomPage();
+  onGenreAnswerSendClick() {
   }
 
-  removeEventListeners(genreAnswerSend, genreInputs) {
-    genreAnswerSend.removeEventListener(`click`, this.onGenreAnswerSendClick);
-
-    genreInputs.forEach((item) => {
-      item.removeEventListener(`change`, this.onGenreInputsChange);
-    });
+  removeEventListeners() {
   }
 
-  onPlayButtonClick(singleAudioPlayer, allAudioPlayers) {
-    if (singleAudioPlayer.paused) {
-      allAudioPlayers.forEach((element) => {
-        element.pause();
-      });
-
-      singleAudioPlayer.play();
-    } else {
-      singleAudioPlayer.pause();
-      singleAudioPlayer.currentTime = 0;
-    }
+  onPlayButtonClick() {
   }
 }
