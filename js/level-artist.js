@@ -7,7 +7,7 @@ import {currentGame} from '../js/game-store.js';
 
 
 export const levelArtist = () => {
-  const levelArtistPage = new LevelArtistView(creatArtistQuestion(currentGame), currentGame);
+  const levelArtistPage = new LevelArtistView(creatArtistQuestion(), currentGame);
 
   levelArtistPage.checkAnswer = (answer, correctAnswer) => {
     if (answer === correctAnswer) {
