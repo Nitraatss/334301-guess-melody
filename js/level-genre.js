@@ -11,7 +11,7 @@ export const levelGenre = () => {
 
   pageLevelGenre.checkAnswer = (inputs, correctAnswer) => {
     let trueAnswers = [];
-    trueAnswers.push(correctAnswer);
+    trueAnswers.push(correctAnswer.genre);
     let answerResult = false;
     let checkedInputsCounter = 0;
 
