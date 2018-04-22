@@ -1,10 +1,10 @@
 import {getRandomInt} from '../js/utils.js';
 import {MINIMUM_PLAYERS_LIVES} from '../js/game.js';
 import {currentGame} from '../js/game-store.js';
-import showPage from '../js/show-page.js';
 import {levelGenre} from '../js/level-genre.js';
 import {levelArtist} from '../js/level-artist.js';
 import {finalResult} from '../js/result.js';
+import {showPage} from '../js/show-page.js';
 
 const ARTIST_PAGE_INDEX = 1;
 const GENRE_PAGE_INDEX = 2;

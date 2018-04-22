@@ -1,9 +1,4 @@
-import showPage from '../js/show-page.js';
 import {welcome} from '../js/welcome.js';
+import {showPage} from '../js/show-page.js';
 
-/* Формирование стартовой страницы */
-const showWelcomePage = () => {
-  showPage(welcome);
-};
-
-showWelcomePage();
+showPage(welcome);

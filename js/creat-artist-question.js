@@ -53,3 +53,4 @@ const creatIncorrectArtistAnswers = (correctAnswerPos, data) => {
   }
   return incorrectAnswers;
 };
+

@@ -1,4 +1,4 @@
-const creatDOMElement = (markup, className) => {
+export const creatDOMElement = (markup, className) => {
   let newElement;
 
   newElement = document.createElement(`section`);
@@ -9,4 +9,3 @@ const creatDOMElement = (markup, className) => {
   return newElement;
 };
 
-export default creatDOMElement;

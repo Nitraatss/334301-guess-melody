@@ -1,10 +1,6 @@
 const app = document.querySelector(`.app`);
 
-/* Отображение определьной страницы */
-const showPage = ({page, init}) => {
-  app.replaceChild(page(), app.querySelector(`.main`));
-
-  init();
+export const showPage = (page) => {
+  const newPage = page();
+  app.replaceChild(newPage.element, app.querySelector(`.main`));
 };
-
-export default showPage;
