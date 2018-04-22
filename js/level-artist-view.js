@@ -1,6 +1,6 @@
 import {AbstractView} from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
-import {timerMarkup} from '../js/timer.js';
+import {timer} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {shuffleArray} from '../js/utils.js';
@@ -36,7 +36,7 @@ export class LevelArtistView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timerMarkup, mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(), mistakes(this.currentGame.state.lives))}
       <div class="main-wrap">
         <h2 class="title main-title">Кто исполняет эту песню?</h2>
         <div class="player-wrapper">

@@ -2,7 +2,7 @@ import {AbstractView} from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {shuffleArray} from '../js/utils.js';
-import {timerMarkup} from '../js/timer.js';
+import {timer} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 
 let className = `main main--level main--level-genre`;
@@ -39,7 +39,7 @@ export class LevelGenreView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timerMarkup, mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(), mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
         <h2 class="title">Выберите ${correctGenre} треки</h2>

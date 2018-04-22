@@ -1,20 +1,27 @@
 import {LevelArtistView} from '../js/level-artist-view.js';
 import {creatArtistQuestion} from '../js/creat-artist-question.js';
-import {DEFAULT_PLAYER_TIME} from '../js/game.js';
 import {showRandomPage} from '../js/show-random-page.js';
 import {setAnswerResults} from '../js/calculate-score.js';
-import {currentGame} from '../js/game-store.js';
+import {timer} from '../js/timer.js';
+import {calculateAnswerTime} from '../js/calculate-answer-time.js';
+import {app} from '../js/application';
 
-
-export const levelArtist = () => {
+export const levelArtist = (currentGame) => {
   const levelArtistPage = new LevelArtistView(creatArtistQuestion(), currentGame);
 
-  levelArtistPage.checkAnswer = (answer, correctAnswer) => {
-    if (answer === correctAnswer) {
-      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(true, DEFAULT_PLAYER_TIME));
+  levelArtistPage.checkAnswer = (answer, correctAnswer, time) => {
+    const answerTime = calculateAnswerTime(levelArtistPage.currentGame.state.timeLimit, timer.time);
+
+    if (answer === correctAnswer && time > 0) {
+      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(true, answerTime));
+      levelArtistPage.currentGame.setTimeLimit(time);
+    } else if (time === 0) {
+      levelArtistPage.currentGame.setTimeLimit(timer.time);
+      app.showResult();
     } else {
-      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(false, DEFAULT_PLAYER_TIME));
+      levelArtistPage.currentGame.addAnswerResults(setAnswerResults(false, answerTime));
       levelArtistPage.currentGame.decreaseLives();
+      levelArtistPage.currentGame.setTimeLimit(time);
     }
   };
 
@@ -31,7 +38,7 @@ export const levelArtist = () => {
     let currentAnswer = evt.target.value;
     let correctAnswer = levelArtistPage.artistQuestion.correctAnswer.artist;
 
-    levelArtistPage.checkAnswer(currentAnswer, correctAnswer);
+    levelArtistPage.checkAnswer(currentAnswer, correctAnswer, timer.time);
 
     levelArtistPage.removeEventListeners(mainAnswers, playerControl);
     showRandomPage();
@@ -47,4 +54,3 @@ export const levelArtist = () => {
 
   return levelArtistPage;
 };
-
