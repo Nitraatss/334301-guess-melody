@@ -1,3 +1,3 @@
-import {app} from '../js/application';
+import Application from '../js/application';
 
-app.showWelcome();
+Application.showWelcome();

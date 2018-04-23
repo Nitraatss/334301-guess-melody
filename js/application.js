@@ -1,34 +1,30 @@
 import {welcome} from '../js/welcome.js';
+import {levelArtist} from '../js/level-artist.js';
+import {levelGenre} from '../js/level-genre.js';
 import {finalResult} from '../js/result.js';
 import {showPage} from '../js/show-page.js';
 import {GamePage} from '../js/game-page.js';
 
-class Application {
-  showWelcome() {
+export default class Application {
+  static showWelcome() {
     const gamePage = new GamePage(welcome);
-    gamePage.init();
     showPage(gamePage.element);
   }
 
-  showFirstLevel(level) {
-    const gamePage = new GamePage(level);
+  static showLevelArtist() {
+    const gamePage = new GamePage(levelArtist);
     showPage(gamePage.element);
-    gamePage.timerStart();
+    gamePage.startTicking();
   }
 
-  showLevel(level) {
-    const gamePage = new GamePage(level);
+  static showLevelGenre() {
+    const gamePage = new GamePage(levelGenre);
     showPage(gamePage.element);
-    gamePage.timerStop();
-    gamePage.timerStart();
+    gamePage.startTicking();
   }
 
-  showResult() {
+  static showResult() {
     const gamePage = new GamePage(finalResult);
     showPage(gamePage.element);
-    gamePage.timerStop();
-
   }
 }
-
-export const app = new Application();

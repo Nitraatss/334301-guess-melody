@@ -1,7 +1,7 @@
 const STARTING_INDEX = 1;
 const TIME_LIMIT = 300;
 
-class GameStore {
+class GameModel {
   constructor() {
     this.state = {
       answersResuls: [],
@@ -52,4 +52,4 @@ class GameStore {
   }
 }
 
-export const currentGame = new GameStore();
+export const currentGame = new GameModel();

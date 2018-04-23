@@ -10,18 +10,47 @@ class Timer {
   getTimerMinutes() {
     let minutes = Math.floor(this.time / 60);
 
-    return minutes;
+    if (minutes > 0) {
+      return `${minutes}`;
+    } else {
+      return `00`;
+    }
   }
 
   getTimerSeconds() {
     let seconds = this.time - Math.floor(this.time / 60) * 60;
 
     if (seconds < 10) {
-      seconds = `0${seconds}`;
+      return `0${seconds}`;
+    } else {
+      return `${seconds}`;
     }
-
-    return seconds;
   }
+
+  updateTimerMinutes() {
+    let timerValue = document.querySelector(`.timer-value`);
+    let timerValueMins = timerValue.querySelector(`.timer-value-mins`);
+    let upMinutes = Math.floor(this.time / 60);
+
+    if (upMinutes > 0) {
+      timerValueMins.textContent = `${upMinutes}`;
+    } else {
+      timerValueMins.textContent = `00`;
+    }
+  }
+
+  updateTimerSeconds() {
+    let timerValue = document.querySelector(`.timer-value`);
+    let timerValueSecs = timerValue.querySelector(`.timer-value-secs`);
+    let upSeconds = this.time - Math.floor(this.time / 60) * 60;
+
+    if (upSeconds < 10) {
+      timerValueSecs.textContent = `0${upSeconds}`;
+    } else {
+      timerValueSecs.textContent = `${upSeconds}`;
+    }
+  }
+
 
   formMarkup() {
     let timerMinutes = this.getTimerMinutes();
@@ -45,30 +74,6 @@ class Timer {
 
   set timeLimit(time) {
     this.time = time;
-  }
-
-  startTicking() {
-    const timer = document.querySelector(`.timer-value`);
-    const timerValueMins = timer.querySelector(`.timer-value-mins`);
-    const timerValueSecs = timer.querySelector(`.timer-value-secs`);
-
-    this.interval = setInterval(
-        () => {
-          if (this.time) {
-            this.time--;
-            timerValueMins.textContent = `${this.getTimerMinutes()}`;
-            timerValueSecs.textContent = `${this.getTimerSeconds()}`;
-          } else {
-            timerValueMins.textContent = `0`;
-            timerValueSecs.textContent = `00`;
-            clearInterval(this.interval);
-          }
-        }, 1000
-    );
-  }
-
-  stopTicking() {
-    clearInterval(this.interval);
   }
 }
 
