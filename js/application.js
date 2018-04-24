@@ -1,30 +1,30 @@
-import {welcome} from '../js/welcome.js';
-import {levelArtist} from '../js/level-artist.js';
-import {levelGenre} from '../js/level-genre.js';
-import {finalResult} from '../js/result.js';
 import {showPage} from '../js/show-page.js';
-import {GamePage} from '../js/game-page.js';
+import {WelcomePage} from '../js/game-page-welcome.js';
+import {GenrePage} from '../js/game-page-genre.js';
+import {ArtistPage} from '../js/game-page-artist.js';
+import {ResultPage} from '../js/game-page-result.js';
+import {currentGame} from '../js/game-model.js';
 
 export default class Application {
   static showWelcome() {
-    const gamePage = new GamePage(welcome);
-    showPage(gamePage.element);
+    const gamePage = new WelcomePage(currentGame);
+    showPage(gamePage.welcome());
   }
 
   static showLevelArtist() {
-    const gamePage = new GamePage(levelArtist);
-    showPage(gamePage.element);
+    const gamePage = new ArtistPage(currentGame);
+    showPage(gamePage.artist());
     gamePage.startTicking();
   }
 
   static showLevelGenre() {
-    const gamePage = new GamePage(levelGenre);
-    showPage(gamePage.element);
+    const gamePage = new GenrePage(currentGame);
+    showPage(gamePage.genre());
     gamePage.startTicking();
   }
 
   static showResult() {
-    const gamePage = new GamePage(finalResult);
-    showPage(gamePage.element);
+    const gamePage = new ResultPage(currentGame);
+    showPage(gamePage.result());
   }
 }
