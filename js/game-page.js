@@ -12,6 +12,9 @@ export class GamePage {
     this.model = model;
   }
 
+  init() {
+  }
+
   initGame() {
     this.model.setInitialParams();
 
@@ -40,13 +43,12 @@ export class GamePage {
   startTicking() {
     this.interval = setInterval(
         () => {
+          timer.updateTimerMinutes();
+          timer.updateTimerSeconds();
+
           if (timer.time) {
             timer.time--;
-            timer.updateTimerMinutes();
-            timer.updateTimerSeconds();
           } else {
-            timer.updateTimerMinutes();
-            timer.updateTimerSeconds();
             clearInterval(this.interval);
           }
         }, 1000
@@ -55,5 +57,9 @@ export class GamePage {
 
   stopTicking() {
     clearInterval(this.interval);
+  }
+
+  get element() {
+    return this.page;
   }
 }

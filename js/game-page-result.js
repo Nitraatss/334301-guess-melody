@@ -5,15 +5,22 @@ import {ResultView} from '../js/result-view.js';
 export class ResultPage extends GamePage {
   constructor(model) {
     super(model);
+    this.init();
   }
 
-  result() {
-    const pageResult = new ResultView(this.model);
+  init() {
+    this.page = new ResultView(this.model);
 
-    pageResult.onMainReplayClickTry = () => {
+    this.bind();
+  }
+
+  bind() {
+    this.onMainReplayClickTry();
+  }
+
+  onMainReplayClickTry() {
+    this.page.onMainReplayClickTry = () => {
       Application.showWelcome();
     };
-
-    return pageResult;
   }
 }

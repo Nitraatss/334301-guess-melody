@@ -9,12 +9,25 @@ import {setAnswerResults} from '../js/calculate-score.js';
 export class GenrePage extends GamePage {
   constructor(model) {
     super(model);
+    this.init();
   }
 
-  genre() {
-    const pageLevelGenre = new LevelGenreView(creatGenreQuestion(gameData), this.model);
+  init() {
+    this.page = new LevelGenreView(creatGenreQuestion(gameData), this.model);
 
-    pageLevelGenre.checkAnswer = (inputs, correctAnswer, time) => {
+    this.bind();
+  }
+
+  bind() {
+    this.checkAnswer();
+    this.onGenreInputsChange();
+    this.onGenreAnswerSendClick();
+    this.removeEventListeners();
+    this.onPlayButtonClick();
+  }
+
+  checkAnswer() {
+    this.page.checkAnswer = (inputs, correctAnswer, time) => {
       let trueAnswers = [];
       trueAnswers.push(correctAnswer.genre);
       let answerResult = false;
@@ -36,20 +49,24 @@ export class GenrePage extends GamePage {
 
       return answerResult;
     };
+  }
 
-    pageLevelGenre.onGenreInputsChange = (genreInputs, genreAnswerSend) => {
+  onGenreInputsChange() {
+    this.page.onGenreInputsChange = (genreInputs, genreAnswerSend) => {
       let check = [...genreInputs].some((item) => item.checked === true);
 
       genreAnswerSend.disabled = !check;
     };
+  }
 
-    pageLevelGenre.onGenreAnswerSendClick = (genreInputs, genreAnswerSend) => {
+  onGenreAnswerSendClick() {
+    this.page.onGenreAnswerSendClick = (genreInputs, genreAnswerSend) => {
       const answerTime = this.model.state.timeLimit - timer.time;
 
       if (timer.time === 0) {
         this.model.setTimeLimit(timer.time);
         Application.showResult();
-      } if (!pageLevelGenre.checkAnswer(genreInputs, pageLevelGenre.genreQuestion, timer.time)) {
+      } if (!this.page.checkAnswer(genreInputs, this.page.genreQuestion, timer.time)) {
         this.model.addAnswerResults(setAnswerResults(false, answerTime));
         this.model.decreaseLives();
         this.model.setTimeLimit(timer.time);
@@ -58,19 +75,23 @@ export class GenrePage extends GamePage {
         this.model.setTimeLimit(timer.time);
       }
 
-      pageLevelGenre.removeEventListeners(genreAnswerSend, genreInputs);
+      this.page.removeEventListeners(genreAnswerSend, genreInputs);
       this.showRandomPage();
     };
+  }
 
-    pageLevelGenre.removeEventListeners = (genreAnswerSend, genreInputs) => {
-      genreAnswerSend.removeEventListener(`click`, pageLevelGenre.onGenreAnswerSendClick);
+  removeEventListeners() {
+    this.page.removeEventListeners = (genreAnswerSend, genreInputs) => {
+      genreAnswerSend.removeEventListener(`click`, this.page.onGenreAnswerSendClick);
 
       genreInputs.forEach((item) => {
-        item.removeEventListener(`change`, pageLevelGenre.onGenreInputsChange);
+        item.removeEventListener(`change`, this.page.onGenreInputsChange);
       });
     };
+  }
 
-    pageLevelGenre.onPlayButtonClick = (singleAudioPlayer, allAudioPlayers) => {
+  onPlayButtonClick() {
+    this.page.onPlayButtonClick = (singleAudioPlayer, allAudioPlayers) => {
       if (singleAudioPlayer.paused) {
         allAudioPlayers.forEach((element) => {
           element.pause();
@@ -82,7 +103,5 @@ export class GenrePage extends GamePage {
         singleAudioPlayer.currentTime = 0;
       }
     };
-
-    return pageLevelGenre;
   }
 }

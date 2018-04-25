@@ -8,12 +8,24 @@ import {creatArtistQuestion} from '../js/creat-artist-question.js';
 export class ArtistPage extends GamePage {
   constructor(model) {
     super(model);
+    this.init();
   }
 
-  artist() {
-    const levelArtistPage = new LevelArtistView(creatArtistQuestion(), this.model);
+  init() {
+    this.page = new LevelArtistView(creatArtistQuestion(), this.model);
 
-    levelArtistPage.checkAnswer = (answer, correctAnswer, time) => {
+    this.bind();
+  }
+
+  bind() {
+    this.checkAnswer();
+    this.onPlayerControlClick();
+    this.onMainAnswerClick();
+    this.removeEventListeners();
+  }
+
+  checkAnswer() {
+    this.page.checkAnswer = (answer, correctAnswer, time) => {
       const answerTime = this.model.state.timeLimit - timer.time;
 
       if (answer === correctAnswer && time > 0) {
@@ -28,8 +40,10 @@ export class ArtistPage extends GamePage {
         this.model.setTimeLimit(time);
       }
     };
+  }
 
-    levelArtistPage.onPlayerControlClick = (audio) => {
+  onPlayerControlClick() {
+    this.page.onPlayerControlClick = (audio) => {
       if (audio.paused) {
         audio.play();
       } else {
@@ -37,25 +51,27 @@ export class ArtistPage extends GamePage {
         audio.currentTime = 0;
       }
     };
+  }
 
-    levelArtistPage.onMainAnswerClick = (evt, mainAnswers, playerControl) => {
+  onMainAnswerClick() {
+    this.page.onMainAnswerClick = (evt, mainAnswers, playerControl) => {
       let currentAnswer = evt.target.value;
-      let correctAnswer = levelArtistPage.artistQuestion.correctAnswer.artist;
+      let correctAnswer = this.page.artistQuestion.correctAnswer.artist;
 
-      levelArtistPage.checkAnswer(currentAnswer, correctAnswer, timer.time);
+      this.page.checkAnswer(currentAnswer, correctAnswer, timer.time);
 
-      levelArtistPage.removeEventListeners(mainAnswers, playerControl);
+      this.page.removeEventListeners(mainAnswers, playerControl);
       this.showRandomPage();
     };
+  }
 
-    levelArtistPage.removeEventListeners = (mainAnswers, playerControl) => {
+  removeEventListeners() {
+    this.page.removeEventListeners = (mainAnswers, playerControl) => {
       mainAnswers.forEach((item) => {
-        item.removeEventListener(`click`, levelArtistPage.onMainAnswerClick);
+        item.removeEventListener(`click`, this.page.onMainAnswerClick);
       });
 
-      playerControl.removeEventListener(`click`, levelArtistPage.onPlayerControlClick);
+      playerControl.removeEventListener(`click`, this.page.onPlayerControlClick);
     };
-
-    return levelArtistPage;
   }
 }

@@ -8,23 +8,23 @@ import {currentGame} from '../js/game-model.js';
 export default class Application {
   static showWelcome() {
     const gamePage = new WelcomePage(currentGame);
-    showPage(gamePage.welcome());
+    showPage(gamePage.element);
   }
 
   static showLevelArtist() {
     const gamePage = new ArtistPage(currentGame);
-    showPage(gamePage.artist());
+    showPage(gamePage.element);
     gamePage.startTicking();
   }
 
   static showLevelGenre() {
     const gamePage = new GenrePage(currentGame);
-    showPage(gamePage.genre());
+    showPage(gamePage.element);
     gamePage.startTicking();
   }
 
   static showResult() {
     const gamePage = new ResultPage(currentGame);
-    showPage(gamePage.result());
+    showPage(gamePage.element);
   }
 }

@@ -4,17 +4,24 @@ import {WelcomeView} from '../js/welcome-view.js';
 export class WelcomePage extends GamePage {
   constructor(model) {
     super(model);
+    this.init();
   }
 
-  welcome() {
+  init() {
     this.initGame();
 
-    const welcomePage = new WelcomeView();
+    this.page = new WelcomeView();
 
-    welcomePage.onMainPlayClick = () => {
+    this.bind();
+  }
+
+  bind() {
+    this.onMainPlayClick();
+  }
+
+  onMainPlayClick() {
+    this.page.onMainPlayClick = () => {
       this.showRandomPage();
     };
-
-    return welcomePage;
   }
 }
