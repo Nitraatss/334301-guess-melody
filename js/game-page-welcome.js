@@ -12,7 +12,7 @@ export class WelcomePage extends GamePage {
 
     this.page = new WelcomeView();
 
-    this.bind();
+    this.page.onMainPlayClick = this.onMainPlayClick.bind(this);
   }
 
   bind() {
@@ -20,8 +20,6 @@ export class WelcomePage extends GamePage {
   }
 
   onMainPlayClick() {
-    this.page.onMainPlayClick = () => {
-      this.showRandomPage();
-    };
+    this.showRandomPage();
   }
 }

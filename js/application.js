@@ -14,13 +14,11 @@ export default class Application {
   static showLevelArtist() {
     const gamePage = new ArtistPage(currentGame);
     showPage(gamePage.element);
-    gamePage.startTicking();
   }
 
   static showLevelGenre() {
     const gamePage = new GenrePage(currentGame);
     showPage(gamePage.element);
-    gamePage.startTicking();
   }
 
   static showResult() {

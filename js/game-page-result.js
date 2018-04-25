@@ -11,6 +11,8 @@ export class ResultPage extends GamePage {
   init() {
     this.page = new ResultView(this.model);
 
+    this.page.onMainReplayClickTry = this.onMainReplayClickTry.bind(this);
+
     this.bind();
   }
 
@@ -19,8 +21,6 @@ export class ResultPage extends GamePage {
   }
 
   onMainReplayClickTry() {
-    this.page.onMainReplayClickTry = () => {
-      Application.showWelcome();
-    };
+    Application.showWelcome();
   }
 }

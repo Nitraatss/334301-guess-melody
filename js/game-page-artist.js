@@ -14,7 +14,12 @@ export class ArtistPage extends GamePage {
   init() {
     this.page = new LevelArtistView(creatArtistQuestion(), this.model);
 
-    this.bind();
+    this.page.checkAnswer = this.checkAnswer.bind(this);
+    this.page.onPlayerControlClick = this.onPlayerControlClick.bind(this);
+    this.page.onMainAnswerClick = this.onMainAnswerClick.bind(this);
+    this.page.removeEventListeners = this.removeEventListeners.bind(this);
+
+    this.startTicking();
   }
 
   bind() {
@@ -24,54 +29,46 @@ export class ArtistPage extends GamePage {
     this.removeEventListeners();
   }
 
-  checkAnswer() {
-    this.page.checkAnswer = (answer, correctAnswer, time) => {
-      const answerTime = this.model.state.timeLimit - timer.time;
+  checkAnswer(answer, correctAnswer, time) {
+    const answerTime = this.model.state.timeLimit - timer.time;
 
-      if (answer === correctAnswer && time > 0) {
-        this.model.addAnswerResults(setAnswerResults(true, answerTime));
-        this.model.setTimeLimit(time);
-      } else if (time === 0) {
-        this.model.setTimeLimit(timer.time);
-        Application.showResult();
-      } else {
-        this.model.addAnswerResults(setAnswerResults(false, answerTime));
-        this.model.decreaseLives();
-        this.model.setTimeLimit(time);
-      }
-    };
+    if (answer === correctAnswer && time > 0) {
+      this.model.addAnswerResults(setAnswerResults(true, answerTime));
+      this.model.setTimeLimit(time);
+    } else if (time === 0) {
+      this.model.setTimeLimit(timer.time);
+      Application.showResult();
+    } else {
+      this.model.addAnswerResults(setAnswerResults(false, answerTime));
+      this.model.decreaseLives();
+      this.model.setTimeLimit(time);
+    }
   }
 
-  onPlayerControlClick() {
-    this.page.onPlayerControlClick = (audio) => {
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-    };
+  onPlayerControlClick(audio) {
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   }
 
-  onMainAnswerClick() {
-    this.page.onMainAnswerClick = (evt, mainAnswers, playerControl) => {
-      let currentAnswer = evt.target.value;
-      let correctAnswer = this.page.artistQuestion.correctAnswer.artist;
+  onMainAnswerClick(evt, mainAnswers, playerControl) {
+    let currentAnswer = evt.target.value;
+    let correctAnswer = this.page.artistQuestion.correctAnswer.artist;
 
-      this.page.checkAnswer(currentAnswer, correctAnswer, timer.time);
+    this.page.checkAnswer(currentAnswer, correctAnswer, timer.time);
 
-      this.page.removeEventListeners(mainAnswers, playerControl);
-      this.showRandomPage();
-    };
+    this.page.removeEventListeners(mainAnswers, playerControl);
+    this.showRandomPage();
   }
 
-  removeEventListeners() {
-    this.page.removeEventListeners = (mainAnswers, playerControl) => {
-      mainAnswers.forEach((item) => {
-        item.removeEventListener(`click`, this.page.onMainAnswerClick);
-      });
+  removeEventListeners(mainAnswers, playerControl) {
+    mainAnswers.forEach((item) => {
+      item.removeEventListener(`click`, this.page.onMainAnswerClick);
+    });
 
-      playerControl.removeEventListener(`click`, this.page.onPlayerControlClick);
-    };
+    playerControl.removeEventListener(`click`, this.page.onPlayerControlClick);
   }
 }
