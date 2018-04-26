@@ -6,6 +6,8 @@ export class ResultPage extends GamePage {
   constructor(model) {
     super(model);
     this.init();
+
+    this.stopTicking();
   }
 
   init() {

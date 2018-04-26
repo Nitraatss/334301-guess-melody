@@ -20,8 +20,6 @@ export class GenrePage extends GamePage {
     this.page.onGenreAnswerSendClick = this.onGenreAnswerSendClick.bind(this);
     this.page.removeEventListeners = this.removeEventListeners.bind(this);
     this.page.onPlayButtonClick = this.onPlayButtonClick.bind(this);
-
-    this.startTicking();
   }
 
   checkAnswer(inputs, correctAnswer, time) {

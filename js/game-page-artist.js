@@ -18,8 +18,6 @@ export class ArtistPage extends GamePage {
     this.page.onPlayerControlClick = this.onPlayerControlClick.bind(this);
     this.page.onMainAnswerClick = this.onMainAnswerClick.bind(this);
     this.page.removeEventListeners = this.removeEventListeners.bind(this);
-
-    this.startTicking();
   }
 
   checkAnswer(answer, correctAnswer, time) {
