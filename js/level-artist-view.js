@@ -36,7 +36,7 @@ export class LevelArtistView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timer.formMarkup(), mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
       <div class="main-wrap">
         <h2 class="title main-title">Кто исполняет эту песню?</h2>
         <div class="player-wrapper">

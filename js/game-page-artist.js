@@ -22,26 +22,19 @@ export class ArtistPage extends GamePage {
     this.startTicking();
   }
 
-  bind() {
-    this.checkAnswer();
-    this.onPlayerControlClick();
-    this.onMainAnswerClick();
-    this.removeEventListeners();
-  }
-
   checkAnswer(answer, correctAnswer, time) {
-    const answerTime = this.model.state.timeLimit - timer.time;
+    const answerTime = this.model.state.timeLimit - time;
 
-    if (answer === correctAnswer && time > 0) {
-      this.model.addAnswerResults(setAnswerResults(true, answerTime));
-      this.model.setTimeLimit(time);
-    } else if (time === 0) {
-      this.model.setTimeLimit(timer.time);
+    if (time <= 0) {
+      this.model.state.timeLimit = 0;
       Application.showResult();
+    } else if (answer === correctAnswer && time > 0) {
+      this.model.addAnswerResults(setAnswerResults(true, answerTime));
+      this.model.state.timeLimit = time;
     } else {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
-      this.model.setTimeLimit(time);
+      this.model.state.timeLimit = time;
     }
   }
 

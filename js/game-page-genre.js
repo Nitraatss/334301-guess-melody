@@ -24,14 +24,6 @@ export class GenrePage extends GamePage {
     this.startTicking();
   }
 
-  bind() {
-    this.checkAnswer();
-    this.onGenreInputsChange();
-    this.onGenreAnswerSendClick();
-    this.removeEventListeners();
-    this.onPlayButtonClick();
-  }
-
   checkAnswer(inputs, correctAnswer, time) {
     let trueAnswers = [];
     trueAnswers.push(correctAnswer.genre);
@@ -64,16 +56,16 @@ export class GenrePage extends GamePage {
   onGenreAnswerSendClick(genreInputs, genreAnswerSend) {
     const answerTime = this.model.state.timeLimit - timer.time;
 
-    if (timer.time === 0) {
-      this.model.setTimeLimit(timer.time);
+    if (timer.time <= 0) {
+      this.model.state.timeLimit = timer.time;
       Application.showResult();
     } if (!this.page.checkAnswer(genreInputs, this.page.genreQuestion, timer.time)) {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
-      this.model.setTimeLimit(timer.time);
+      this.model.state.timeLimit = timer.time;
     } else {
       this.model.addAnswerResults(setAnswerResults(true, answerTime));
-      this.model.setTimeLimit(timer.time);
+      this.model.state.timeLimit = timer.time;
     }
 
     this.page.removeEventListeners(genreAnswerSend, genreInputs);

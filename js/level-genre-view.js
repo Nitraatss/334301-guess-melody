@@ -39,7 +39,7 @@ export class LevelGenreView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timer.formMarkup(), mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
         <h2 class="title">Выберите ${correctGenre} треки</h2>

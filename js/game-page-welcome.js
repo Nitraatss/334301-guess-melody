@@ -15,10 +15,6 @@ export class WelcomePage extends GamePage {
     this.page.onMainPlayClick = this.onMainPlayClick.bind(this);
   }
 
-  bind() {
-    this.onMainPlayClick();
-  }
-
   onMainPlayClick() {
     this.showRandomPage();
   }

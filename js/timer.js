@@ -1,9 +1,7 @@
 const MINIMUM_TIME = 0;
-const DEFAULT_LIMIT = 300;
 
 class Timer {
   constructor() {
-    this.time = DEFAULT_LIMIT;
     this.interval = 0;
   }
 
@@ -52,7 +50,9 @@ class Timer {
   }
 
 
-  formMarkup() {
+  formMarkup(time) {
+    this.time = time;
+
     let timerMinutes = this.getTimerMinutes();
     let timerSeconds = this.getTimerSeconds();
 
@@ -70,10 +70,6 @@ class Timer {
         </div>
       </svg>
     `;
-  }
-
-  set timeLimit(time) {
-    this.time = time;
   }
 }
 

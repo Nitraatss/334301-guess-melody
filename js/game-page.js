@@ -41,17 +41,18 @@ export class GamePage {
   }
 
   startTicking() {
-    this.interval = setInterval(
-        () => {
-          timer.updateTimerMinutes();
-          timer.updateTimerSeconds();
 
-          if (timer.time) {
-            timer.time--;
-          } else {
-            clearInterval(this.interval);
-          }
-        }, 1000
+    timer.updateTimerMinutes();
+    timer.updateTimerSeconds();
+
+    if (timer.time) {
+      timer.time--;
+    } else {
+      clearInterval(this.interval);
+    }
+
+
+    this.interval = setInterval(this.startTicking, 1000
     );
   }
 
