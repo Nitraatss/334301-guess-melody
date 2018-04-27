@@ -1,4 +1,7 @@
-class GameStore {
+const STARTING_INDEX = 1;
+const TIME_LIMIT = 300;
+
+class GameModel {
   constructor() {
     this.state = {
       answersResuls: [],
@@ -6,8 +9,13 @@ class GameStore {
       lives: 0,
       totalTime: 0,
       allPlayers: [],
-      round: 1
+      round: STARTING_INDEX,
+      timeLimit: TIME_LIMIT
     };
+  }
+
+  setTimeLimit(newLimit) {
+    this.timeLimit = newLimit;
   }
 
   addAnswerResults(newAnswer) {
@@ -39,7 +47,9 @@ class GameStore {
     this.state.totalScore = 0;
     this.state.lives = 0;
     this.state.totalTime = 0;
+    this.state.timeLimit = TIME_LIMIT;
+    this.state.round = STARTING_INDEX;
   }
 }
 
-export const currentGame = new GameStore();
+export const currentGame = new GameModel();

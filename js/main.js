@@ -1,4 +1,3 @@
-import {welcome} from '../js/welcome.js';
-import {showPage} from '../js/show-page.js';
+import Application from '../js/application';
 
-showPage(welcome);
+Application.showWelcome();

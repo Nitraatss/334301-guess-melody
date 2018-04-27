@@ -1,14 +1,14 @@
 import {assert} from 'chai';
-import {createTimer} from '../js/timer.js';
+import {createTestTimer} from '../js/timer.js';
 
 describe(`Timer tick test`, () => {
 
   it(`Time left`, () => {
-    assert.equal(createTimer(40).tick(), 39);
+    assert.equal(createTestTimer(40), 39);
   });
 
 
   it(`Time out`, () => {
-    assert.equal(createTimer(1).tick(), `Ваше время вышло`);
+    assert.equal(createTestTimer(1), `Ваше время вышло`);
   });
 });

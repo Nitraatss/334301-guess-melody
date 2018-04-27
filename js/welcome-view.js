@@ -21,7 +21,6 @@ export class WelcomeView extends AbstractView {
     `;
   }
 
-
   render() {
     this._element = creatDOMElement(this.template, className);
   }
