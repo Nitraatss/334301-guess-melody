@@ -49,7 +49,6 @@ class Timer {
     }
   }
 
-
   formMarkup(time) {
     this.time = time;
 
@@ -71,12 +70,21 @@ class Timer {
       </svg>
     `;
   }
+
+  tick() {
+    return this.time--;
+  }
+
+  setTimeLimit(newTime) {
+    this.time = newTime;
+  }
 }
 
 export const timer = new Timer();
 
-export const createTimer = (timerLimit) => ({
-  tick: () => {
-    return --timerLimit > MINIMUM_TIME ? timerLimit : `Ваше время вышло`;
-  }
-});
+export const createTestTimer = (timerLimit) => {
+  const testTimer = new Timer();
+  testTimer.setTimeLimit(timerLimit);
+  testTimer.tick();
+  return testTimer.time > MINIMUM_TIME ? testTimer.time : `Ваше время вышло`;
+};

@@ -25,8 +25,13 @@ export class ResultView extends AbstractView {
   }
 
   get template() {
-    this.currentGame.setTotalScore(calculateScore(this.currentGame.state.answersResuls));
-    this.currentGame.setTotalTime(calculateTime(this.currentGame.state.answersResuls));
+    if (this.currentGame.state.answersResuls) {
+      this.currentGame.setTotalScore(calculateScore(this.currentGame.state.answersResuls));
+      this.currentGame.setTotalTime(calculateTime(this.currentGame.state.answersResuls));
+    } else {
+      this.currentGame.setTotalScore(0);
+      this.currentGame.setTotalTime(0);
+    }
 
     const currentPlayerResult = {
       answersResuls: this.currentGame.state.answersResuls,

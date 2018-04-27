@@ -24,6 +24,7 @@ export class GamePage {
   }
 
   showRandomPage() {
+    this.stopTicking();
     if (this.model.state.lives === MINIMUM_PLAYERS_LIVES) {
       Application.showResult();
     } else if (this.model.state.round < LAST_INDEX) {
@@ -46,25 +47,23 @@ export class GamePage {
   }
 
   startTicking() {
-    if (timer.time) {
-      timer.time--;
-    } else {
-      clearInterval(this.interval);
-    }
+    this.checkTime();
 
-    timer.updateTimerMinutes();
-    timer.updateTimerSeconds();
-
-    setInterval(this.startTicking, 1000);
+    this.interval = setInterval(this.checkTime.bind(this), 1000);
   }
 
   stopTicking() {
-    (() => {
-      let i = setInterval(() => {}, 100000);
-      while (i >= 0) {
-        clearInterval(i--);
-      }
-    })();
+    clearInterval(this.interval);
+  }
+
+  checkTime() {
+    if (timer.tick() <= 0) {
+      this.stopTicking();
+      Application.showResult();
+    } else {
+      timer.updateTimerMinutes();
+      timer.updateTimerSeconds();
+    }
   }
 
   get element() {

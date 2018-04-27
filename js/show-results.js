@@ -29,10 +29,10 @@ export const creatCurrentPlayerResult = (totalScore, leftLives, leftTime) => {
   return creatPlayerResult(totalScore, leftLives, leftTime);
 };
 
-const creatPlayerResult = (score, lives, time) => ({
+const creatPlayerResult = (score, lives, totalTime) => ({
   score,
   lives,
-  time
+  totalTime
 });
 
 const calculatePlayerSuccess = (playerPlace, totalPlayers) => {
@@ -71,7 +71,7 @@ export const showResults = (otherPlayersResults, currentPlayerResults) => {
 
   if (currentPlayerResults.lives === MINIMUM_LIVES) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;
-  } else if (currentPlayerResults.time <= MINIMUM_TIME) {
+  } else if (currentPlayerResults.totalTime <= MINIMUM_TIME) {
     return `Время вышло! Вы не успели отгадать все мелодии`;
   } else if (currentPlayerResults.score >= QUESTIONS_COUNT) {
     index = playersResults.findIndex((otherPlayer) => {
