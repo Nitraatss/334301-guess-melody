@@ -6,11 +6,11 @@ export class ResultPage extends GamePage {
   constructor(model) {
     super(model);
     this.init();
-
-    this.stopTicking();
   }
 
   init() {
+    this.stopTicking();
+
     this.page = new ResultView(this.model);
 
     this.page.onMainReplayClickTry = this.onMainReplayClickTry.bind(this);

@@ -4,11 +4,16 @@ import {GenrePage} from '../js/game-page-genre.js';
 import {ArtistPage} from '../js/game-page-artist.js';
 import {ResultPage} from '../js/game-page-result.js';
 import {currentGame} from '../js/game-model.js';
+import {loadQuestions} from '../js/game.js';
 
 export default class Application {
   static showWelcome() {
-    const gamePage = new WelcomePage(currentGame);
-    showPage(gamePage.element);
+    loadQuestions().then(
+        () => {
+          const gamePage = new WelcomePage(currentGame);
+          showPage(gamePage.element);
+        }
+    );
   }
 
   static showLevelArtist() {

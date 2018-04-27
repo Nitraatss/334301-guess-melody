@@ -17,9 +17,9 @@ export class LevelGenreView extends AbstractView {
   get template() {
     let answerID = 0;
 
-    let {correctAnswer, incorrectAnswers, genre: correctGenre} = this.genreQuestion;
+    let {correctAnswers, incorrectAnswers, genre: correctGenre} = this.genreQuestion;
 
-    let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
+    let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswers)).map((item) => {
       answerID++;
       return `
         <div class="genre-answer">

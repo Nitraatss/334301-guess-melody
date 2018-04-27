@@ -1,56 +1,47 @@
 import {getRandomInt} from '../js/utils.js';
-import {gameData} from '../js/game.js';
 
-export const creatArtistQuestion = () => {
-  let correctIndex = getRandomInt(0, gameData.length - 1);
+export const creatArtistQuestion = (artistQuestions) => {
+  const questionIndex = getRandomInt(0, artistQuestions.length - 1);
+  const currentQuestionData = artistQuestions[questionIndex];
+  artistQuestions.splice(questionIndex, 1);
 
   const artistQuestion = {
-    correctAnswer: creatArtistAnswer(correctIndex, gameData),
-    incorrectAnswers: creatIncorrectArtistAnswers(correctIndex, gameData)
+    correctAnswer: creatCorrectArtistAnswer(currentQuestionData),
+    incorrectAnswers: creatIncorrrectArtistAnswers(currentQuestionData),
+    questionText: currentQuestionData.question
   };
 
   return artistQuestion;
 };
 
-const creatArtistAnswer = (correctAnswerPos, dataBase) => {
-  const answer = {
-    artist: dataBase[correctAnswerPos].artist,
-    image: dataBase[correctAnswerPos].image,
-    src: dataBase[correctAnswerPos].src
+const creatCorrectArtistAnswer = (currentQuestionData) => {
+  const correctAnswer = {
+    src: currentQuestionData.src
   };
 
-  return answer;
+  currentQuestionData.answers.forEach((element) => {
+    if (element.isCorrect) {
+      correctAnswer.artist = element.title;
+      correctAnswer.image = element.image.url;
+    }
+  });
+
+  return correctAnswer;
 };
 
-const creatIncorrectArtistAnswers = (correctAnswerPos, data) => {
+const creatIncorrrectArtistAnswers = (currentQuestionData) => {
   let incorrectAnswers = [];
-  let position = correctAnswerPos;
 
-  while (incorrectAnswers.length < 1) {
-    if (position + 1 < data.length) {
-      position = position + 1;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
-    } else {
-      position = position - 1;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
-    }
-  }
+  currentQuestionData.answers.forEach((element) => {
+    if (!element.isCorrect) {
+      const answer = {
+        artist: element.title,
+        image: element.image.url
+      };
 
-  while (incorrectAnswers.length < 2) {
-    if (position + 1 < data.length && position + 1 !== correctAnswerPos) {
-      position = position + 1;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
-    } else if (position + 2 < data.length && position + 2 !== correctAnswerPos) {
-      position = position + 2;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
-    } else if (position - 1 !== correctAnswerPos && position - 1 > 0) {
-      position = position - 1;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
-    } else if (position - 2 !== correctAnswerPos && position - 2 > 0) {
-      position = position - 2;
-      incorrectAnswers.push(creatArtistAnswer(position, data));
+      incorrectAnswers.push(answer);
     }
-  }
+  });
+
   return incorrectAnswers;
 };
-

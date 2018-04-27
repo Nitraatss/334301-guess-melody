@@ -1,6 +1,61 @@
 export const MINIMUM_PLAYERS_LIVES = 3;
 export const MINIMUM_PLAYER_TIME = 0;
 
+const DATA_SERVER = `https://es.dump.academy/guess-melody/questions`;
+
+export const allQuestions = {
+  artist: [],
+  genre: []
+};
+
+const QuestionType = {
+  GENRE: `genre`,
+  ARTIST: `artist`
+};
+
+const checkLoad = (response) => {
+  if (response.ok) {
+    return response.json();
+  } else if (response.status === 404) {
+    return [];
+  }
+  throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+};
+
+const showError = (error) => {
+  throw new Error(`Ошибка ${error}`);
+};
+
+const seperateArtistQuestions = (questions) => {
+  questions.forEach((element) => {
+    if (element.type === QuestionType.ARTIST) {
+      allQuestions.artist.push(element);
+    }
+  });
+};
+
+const seperateGenreQuestions = (questions) => {
+  questions.forEach((element) => {
+    if (element.type === `genre`) {
+      allQuestions.genre.push(element);
+    }
+  });
+};
+
+const seperateQuestions = (questions) => {
+  seperateArtistQuestions(questions);
+  seperateGenreQuestions(questions);
+};
+
+export const loadQuestions = () => {
+  return fetch(DATA_SERVER).then(checkLoad).then(seperateQuestions).catch(showError);
+};
+
+export const questions = {
+  artist: [],
+  genre: []
+};
+
 export const gameData = [
   {
     artist: `Kevin MacLeod`,
@@ -45,4 +100,3 @@ export const gameData = [
     genre: `Electronic`
   }
 ];
-

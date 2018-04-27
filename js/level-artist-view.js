@@ -18,7 +18,6 @@ export class LevelArtistView extends AbstractView {
     let songLocation = this.artistQuestion.correctAnswer.src;
     let answerID = 0;
 
-
     let {correctAnswer, incorrectAnswers} = this.artistQuestion;
     let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
       answerID++;

@@ -1,10 +1,10 @@
 import {GamePage} from '../js/game-page';
 import {timer} from '../js/timer.js';
 import {LevelGenreView} from '../js/level-genre-view.js';
-import {creatGenreQuestion} from '../js/creat-genre-question';
-import {gameData} from '../js/game.js';
 import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
+import {creatGenreQuestion} from '../js/creat-genre-question.js';
+import {allQuestions} from '../js/game.js';
 
 export class GenrePage extends GamePage {
   constructor(model) {
@@ -13,7 +13,7 @@ export class GenrePage extends GamePage {
   }
 
   init() {
-    this.page = new LevelGenreView(creatGenreQuestion(gameData), this.model);
+    this.page = new LevelGenreView(creatGenreQuestion(allQuestions.genre), this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onGenreInputsChange = this.onGenreInputsChange.bind(this);
@@ -22,9 +22,13 @@ export class GenrePage extends GamePage {
     this.page.onPlayButtonClick = this.onPlayButtonClick.bind(this);
   }
 
-  checkAnswer(inputs, correctAnswer, time) {
+  checkAnswer(inputs, correctAnswers, time) {
     let trueAnswers = [];
-    trueAnswers.push(correctAnswer.genre);
+
+    correctAnswers.forEach((element) => {
+      trueAnswers.push(element.genre);
+    });
+
     let answerResult = false;
     let checkedInputsCounter = 0;
 
@@ -57,7 +61,7 @@ export class GenrePage extends GamePage {
     if (timer.time <= 0) {
       this.model.state.timeLimit = timer.time;
       Application.showResult();
-    } if (!this.page.checkAnswer(genreInputs, this.page.genreQuestion, timer.time)) {
+    } if (!this.page.checkAnswer(genreInputs, this.page.genreQuestion.correctAnswers, timer.time)) {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
       this.model.state.timeLimit = timer.time;
