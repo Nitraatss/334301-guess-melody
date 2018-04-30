@@ -1,7 +1,6 @@
 import {AbstractView} from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {formHeaderMarkup} from '../js/form-header-markup.js';
-import {shuffleArray} from '../js/utils.js';
 import {timer} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 
@@ -17,9 +16,7 @@ export class LevelGenreView extends AbstractView {
   get template() {
     let answerID = 0;
 
-    let {correctAnswers, incorrectAnswers, genre: correctGenre} = this.genreQuestion;
-
-    let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswers)).map((item) => {
+    let answersMakup = this.genreQuestion.answers.map((item) => {
       answerID++;
       return `
         <div class="genre-answer">
@@ -42,7 +39,7 @@ export class LevelGenreView extends AbstractView {
       ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
-        <h2 class="title">Выберите ${correctGenre} треки</h2>
+        <h2 class="title">${this.genreQuestion.question}</h2>
         <form class="genre">
           ${answersMakup}
 
