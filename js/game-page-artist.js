@@ -4,7 +4,7 @@ import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 import {LevelArtistView} from '../js/level-artist-view.js';
 import {creatArtistQuestion} from '../js/creat-artist-question.js';
-import {allQuestions} from '../js/game.js';
+import {currentGame} from '../js/game-model.js';
 
 export class ArtistPage extends GamePage {
   constructor(model) {
@@ -13,7 +13,7 @@ export class ArtistPage extends GamePage {
   }
 
   init() {
-    this.page = new LevelArtistView(creatArtistQuestion(allQuestions.artist), this.model);
+    this.page = new LevelArtistView(creatArtistQuestion(currentGame.state.questions.artist), this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onPlayerControlClick = this.onPlayerControlClick.bind(this);

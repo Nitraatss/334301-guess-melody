@@ -4,7 +4,7 @@ import {LevelGenreView} from '../js/level-genre-view.js';
 import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 import {creatGenreQuestion} from '../js/creat-genre-question.js';
-import {allQuestions} from '../js/game.js';
+import {currentGame} from '../js/game-model.js';
 
 export class GenrePage extends GamePage {
   constructor(model) {
@@ -13,7 +13,7 @@ export class GenrePage extends GamePage {
   }
 
   init() {
-    this.page = new LevelGenreView(creatGenreQuestion(allQuestions.genre), this.model);
+    this.page = new LevelGenreView(creatGenreQuestion(currentGame.state.questions.genre), this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onGenreInputsChange = this.onGenreInputsChange.bind(this);
