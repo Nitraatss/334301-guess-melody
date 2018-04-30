@@ -11,7 +11,7 @@ class GameModel {
       allPlayers: [],
       round: STARTING_INDEX,
       timeLimit: TIME_LIMIT,
-      questions: {}
+      questions: []
     };
   }
 
@@ -50,7 +50,7 @@ class GameModel {
     this.state.totalTime = 0;
     this.state.timeLimit = TIME_LIMIT;
     this.state.round = STARTING_INDEX;
-    this.state.questions = {};
+    this.state.questions = [];
   }
 }
 

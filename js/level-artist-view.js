@@ -7,17 +7,16 @@ import {formHeaderMarkup} from '../js/form-header-markup.js';
 const className = `main main--level main--level-artist`;
 
 export class LevelArtistView extends AbstractView {
-  constructor(artistQuestion, currentGame) {
+  constructor(currentGame) {
     super();
-    this.artistQuestion = artistQuestion;
     this.currentGame = currentGame;
   }
 
   get template() {
-    let songLocation = this.artistQuestion.src;
+    let songLocation = this.currentGame.state.curentQuestion.src;
     let answerID = 0;
 
-    let answersMakup = this.artistQuestion.answers.map((item) => {
+    let answersMakup = this.currentGame.state.curentQuestion.answers.map((item) => {
       answerID++;
 
       return `

@@ -7,16 +7,15 @@ import {mistakes} from '../js/mistakes.js';
 let className = `main main--level main--level-genre`;
 
 export class LevelGenreView extends AbstractView {
-  constructor(genreQuestion, currentGame) {
+  constructor(currentGame) {
     super();
-    this.genreQuestion = genreQuestion;
     this.currentGame = currentGame;
   }
 
   get template() {
     let answerID = 0;
 
-    let answersMakup = this.genreQuestion.answers.map((item) => {
+    let answersMakup = this.currentGame.state.curentQuestion.answers.map((item) => {
       answerID++;
       return `
         <div class="genre-answer">
@@ -39,7 +38,7 @@ export class LevelGenreView extends AbstractView {
       ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
-        <h2 class="title">${this.genreQuestion.question}</h2>
+        <h2 class="title">${this.currentGame.state.curentQuestion.question}</h2>
         <form class="genre">
           ${answersMakup}
 

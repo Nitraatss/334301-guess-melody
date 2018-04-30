@@ -15,10 +15,7 @@ const QuestionType = {
 
 class LoadService {
   constructor() {
-    this.allQuestions = {
-      artist: [],
-      genre: []
-    };
+    this.allQuestions = [];
   }
 
   checkLoad(response) {
@@ -51,18 +48,18 @@ class LoadService {
   }
 
   seperateQuestions(questions) {
-    this.seperateArtistQuestions(questions);
-    this.seperateGenreQuestions(questions);
+    questions.forEach((element) => {
+      this.allQuestions.push(element);
+    });
   }
 
   loadQuestions() {
     return fetch(DATA_SERVER).then(this.checkLoad).then(this.seperateQuestions.bind(this)).catch(this.showError);
   }
 
-  get getQuestions() {
+  get questions() {
     return this.allQuestions;
   }
 }
 
 export const loader = new LoadService();
-

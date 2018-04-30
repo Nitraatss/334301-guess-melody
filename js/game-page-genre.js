@@ -3,8 +3,6 @@ import {timer} from '../js/timer.js';
 import {LevelGenreView} from '../js/level-genre-view.js';
 import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
-import {currentGame} from '../js/game-model.js';
-import {pickRandomQuestion} from '../js/pick-random-question.js';
 
 export class GenrePage extends GamePage {
   constructor(model) {
@@ -13,8 +11,7 @@ export class GenrePage extends GamePage {
   }
 
   init() {
-    this.question = pickRandomQuestion(currentGame.state.questions.genre);
-    this.page = new LevelGenreView(this.question, this.model);
+    this.page = new LevelGenreView(this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onGenreInputsChange = this.onGenreInputsChange.bind(this);
@@ -63,7 +60,7 @@ export class GenrePage extends GamePage {
     if (timer.time <= 0) {
       this.model.state.timeLimit = timer.time;
       Application.showResult();
-    } if (!this.page.checkAnswer(genreInputs, this.question.genre, timer.time)) {
+    } if (!this.page.checkAnswer(genreInputs, this.model.state.curentQuestion.genre, timer.time)) {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
       this.model.state.timeLimit = timer.time;

@@ -11,7 +11,7 @@ export default class Application {
     loader.loadQuestions().then(
         () => {
           const gamePage = new WelcomePage(currentGame);
-          currentGame.state.questions = loader.getQuestions;
+          currentGame.state.questions = loader.questions;
           showPage(gamePage.element);
         }
     );
