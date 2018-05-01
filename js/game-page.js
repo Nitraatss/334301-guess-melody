@@ -4,6 +4,7 @@ import Application from '../js/application.js';
 
 const FIRST_ROUND_INDEX = 2;
 const LAST_INDEX = 11;
+let interval;
 
 export class GamePage {
   constructor(model) {
@@ -46,11 +47,11 @@ export class GamePage {
   startTicking() {
     this.checkTime();
 
-    this.interval = setInterval(this.checkTime.bind(this), 1000);
+    interval = setInterval(this.checkTime.bind(this), 1000);
   }
 
   stopTicking() {
-    clearInterval(this.interval);
+    clearInterval(interval);
   }
 
   checkTime() {

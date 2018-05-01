@@ -22,9 +22,7 @@ class LoadService {
   }
 
   formQuestions(questions) {
-    questions.forEach((element) => {
-      this.allQuestions.push(element);
-    });
+    this.allQuestions = questions;
   }
 
   loadQuestions() {
