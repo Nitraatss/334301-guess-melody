@@ -10,6 +10,7 @@ export default class Application {
   static showWelcome() {
     loader.loadQuestions().then(
         () => {
+          currentGame.setInitialParams();
           const gamePage = new WelcomePage(currentGame);
           currentGame.state.questions = loader.questions;
           showPage(gamePage.element);
