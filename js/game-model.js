@@ -1,3 +1,5 @@
+import {resultsLoader} from "../js/game.js";
+
 const STARTING_INDEX = 1;
 const TIME_LIMIT = 300;
 
@@ -8,7 +10,7 @@ class GameModel {
       totalScore: 0,
       lives: 0,
       totalTime: 0,
-      allPlayers: [],
+      allPlayers: resultsLoader.loadResults().then(resultsLoader.allResults),
       round: STARTING_INDEX,
       timeLimit: TIME_LIMIT,
       questions: []
@@ -51,6 +53,7 @@ class GameModel {
     this.state.timeLimit = TIME_LIMIT;
     this.state.round = STARTING_INDEX;
     this.state.questions = [];
+    this.state.allPlayers = resultsLoader.loadResults();
   }
 }
 
