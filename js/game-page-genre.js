@@ -1,8 +1,6 @@
 import {GamePage} from '../js/game-page';
 import {timer} from '../js/timer.js';
 import {LevelGenreView} from '../js/level-genre-view.js';
-import {creatGenreQuestion} from '../js/creat-genre-question';
-import {gameData} from '../js/game.js';
 import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 
@@ -13,7 +11,7 @@ export class GenrePage extends GamePage {
   }
 
   init() {
-    this.page = new LevelGenreView(creatGenreQuestion(gameData), this.model);
+    this.page = new LevelGenreView(this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onGenreInputsChange = this.onGenreInputsChange.bind(this);
@@ -23,21 +21,26 @@ export class GenrePage extends GamePage {
   }
 
   checkAnswer(inputs, correctAnswer, time) {
-    let trueAnswers = [];
-    trueAnswers.push(correctAnswer.genre);
-    let answerResult = false;
+    let correctAnswerCounter = 0;
     let checkedInputsCounter = 0;
+    let answerResult = true;
 
-    inputs.forEach((item) => {
-      if (item.checked) {
+    inputs.forEach((element) => {
+      if (element.value === correctAnswer) {
+        correctAnswerCounter++;
+      }
+
+      if (element.checked) {
         checkedInputsCounter++;
       }
     });
 
-    if (trueAnswers.length === checkedInputsCounter && time > 0) {
+    if (correctAnswerCounter === checkedInputsCounter && time > 0) {
       inputs.forEach((element) => {
-        if (element.checked && trueAnswers.indexOf(element.value) > -1) {
+        if (element.checked && element.value === correctAnswer) {
           answerResult = true;
+        } else if (element.checked && element.value !== correctAnswer) {
+          answerResult = false;
         }
       });
     }
@@ -57,7 +60,7 @@ export class GenrePage extends GamePage {
     if (timer.time <= 0) {
       this.model.state.timeLimit = timer.time;
       Application.showResult();
-    } if (!this.page.checkAnswer(genreInputs, this.page.genreQuestion, timer.time)) {
+    } if (!this.page.checkAnswer(genreInputs, this.model.state.curentQuestion.genre, timer.time)) {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
       this.model.state.timeLimit = timer.time;

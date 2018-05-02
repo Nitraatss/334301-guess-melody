@@ -3,33 +3,29 @@ import {creatDOMElement} from "../js/create-dom-element.js";
 import {timer} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
-import {shuffleArray} from '../js/utils.js';
 
 const className = `main main--level main--level-artist`;
 
 export class LevelArtistView extends AbstractView {
-  constructor(artistQuestion, currentGame) {
+  constructor(currentGame) {
     super();
-    this.artistQuestion = artistQuestion;
     this.currentGame = currentGame;
   }
 
   get template() {
-    let songLocation = this.artistQuestion.correctAnswer.src;
+    let songLocation = this.currentGame.state.curentQuestion.src;
     let answerID = 0;
 
-
-    let {correctAnswer, incorrectAnswers} = this.artistQuestion;
-    let answersMakup = shuffleArray(incorrectAnswers.concat(correctAnswer)).map((item) => {
+    let answersMakup = this.currentGame.state.curentQuestion.answers.map((item) => {
       answerID++;
 
       return `
             <div class="main-answer-wrapper">
-            <input class="main-answer-r" type="radio" id="answer-${answerID}" name="answer" value="${item.artist}"/>
+            <input class="main-answer-r" type="radio" id="answer-${answerID}" name="answer" value="${item.title}"/>
             <label class="main-answer" for="answer-${answerID}">
-              <img class="main-answer-preview" src="${item.image}"
-                    alt="${item.artist}" width="134" height="134">
-              ${item.artist}
+              <img class="main-answer-preview" src="${item.image.url}"
+                    alt="${item.title}" width="134" height="134">
+              ${item.title}
             </label>
           </div>
       `;

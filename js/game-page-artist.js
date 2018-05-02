@@ -3,7 +3,6 @@ import {timer} from '../js/timer.js';
 import Application from '../js/application.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 import {LevelArtistView} from '../js/level-artist-view.js';
-import {creatArtistQuestion} from '../js/creat-artist-question.js';
 
 export class ArtistPage extends GamePage {
   constructor(model) {
@@ -12,7 +11,7 @@ export class ArtistPage extends GamePage {
   }
 
   init() {
-    this.page = new LevelArtistView(creatArtistQuestion(), this.model);
+    this.page = new LevelArtistView(this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
     this.page.onPlayerControlClick = this.onPlayerControlClick.bind(this);
@@ -47,9 +46,13 @@ export class ArtistPage extends GamePage {
 
   onMainAnswerClick(evt, mainAnswers, playerControl) {
     let currentAnswer = evt.target.value;
-    let correctAnswer = this.page.artistQuestion.correctAnswer.artist;
+    let correctAnswer;
 
-    this.page.checkAnswer(currentAnswer, correctAnswer, timer.time);
+    correctAnswer = this.model.state.curentQuestion.answers.find((element) => {
+      return element.isCorrect;
+    });
+
+    this.page.checkAnswer(currentAnswer, correctAnswer.title, timer.time);
 
     this.page.removeEventListeners(mainAnswers, playerControl);
     this.showRandomPage();

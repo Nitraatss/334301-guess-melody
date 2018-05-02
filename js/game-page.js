@@ -1,17 +1,14 @@
 import {timer} from '../js/timer.js';
-import {getRandomInt} from '../js/utils.js';
 import {MINIMUM_PLAYERS_LIVES} from '../js/game.js';
 import Application from '../js/application.js';
 
-const ARTIST_PAGE_INDEX = 1;
-const GENRE_PAGE_INDEX = 2;
 const FIRST_ROUND_INDEX = 2;
 const LAST_INDEX = 11;
+let interval;
 
 export class GamePage {
   constructor(model) {
     this.model = model;
-    this.interval = 0;
   }
 
   init() {
@@ -24,15 +21,16 @@ export class GamePage {
   }
 
   showRandomPage() {
-    this.stopTicking();
     if (this.model.state.lives === MINIMUM_PLAYERS_LIVES) {
       Application.showResult();
     } else if (this.model.state.round < LAST_INDEX) {
+      const curentQuestionIndex = this.model.state.round - 1;
+
       this.model.nextRound();
 
-      let nextPageIndex = getRandomInt(ARTIST_PAGE_INDEX, GENRE_PAGE_INDEX);
+      this.model.state.curentQuestion = this.model.state.questions[curentQuestionIndex];
 
-      if (nextPageIndex === ARTIST_PAGE_INDEX) {
+      if (this.model.state.curentQuestion.type === `artist`) {
         Application.showLevelArtist();
       } else {
         Application.showLevelGenre();
@@ -49,11 +47,11 @@ export class GamePage {
   startTicking() {
     this.checkTime();
 
-    this.interval = setInterval(this.checkTime.bind(this), 1000);
+    interval = setInterval(this.checkTime.bind(this), 1000);
   }
 
   stopTicking() {
-    clearInterval(this.interval);
+    clearInterval(interval);
   }
 
   checkTime() {
@@ -64,6 +62,11 @@ export class GamePage {
       timer.updateTimerMinutes();
       timer.updateTimerSeconds();
     }
+  }
+
+  nextLevelQuestion(index) {
+    this.model.state.curentQuestion = this.model.state.questions[index];
+    this.model.state.questions.splice(index, 1);
   }
 
   get element() {
