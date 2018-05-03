@@ -4,6 +4,7 @@ import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
 import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game.js';
 import {calculateFastAnswers} from '../js/calculate-score.js';
+import {stat} from '../js/game.js';
 
 const className = `main main--result`;
 
@@ -40,10 +41,21 @@ export class ResultView extends AbstractView {
       totalTime: this.currentGame.state.totalTime,
     };
 
-    let result = showResults(this.currentGame.state.allPlayers, currentPlayerResult);
+    let result;
 
     if (currentPlayerResult.lives !== MINIMUM_PLAYERS_LIVES && currentPlayerResult.totalTime !== MINIMUM_PLAYER_TIME) {
-      this.currentGame.addPlayerResult(currentPlayerResult);
+
+      let otherPlayersResults = [];
+
+      stat.loadResults().then(
+          () => {
+            otherPlayersResults = stat.allResults;
+            result = showResults(otherPlayersResults, currentPlayerResult);
+            stat.saveResult(currentPlayerResult);
+          }
+      );
+    } else {
+      result = showResults([], currentPlayerResult);
     }
 
     return `

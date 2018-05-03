@@ -4,9 +4,8 @@ const APP_ID = `22821421984`;
 const RESULTS_SERVER = `https://es.dump.academy/guess-melody/stats/:${APP_ID}`;
 const DATA_SERVER = `https://es.dump.academy/guess-melody/questions`;
 
-class LoadService {
+class NetworkService {
   constructor() {
-    this.allQuestions = [];
   }
 
   checkLoad(response) {
@@ -18,8 +17,33 @@ class LoadService {
     throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
   }
 
+
   showError(error) {
-    throw new Error(`Ошибка ${error}`);
+    const node = document.createElement(`canvas`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: darkred;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.width = 500;
+    node.style.fontSize = `30px`;
+
+    node.textContent = error;
+
+    document.body.insertAdjacentElement(`afterbegin`, node);
+
+    const ctx = node.getContext(`2d`);
+    ctx.fillStyle = `white`;
+    ctx.font = `16px Arial`;
+    ctx.textBaseline = `hanging`;
+
+    ctx.fillText(error, 40, 50);
+  }
+}
+
+class LoadService extends NetworkService {
+  constructor() {
+    super();
+    this.allQuestions = [];
   }
 
   formQuestions(questions) {
@@ -37,48 +61,21 @@ class LoadService {
 
 export const loader = new LoadService();
 
-class SaveService {
+class StatService extends NetworkService {
   constructor() {
-  }
-
-  showError(error) {
-    throw new Error(`Ошибка ${error}`);
+    super();
+    this.allPlayers = [];
   }
 
   saveResult(result) {
     fetch(`${RESULTS_SERVER}`, {
       method: `POST`,
-      body: JSON.stringify({
-        'lives': result.lives,
-        'totalTime': result.totalTime,
-        'totalScore': result.totalScore
-      }),
+      body: JSON.stringify(result),
       headers: {
         'Content-Type': `application/json`
       }
     }).
         catch(this.showError);
-  }
-}
-
-export const saver = new SaveService();
-
-class ResultsLoadService {
-  constructor() {
-    this.allPlayers = [];
-  }
-
-  checkLoad(response) {
-    if (response.ok) {
-      return response.json();
-    } else if (response.status === 404) {
-      return [];
-    }
-    throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-  }
-
-  showError(error) {
-    throw new Error(`Ошибка ${error}`);
   }
 
   formResults(results) {
@@ -94,4 +91,4 @@ class ResultsLoadService {
   }
 }
 
-export const resultsLoader = new ResultsLoadService();
+export const stat = new StatService();

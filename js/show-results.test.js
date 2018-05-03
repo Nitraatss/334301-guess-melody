@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {creatCurrentPlayerResult, showResults} from '../js/show-results.js';
+import {creatOtherPlayersResults, creatCurrentPlayerResult, showResults} from '../js/show-results.js';
 
 describe(`Show results test`, () => {
   let otherPlayersResults;
@@ -19,6 +19,26 @@ describe(`Show results test`, () => {
     currentPlayerResults = creatCurrentPlayerResult(9, 2, 0);
 
     assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Время вышло! Вы не успели отгадать все мелодии`);
+  });
+
+  it(`Last place`, () => {
+    otherPlayersResults = creatOtherPlayersResults(3, 25, 2, 10);
+    currentPlayerResults = creatCurrentPlayerResult(10, 2, 2);
+
+    assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 4 место из 4 игроков. Это лучше, чем у 0% игроков`);
+  });
+
+  it(`You achieved some place`, () => {
+    otherPlayersResults = creatOtherPlayersResults(5, 20, 3, 10);
+    currentPlayerResults = creatCurrentPlayerResult(17, 2, 2);
+
+    assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 3 место из 6 игроков. Это лучше, чем у 50% игроков`);
+  });
+
+  it(`You are first player of the game`, () => {
+    creatCurrentPlayerResult(29, 2, 2);
+
+    assert.equal(showResults(otherPlayersResults, currentPlayerResults), `Вы заняли 1 место из 1 игроков. Это лучше, чем у 100% игроков`);
   });
 });
 

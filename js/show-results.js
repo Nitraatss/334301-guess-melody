@@ -1,5 +1,3 @@
-import {saver} from '../js/game.js';
-
 const MINIMUM_LIVES = 3;
 const MINIMUM_TIME = 0;
 const QUESTIONS_COUNT = 10;
@@ -62,8 +60,6 @@ const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInAr
   } else {
     playerSuccess = calculatePlayerSuccess(playerPlace, totalPlayers);
   }
-
-  saver.saveResult(currentPlayerResults);
 
   return `Вы заняли ${playerPlace} место из ${totalPlayers} игроков. Это лучше, чем у ${playerSuccess}% игроков`;
 };
