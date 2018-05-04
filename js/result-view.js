@@ -51,6 +51,10 @@ export class ResultView extends AbstractView {
           () => {
             otherPlayersResults = stat.allResults;
             result = showResults(otherPlayersResults, currentPlayerResult);
+
+            const mainComparison = document.querySelector(`.main-comparison`);
+            mainComparison.innerHTML = result;
+
             stat.saveResult(currentPlayerResult);
           }
       );
@@ -96,7 +100,7 @@ export class ResultView extends AbstractView {
     return markupTitle;
   }
 
-  formResultInfoMarkup(player, resultText) {
+  formResultInfoMarkup(player, resultText = ``) {
     let fastAnswersNumber = calculateFastAnswers(player.answersResuls);
     let playerMistakes = player.lives;
     let finalTime = player.totalTime;

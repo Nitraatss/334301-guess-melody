@@ -14,29 +14,15 @@ class NetworkService {
     } else if (response.status === 404) {
       return [];
     }
-    throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+    return this.showError(response.status);
   }
 
 
   showError(error) {
-    const node = document.createElement(`canvas`);
-    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: darkred;`;
-    node.style.position = `absolute`;
-    node.style.left = 0;
-    node.style.right = 0;
-    node.width = 500;
-    node.style.fontSize = `30px`;
+    const errorMesage = document.querySelector(`.error-message`);
+    errorMesage.style = `display: block !important; position: fixed; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); z-index: 10; background-color: darkred;`;
 
-    node.textContent = error;
-
-    document.body.insertAdjacentElement(`afterbegin`, node);
-
-    const ctx = node.getContext(`2d`);
-    ctx.fillStyle = `white`;
-    ctx.font = `16px Arial`;
-    ctx.textBaseline = `hanging`;
-
-    ctx.fillText(error, 40, 50);
+    errorMesage.textContent = `Ошибка: ${error}`;
   }
 }
 
