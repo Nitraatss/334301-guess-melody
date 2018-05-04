@@ -58,8 +58,6 @@ export class ResultView extends AbstractView {
             stat.saveResult(this.currentPlayerResult);
           }
       );
-    } else {
-      result = showResults([], this.currentPlayerResult);
     }
 
     return `
@@ -67,7 +65,7 @@ export class ResultView extends AbstractView {
 
       <h2 class="title">${this.formTitleMarkup(this.currentPlayerResult)}</h2>
 
-      ${this.formResultInfoMarkup(this.currentPlayerResult, result)}
+      ${this.formResultInfoMarkup(this.currentPlayerResult)}
 
       <span role="button" tabindex="0" class="main-replay">${this.formButtonMarkup(this.currentPlayerResult)}</span>
     `;
