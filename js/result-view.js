@@ -34,7 +34,7 @@ export class ResultView extends AbstractView {
       this.currentGame.setTotalTime(0);
     }
 
-    const currentPlayerResult = {
+    this.currentPlayerResult = {
       answersResuls: this.currentGame.state.answersResuls,
       totalScore: this.currentGame.state.totalScore,
       lives: this.currentGame.state.lives,
@@ -43,33 +43,33 @@ export class ResultView extends AbstractView {
 
     let result;
 
-    if (currentPlayerResult.lives !== MINIMUM_PLAYERS_LIVES && currentPlayerResult.totalTime !== MINIMUM_PLAYER_TIME) {
+    if (this.currentPlayerResult.lives !== MINIMUM_PLAYERS_LIVES && this.currentPlayerResult.totalTime !== MINIMUM_PLAYER_TIME) {
 
       let otherPlayersResults = [];
 
       stat.loadResults().then(
           () => {
             otherPlayersResults = stat.allResults;
-            result = showResults(otherPlayersResults, currentPlayerResult);
+            result = showResults(otherPlayersResults, this.currentPlayerResult);
 
-            const mainComparison = document.querySelector(`.main-comparison`);
-            mainComparison.innerHTML = result;
+            const mainComparison = this.element.querySelector(`.main-comparison`);
+            mainComparison.textContent = result;
 
-            stat.saveResult(currentPlayerResult);
+            stat.saveResult(this.currentPlayerResult);
           }
       );
     } else {
-      result = showResults([], currentPlayerResult);
+      result = showResults([], this.currentPlayerResult);
     }
 
     return `
       <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
-      <h2 class="title">${this.formTitleMarkup(currentPlayerResult)}</h2>
+      <h2 class="title">${this.formTitleMarkup(this.currentPlayerResult)}</h2>
 
-      ${this.formResultInfoMarkup(currentPlayerResult, result)}
+      ${this.formResultInfoMarkup(this.currentPlayerResult, result)}
 
-      <span role="button" tabindex="0" class="main-replay">${this.formButtonMarkup(currentPlayerResult)}</span>
+      <span role="button" tabindex="0" class="main-replay">${this.formButtonMarkup(this.currentPlayerResult)}</span>
     `;
   }
 
@@ -100,7 +100,7 @@ export class ResultView extends AbstractView {
     return markupTitle;
   }
 
-  formResultInfoMarkup(player, resultText = ``) {
+  formResultInfoMarkup(player) {
     let fastAnswersNumber = calculateFastAnswers(player.answersResuls);
     let playerMistakes = player.lives;
     let finalTime = player.totalTime;
@@ -112,11 +112,11 @@ export class ResultView extends AbstractView {
           <br>вы&nbsp;набрали ${player.totalScore} баллов (${fastAnswersNumber} быстрых)
           <br>совершив ${playerMistakes} ошибки
         </div>
-        <span class="main-comparison">${resultText}</span>
+        <span class="main-comparison"></span>
       `;
 
     if (playerMistakes >= 3 || finalTime === 0) {
-      markupInfoResult = `<div class="main-stat">${resultText}</div>`;
+      markupInfoResult = `<div class="main-stat">${showResults([], this.currentPlayerResult)}</div>`;
     }
 
     return markupInfoResult;

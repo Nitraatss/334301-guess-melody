@@ -20,7 +20,7 @@ class NetworkService {
 
   showError(error) {
     const errorMesage = document.querySelector(`.error-message`);
-    errorMesage.style = `display: block !important; position: fixed; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); z-index: 10; background-color: darkred;`;
+    errorMesage.style = `display: block;`;
 
     errorMesage.textContent = `Ошибка: ${error}`;
   }

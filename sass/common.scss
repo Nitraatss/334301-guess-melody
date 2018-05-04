@@ -69,4 +69,14 @@ body {
   color: #f00;
 }
 
+.error-message {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 10;
+  background-color: darkred;
+}
+
 @import "player/player";
