@@ -2,7 +2,6 @@ const MINIMUM_TIME = 0;
 
 class Timer {
   constructor() {
-    this.timerValue = ``;
   }
 
   getTimerMinutes() {

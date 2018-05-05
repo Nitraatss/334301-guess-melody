@@ -59,9 +59,9 @@ export default class GamePage {
       this.stopTicking();
       Application.showResult();
     } else {
-      timer.changeColor();
       timer.updateTimerMinutes();
       timer.updateTimerSeconds();
+      timer.changeColor();
     }
   }
 
