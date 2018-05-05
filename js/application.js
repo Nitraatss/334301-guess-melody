@@ -4,7 +4,7 @@ import ArtistPage from '../js/game-page-artist.js';
 import ResultPage from '../js/game-page-result.js';
 import {showPage} from '../js/show-page.js';
 import {currentGame} from '../js/game-model.js';
-import {loader} from '../js/game.js';
+import {loader} from '../js/network-service';
 
 export default class Application {
   static showWelcome() {

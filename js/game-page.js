@@ -1,6 +1,6 @@
 import Application from '../js/application.js';
 import {timer} from '../js/timer.js';
-import {MINIMUM_PLAYERS_LIVES} from '../js/game.js';
+import {MINIMUM_PLAYERS_LIVES} from '../js/game-model.js';
 
 const FIRST_ROUND_INDEX = 2;
 const LAST_INDEX = 11;

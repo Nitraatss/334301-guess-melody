@@ -1,3 +1,5 @@
+export const MINIMUM_PLAYERS_LIVES = 3;
+export const MINIMUM_PLAYER_TIME = 0;
 const STARTING_INDEX = 1;
 const TIME_LIMIT = 300;
 
