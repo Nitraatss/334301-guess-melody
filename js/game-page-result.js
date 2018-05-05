@@ -4,11 +4,11 @@ import ResultView from '../js/result-view.js';
 export default class ResultPage extends GamePage {
   constructor(model) {
     super(model);
-    this._init();
+    this.init();
   }
 
-  _init() {
-    this._stopTicking();
+  init() {
+    this.stopTicking();
 
     this.page = new ResultView(this.model);
 
@@ -16,8 +16,8 @@ export default class ResultPage extends GamePage {
   }
 
   onMainReplayClickTry() {
-    this._initGame();
+    this.initGame();
 
-    this._showRandomPage();
+    this.showRandomPage();
   }
 }

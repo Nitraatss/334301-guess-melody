@@ -7,10 +7,10 @@ import {setAnswerResults} from '../js/calculate-score.js';
 export default class ArtistPage extends GamePage {
   constructor(model) {
     super(model);
-    this._init();
+    this.init();
   }
 
-  _init() {
+  init() {
     this.page = new LevelArtistView(this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
@@ -54,7 +54,7 @@ export default class ArtistPage extends GamePage {
     this.page.checkAnswer(currentAnswer, correctAnswer.title, timer.time);
 
     this.page.removeEventListeners(mainAnswers, playerControl);
-    this._showRandomPage();
+    this.showRandomPage();
   }
 
   removeEventListeners(mainAnswers, playerControl) {

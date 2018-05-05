@@ -7,10 +7,10 @@ import {setAnswerResults} from '../js/calculate-score.js';
 export default class GenrePage extends GamePage {
   constructor(model) {
     super(model);
-    this._init();
+    this.init();
   }
 
-  _init() {
+  init() {
     this.page = new LevelGenreView(this.model);
 
     this.page.checkAnswer = this.checkAnswer.bind(this);
@@ -64,7 +64,7 @@ export default class GenrePage extends GamePage {
     }
 
     this.page.removeEventListeners(genreAnswerSend, genreInputs);
-    this._showRandomPage();
+    this.showRandomPage();
   }
 
   removeEventListeners(genreAnswerSend, genreInputs) {

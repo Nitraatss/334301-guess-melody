@@ -4,11 +4,11 @@ import WelcomeView from '../js/welcome-view.js';
 export default class WelcomePage extends GamePage {
   constructor(model) {
     super(model);
-    this._init();
+    this.init();
   }
 
-  _init() {
-    this._initGame();
+  init() {
+    this.initGame();
 
     this.page = new WelcomeView();
 
@@ -16,6 +16,6 @@ export default class WelcomePage extends GamePage {
   }
 
   onMainPlayClick() {
-    this._showRandomPage();
+    this.showRandomPage();
   }
 }
