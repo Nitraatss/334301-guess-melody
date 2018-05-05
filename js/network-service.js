@@ -8,7 +8,7 @@ class NetworkService {
     this.allPlayers = [];
   }
 
-  checkLoad(response) {
+  _checkLoad(response) {
     if (response.ok) {
       return response.json();
     } else if (response.status === 404) {
@@ -18,14 +18,14 @@ class NetworkService {
   }
 
 
-  showError(error) {
+  _showError(error) {
     const errorMesage = document.querySelector(`.error-message`);
     errorMesage.style = `display: block;`;
 
     errorMesage.textContent = `Ошибка: ${error}`;
   }
 
-  saveResult(result) {
+  _saveResult(result) {
     fetch(`${RESULTS_SERVER}`, {
       method: `POST`,
       body: JSON.stringify(result),
@@ -36,24 +36,24 @@ class NetworkService {
         catch(this.showError);
   }
 
-  formResults(results) {
+  _formResults(results) {
     this.allPlayers = results;
   }
 
   loadResults() {
-    return fetch(RESULTS_SERVER).then(this.checkLoad).then(this.formResults.bind(this)).catch(this.showError);
+    return fetch(RESULTS_SERVER).then(this._checkLoad).then(this._formResults.bind(this)).catch(this._showError);
   }
 
   get allResults() {
     return this.allPlayers;
   }
 
-  formQuestions(questions) {
+  _formQuestions(questions) {
     this.allQuestions = questions;
   }
 
   loadQuestions() {
-    return fetch(DATA_SERVER).then(this.checkLoad).then(this.formQuestions.bind(this)).catch(this.showError);
+    return fetch(DATA_SERVER).then(this._checkLoad).then(this._formQuestions.bind(this)).catch(this._showError);
   }
 
   get questions() {

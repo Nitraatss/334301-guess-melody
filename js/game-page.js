@@ -11,16 +11,16 @@ export default class GamePage {
     this.model = model;
   }
 
-  init() {
+  _init() {
   }
 
-  initGame() {
+  _initGame() {
     this.model.setInitialParams();
 
     timer.timeLimit = this.model.state.timeLimit;
   }
 
-  showRandomPage() {
+  _showRandomPage() {
     if (this.model.state.lives === MINIMUM_PLAYERS_LIVES) {
       Application.showResult();
     } else if (this.model.state.round < LAST_INDEX) {
@@ -44,17 +44,17 @@ export default class GamePage {
     }
   }
 
-  startTicking() {
+  _startTicking() {
     this.checkTime();
 
     interval = setInterval(this.checkTime.bind(this), 1000);
   }
 
-  stopTicking() {
+  _stopTicking() {
     clearInterval(interval);
   }
 
-  checkTime() {
+  _checkTime() {
     if (timer.tick() <= 0) {
       this.stopTicking();
       this.model.state.answersResults = [];
@@ -65,11 +65,6 @@ export default class GamePage {
       timer.updateTimerSeconds();
       timer.changeColor();
     }
-  }
-
-  nextLevelQuestion(index) {
-    this.model.state.currentQuestion = this.model.state.questions[index];
-    this.model.state.questions.splice(index, 1);
   }
 
   get element() {

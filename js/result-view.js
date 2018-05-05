@@ -71,11 +71,11 @@ export default class ResultView extends AbstractView {
     `;
   }
 
-  render() {
+  _render() {
     this._element = creatDOMElement(this.template, className);
   }
 
-  bind() {
+  _bind() {
     const mainReplayTry = this._element.querySelector(`.main-replay`);
 
     mainReplayTry.addEventListener(`click`, () => {

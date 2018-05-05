@@ -51,11 +51,11 @@ export default class LevelArtistView extends AbstractView {
     `;
   }
 
-  render() {
+  _render() {
     this._element = creatDOMElement(this.template, className);
   }
 
-  bind() {
+  _bind() {
     const mainAnswers = this._element.querySelectorAll(`.main-answer-r`);
     const playerControl = this._element.querySelector(`.player-control`);
     const audio = this._element.querySelector(`audio`);

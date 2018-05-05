@@ -21,11 +21,11 @@ export default class WelcomeView extends AbstractView {
     `;
   }
 
-  render() {
+  _render() {
     this._element = creatDOMElement(this.template, className);
   }
 
-  bind() {
+  _bind() {
     const mainPlay = this._element.querySelector(`.main-play`);
 
 

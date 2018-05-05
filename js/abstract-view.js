@@ -8,17 +8,17 @@ export default class AbstractView {
 
   get element() {
     if (!this._element) {
-      this.render();
+      this._render();
 
-      this.bind();
+      this._bind();
     }
 
     return this._element;
   }
 
-  render() {
+  _render() {
   }
 
-  bind() {
+  _bind() {
   }
 }

@@ -48,11 +48,11 @@ export default class LevelGenreView extends AbstractView {
     `;
   }
 
-  render() {
+  _render() {
     this._element = creatDOMElement(this.template, className);
   }
 
-  bind() {
+  _bind() {
     const genreAnswerSend = this._element.querySelector(`.genre-answer-send`);
     const genreInputs = this._element.querySelectorAll(`input`);
     const allAudioPlayers = this._element.querySelectorAll(`audio`);
@@ -69,7 +69,8 @@ export default class LevelGenreView extends AbstractView {
 
     genreAnswerSend.disabled = true;
 
-    genreAnswerSend.addEventListener(`click`, () => {
+    genreAnswerSend.addEventListener(`click`, (evt) => {
+      evt.preventDefault();
       this.onGenreAnswerSendClick(genreInputs, genreAnswerSend);
     });
 

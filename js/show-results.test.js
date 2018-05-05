@@ -1,5 +1,6 @@
 import {assert} from 'chai';
-import {creatOtherPlayersResults, creatCurrentPlayerResult, showResults} from '../js/show-results.js';
+import {showResults} from '../js/show-results.js';
+import {creatOtherPlayersResults, creatCurrentPlayerResult} from '../js/test-utils.js';
 
 describe(`Show results test`, () => {
   let otherPlayersResults;
