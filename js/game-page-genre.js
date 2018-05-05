@@ -60,7 +60,7 @@ export default class GenrePage extends GamePage {
     if (timer.time <= 0) {
       this.model.state.timeLimit = timer.time;
       Application.showResult();
-    } if (!this.page.checkAnswer(genreInputs, this.model.state.curentQuestion.genre, timer.time)) {
+    } if (!this.page.checkAnswer(genreInputs, this.model.state.currentQuestion.genre, timer.time)) {
       this.model.addAnswerResults(setAnswerResults(false, answerTime));
       this.model.decreaseLives();
       this.model.state.timeLimit = timer.time;

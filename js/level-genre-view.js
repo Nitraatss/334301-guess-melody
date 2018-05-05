@@ -15,7 +15,7 @@ export default class LevelGenreView extends AbstractView {
   get template() {
     let answerID = 0;
 
-    let answersMakup = this.currentGame.state.curentQuestion.answers.map((item) => {
+    let answersMakup = this.currentGame.state.currentQuestion.answers.map((item) => {
       answerID++;
       return `
         <div class="genre-answer">
@@ -38,7 +38,7 @@ export default class LevelGenreView extends AbstractView {
       ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
-        <h2 class="title">${this.currentGame.state.curentQuestion.question}</h2>
+        <h2 class="title">${this.currentGame.state.currentQuestion.question}</h2>
         <form class="genre">
           ${answersMakup}
 

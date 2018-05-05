@@ -13,10 +13,10 @@ export default class LevelArtistView extends AbstractView {
   }
 
   get template() {
-    let songLocation = this.currentGame.state.curentQuestion.src;
+    let songLocation = this.currentGame.state.currentQuestion.src;
     let answerID = 0;
 
-    let answersMakup = this.currentGame.state.curentQuestion.answers.map((item) => {
+    let answersMakup = this.currentGame.state.currentQuestion.answers.map((item) => {
       answerID++;
 
       return `

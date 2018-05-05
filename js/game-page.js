@@ -24,13 +24,13 @@ export default class GamePage {
     if (this.model.state.lives === MINIMUM_PLAYERS_LIVES) {
       Application.showResult();
     } else if (this.model.state.round < LAST_INDEX) {
-      const curentQuestionIndex = this.model.state.round - 1;
+      const currentQuestionIndex = this.model.state.round - 1;
 
       this.model.nextRound();
 
-      this.model.state.curentQuestion = this.model.state.questions[curentQuestionIndex];
+      this.model.state.currentQuestion = this.model.state.questions[currentQuestionIndex];
 
-      if (this.model.state.curentQuestion.type === `artist`) {
+      if (this.model.state.currentQuestion.type === `artist`) {
         Application.showLevelArtist();
       } else {
         Application.showLevelGenre();
@@ -66,7 +66,7 @@ export default class GamePage {
   }
 
   nextLevelQuestion(index) {
-    this.model.state.curentQuestion = this.model.state.questions[index];
+    this.model.state.currentQuestion = this.model.state.questions[index];
     this.model.state.questions.splice(index, 1);
   }
 
