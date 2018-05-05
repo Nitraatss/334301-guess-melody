@@ -1,5 +1,5 @@
 import {creatDOMElement} from "../js/create-dom-element.js";
-import {AbstractView} from '../js/abstract-view.js';
+import AbstractView from '../js/abstract-view.js';
 import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
 import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game.js';
@@ -19,7 +19,7 @@ const buttonOptions = {
   looser: `Попробовать ещё раз`
 };
 
-export class ResultView extends AbstractView {
+export default class ResultView extends AbstractView {
   constructor(currentGame) {
     super();
     this.currentGame = currentGame;

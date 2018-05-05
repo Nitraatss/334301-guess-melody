@@ -1,4 +1,4 @@
-import {AbstractView} from '../js/abstract-view.js';
+import AbstractView from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {timer} from '../js/timer.js';
 import {mistakes} from '../js/mistakes.js';
@@ -6,7 +6,7 @@ import {formHeaderMarkup} from '../js/form-header-markup.js';
 
 const className = `main main--level main--level-artist`;
 
-export class LevelArtistView extends AbstractView {
+export default class LevelArtistView extends AbstractView {
   constructor(currentGame) {
     super();
     this.currentGame = currentGame;

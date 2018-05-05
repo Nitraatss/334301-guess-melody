@@ -1,7 +1,7 @@
-import {GamePage} from '../js/game-page';
-import {WelcomeView} from '../js/welcome-view.js';
+import GamePage from '../js/game-page';
+import WelcomeView from '../js/welcome-view.js';
 
-export class WelcomePage extends GamePage {
+export default class WelcomePage extends GamePage {
   constructor(model) {
     super(model);
     this.init();

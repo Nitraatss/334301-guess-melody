@@ -1,10 +1,10 @@
-import {GamePage} from '../js/game-page';
-import {timer} from '../js/timer.js';
-import {LevelGenreView} from '../js/level-genre-view.js';
+import GamePage from '../js/game-page';
+import LevelGenreView from '../js/level-genre-view.js';
 import Application from '../js/application.js';
+import {timer} from '../js/timer.js';
 import {setAnswerResults} from '../js/calculate-score.js';
 
-export class GenrePage extends GamePage {
+export default class GenrePage extends GamePage {
   constructor(model) {
     super(model);
     this.init();
