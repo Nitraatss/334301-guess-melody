@@ -1,7 +1,7 @@
 import AbstractView from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {timer} from '../js/timer.js';
-import {mistakes} from '../js/mistakes.js';
+import {showMistakes} from '../js/show-mistakes.js';
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 
 const className = `main main--level main--level-artist`;
@@ -13,7 +13,7 @@ export default class LevelArtistView extends AbstractView {
   }
 
   get template() {
-    let songLocation = this.currentGame.state.currentQuestion.src;
+    const songLocation = this.currentGame.state.currentQuestion.src;
     let answerID = 0;
 
     let answersMakup = this.currentGame.state.currentQuestion.answers.map((item) => {
@@ -32,7 +32,7 @@ export default class LevelArtistView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), showMistakes(this.currentGame.state.lives))}
       <div class="main-wrap">
         <h2 class="title main-title">Кто исполняет эту песню?</h2>
         <div class="player-wrapper">

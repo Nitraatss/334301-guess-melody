@@ -47,7 +47,7 @@ const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInAr
   let totalPlayers;
   let playerPlace;
   let playerSuccess;
-  let playersResults = resultsArray.slice();
+  const playersResults = resultsArray.slice();
 
   playersResults.push(currentPlayerResults);
   playersResults.sort(comparePlayersScore);
@@ -66,8 +66,8 @@ const showWinnerPlayerResult = (resultsArray, currentPlayerResults, positionInAr
 
 export const showResults = (otherPlayersResults, currentPlayerResults) => {
   let index = -1;
-  let playersResults = otherPlayersResults.slice();
-  let playersNumber = playersResults.length;
+  const playersResults = otherPlayersResults.slice();
+  const playersNumber = playersResults.length;
 
   if (currentPlayerResults.lives === MINIMUM_LIVES) {
     return `У вас закончились все попытки. Ничего, повезёт в следующий раз!`;

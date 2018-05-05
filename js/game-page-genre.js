@@ -35,21 +35,15 @@ export default class GenrePage extends GamePage {
       }
     });
 
-    if (correctAnswerCounter === checkedInputsCounter && time > 0) {
-      inputs.forEach((element) => {
-        if (element.checked && element.value === correctAnswer) {
-          answerResult = true;
-        } else if (element.checked && element.value !== correctAnswer) {
-          answerResult = false;
-        }
-      });
+    if (correctAnswerCounter !== checkedInputsCounter && time > 0) {
+      answerResult = false;
     }
 
     return answerResult;
   }
 
   onGenreInputsChange(genreInputs, genreAnswerSend) {
-    let check = [...genreInputs].some((item) => item.checked === true);
+    const check = [...genreInputs].some((item) => item.checked === true);
 
     genreAnswerSend.disabled = !check;
   }

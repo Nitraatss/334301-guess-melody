@@ -2,7 +2,7 @@ import AbstractView from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {timer} from '../js/timer.js';
-import {mistakes} from '../js/mistakes.js';
+import {showMistakes} from '../js/show-mistakes.js';
 
 let className = `main main--level main--level-genre`;
 
@@ -15,7 +15,7 @@ export default class LevelGenreView extends AbstractView {
   get template() {
     let answerID = 0;
 
-    let answersMakup = this.currentGame.state.currentQuestion.answers.map((item) => {
+    const answersMakup = this.currentGame.state.currentQuestion.answers.map((item) => {
       answerID++;
       return `
         <div class="genre-answer">
@@ -35,7 +35,7 @@ export default class LevelGenreView extends AbstractView {
     }).join(` `);
 
     return `
-      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), mistakes(this.currentGame.state.lives))}
+      ${formHeaderMarkup(timer.formMarkup(this.currentGame.state.timeLimit), showMistakes(this.currentGame.state.lives))}
 
       <div class="main-wrap">
         <h2 class="title">${this.currentGame.state.currentQuestion.question}</h2>

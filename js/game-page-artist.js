@@ -45,10 +45,9 @@ export default class ArtistPage extends GamePage {
   }
 
   onMainAnswerClick(evt, mainAnswers, playerControl) {
-    let currentAnswer = evt.target.value;
-    let correctAnswer;
+    const currentAnswer = evt.target.value;
 
-    correctAnswer = this.model.state.currentQuestion.answers.find((element) => {
+    const correctAnswer = this.model.state.currentQuestion.answers.find((element) => {
       return element.isCorrect;
     });
 

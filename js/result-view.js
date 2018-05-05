@@ -2,7 +2,7 @@ import {creatDOMElement} from "../js/create-dom-element.js";
 import AbstractView from '../js/abstract-view.js';
 import {calculateScore, calculateTime} from '../js/calculate-score.js';
 import {showResults} from '../js/show-results.js';
-import {stat} from '../js/network-service';
+import {network} from '../js/network-service';
 import {calculateFastAnswers} from '../js/calculate-score.js';
 import {MINIMUM_PLAYERS_LIVES, MINIMUM_PLAYER_TIME} from '../js/game-model.js';
 
@@ -26,16 +26,16 @@ export default class ResultView extends AbstractView {
   }
 
   get template() {
-    if (this.currentGame.state.answersResuls) {
-      this.currentGame.setTotalScore(calculateScore(this.currentGame.state.answersResuls));
-      this.currentGame.setTotalTime(calculateTime(this.currentGame.state.answersResuls));
+    if (this.currentGame.state.answersResults.length > 0) {
+      this.currentGame.setTotalScore(calculateScore(this.currentGame.state.answersResults));
+      this.currentGame.setTotalTime(calculateTime(this.currentGame.state.answersResults));
     } else {
       this.currentGame.setTotalScore(0);
       this.currentGame.setTotalTime(0);
     }
 
     this.currentPlayerResult = {
-      answersResuls: this.currentGame.state.answersResuls,
+      answersResults: this.currentGame.state.answersResults,
       totalScore: this.currentGame.state.totalScore,
       lives: this.currentGame.state.lives,
       totalTime: this.currentGame.state.totalTime,
@@ -47,15 +47,15 @@ export default class ResultView extends AbstractView {
 
       let otherPlayersResults = [];
 
-      stat.loadResults().then(
+      network.loadResults().then(
           () => {
-            otherPlayersResults = stat.allResults;
+            otherPlayersResults = network.allResults;
             result = showResults(otherPlayersResults, this.currentPlayerResult);
 
             const mainComparison = this.element.querySelector(`.main-comparison`);
             mainComparison.textContent = result;
 
-            stat.saveResult(this.currentPlayerResult);
+            network.saveResult(this.currentPlayerResult);
           }
       );
     }
@@ -99,11 +99,11 @@ export default class ResultView extends AbstractView {
   }
 
   formResultInfoMarkup(player) {
-    let fastAnswersNumber = calculateFastAnswers(player.answersResuls);
-    let playerMistakes = player.lives;
-    let finalTime = player.totalTime;
-    let finalTimeMinutes = Math.floor(finalTime / 60);
-    let finalTimeSeconds = finalTime - Math.floor(finalTime / 60) * 60;
+    const fastAnswersNumber = calculateFastAnswers(player.answersResults);
+    const playerMistakes = player.lives;
+    const finalTime = player.totalTime;
+    const finalTimeMinutes = Math.floor(finalTime / 60);
+    const finalTimeSeconds = finalTime - Math.floor(finalTime / 60) * 60;
 
     let markupInfoResult = `
         <div class="main-stat">За&nbsp;${finalTimeMinutes}&nbsp;минуты и ${finalTimeSeconds}&nbsp;секунд

@@ -4,6 +4,8 @@ const DATA_SERVER = `https://es.dump.academy/guess-melody/questions`;
 
 class NetworkService {
   constructor() {
+    this.allQuestions = [];
+    this.allPlayers = [];
   }
 
   checkLoad(response) {
@@ -21,34 +23,6 @@ class NetworkService {
     errorMesage.style = `display: block;`;
 
     errorMesage.textContent = `Ошибка: ${error}`;
-  }
-}
-
-class LoadService extends NetworkService {
-  constructor() {
-    super();
-    this.allQuestions = [];
-  }
-
-  formQuestions(questions) {
-    this.allQuestions = questions;
-  }
-
-  loadQuestions() {
-    return fetch(DATA_SERVER).then(this.checkLoad).then(this.formQuestions.bind(this)).catch(this.showError);
-  }
-
-  get questions() {
-    return this.allQuestions;
-  }
-}
-
-export const loader = new LoadService();
-
-class StatService extends NetworkService {
-  constructor() {
-    super();
-    this.allPlayers = [];
   }
 
   saveResult(result) {
@@ -73,6 +47,19 @@ class StatService extends NetworkService {
   get allResults() {
     return this.allPlayers;
   }
+
+  formQuestions(questions) {
+    this.allQuestions = questions;
+  }
+
+  loadQuestions() {
+    return fetch(DATA_SERVER).then(this.checkLoad).then(this.formQuestions.bind(this)).catch(this.showError);
+  }
+
+  get questions() {
+    return this.allQuestions;
+  }
 }
 
-export const stat = new StatService();
+export const network = new NetworkService();
+

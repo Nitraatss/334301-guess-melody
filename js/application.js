@@ -4,15 +4,15 @@ import ArtistPage from '../js/game-page-artist.js';
 import ResultPage from '../js/game-page-result.js';
 import {showPage} from '../js/show-page.js';
 import {currentGame} from '../js/game-model.js';
-import {loader} from '../js/network-service';
+import {network} from '../js/network-service';
 
 export default class Application {
   static showWelcome() {
-    loader.loadQuestions().then(
+    network.loadQuestions().then(
         () => {
           currentGame.setInitialParams();
           const gamePage = new WelcomePage(currentGame);
-          currentGame.state.questions = loader.questions;
+          currentGame.state.questions = network.questions;
           showPage(gamePage.element);
         }
     );

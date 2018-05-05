@@ -1,4 +1,4 @@
-export const mistakes = (mistakesNumber) => {
+export const showMistakes = (mistakesNumber) => {
   return `
     <div class="main-mistakes">
     ${new Array(mistakesNumber)

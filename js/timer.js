@@ -5,7 +5,7 @@ class Timer {
   }
 
   getTimerMinutes() {
-    let minutes = Math.floor(this.time / 60);
+    const minutes = Math.floor(this.time / 60);
 
     if (minutes > 0) {
       return `${minutes}`;
@@ -15,7 +15,7 @@ class Timer {
   }
 
   getTimerSeconds() {
-    let seconds = this.time - Math.floor(this.time / 60) * 60;
+    const seconds = this.time - Math.floor(this.time / 60) * 60;
 
     if (seconds < 10) {
       return `0${seconds}`;
@@ -26,8 +26,8 @@ class Timer {
 
   updateTimerMinutes() {
     this.timerValue = document.querySelector(`.timer-value`);
-    let timerValueMins = this.timerValue.querySelector(`.timer-value-mins`);
-    let upMinutes = Math.floor(this.time / 60);
+    const timerValueMins = this.timerValue.querySelector(`.timer-value-mins`);
+    const upMinutes = Math.floor(this.time / 60);
 
     if (upMinutes > 0) {
       timerValueMins.textContent = `${upMinutes}`;
@@ -48,8 +48,8 @@ class Timer {
 
   updateTimerSeconds() {
     this.timerValue = document.querySelector(`.timer-value`);
-    let timerValueSecs = this.timerValue.querySelector(`.timer-value-secs`);
-    let upSeconds = this.time - Math.floor(this.time / 60) * 60;
+    const timerValueSecs = this.timerValue.querySelector(`.timer-value-secs`);
+    const upSeconds = this.time - Math.floor(this.time / 60) * 60;
 
     if (upSeconds < 10) {
       timerValueSecs.textContent = `0${upSeconds}`;
@@ -61,8 +61,8 @@ class Timer {
   formMarkup(time) {
     this.time = time;
 
-    let timerMinutes = this.getTimerMinutes();
-    let timerSeconds = this.getTimerSeconds();
+    const timerMinutes = this.getTimerMinutes();
+    const timerSeconds = this.getTimerSeconds();
 
     return `
       <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">

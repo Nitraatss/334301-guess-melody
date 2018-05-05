@@ -1,7 +1,10 @@
 const QUICK_ANSWER_TIME_LIMIT = 30;
-const FAST_ANSWER_SCORE = 2;
-const RIGHT_ANSWER_SCORE = 1;
-const INCORRECT_ANSWER_SCORE = -2;
+
+const ANSWERS_SCORE = {
+  FAST: 2,
+  CORRECT: 1,
+  INCORRECT: -2
+};
 
 export const setAnswerResults = (answerResult, timeSpend) => ({
   correct: answerResult,
@@ -10,12 +13,12 @@ export const setAnswerResults = (answerResult, timeSpend) => ({
 
 const countAnswerScore = (playerAnswer) => {
   if (playerAnswer.correct && playerAnswer.time < QUICK_ANSWER_TIME_LIMIT) {
-    return FAST_ANSWER_SCORE;
+    return ANSWERS_SCORE.FAST;
   } else if (playerAnswer.correct) {
-    return RIGHT_ANSWER_SCORE;
+    return ANSWERS_SCORE.CORRECT;
   }
 
-  return INCORRECT_ANSWER_SCORE;
+  return ANSWERS_SCORE.INCORRECT;
 };
 
 export const calculateScore = (playerAnswers) => {

@@ -57,6 +57,8 @@ export default class GamePage {
   checkTime() {
     if (timer.tick() <= 0) {
       this.stopTicking();
+      this.model.state.answersResults = [];
+      this.model.state.totalTime = 0;
       Application.showResult();
     } else {
       timer.updateTimerMinutes();

@@ -1,12 +1,12 @@
 export const MINIMUM_PLAYERS_LIVES = 3;
 export const MINIMUM_PLAYER_TIME = 0;
 const STARTING_INDEX = 1;
-const TIME_LIMIT = 300;
+const TIME_LIMIT = 5;
 
 class GameModel {
   constructor() {
     this.state = {
-      answersResuls: [],
+      answersResults: [],
       totalScore: 0,
       lives: 0,
       totalTime: 0,
@@ -21,7 +21,7 @@ class GameModel {
   }
 
   addAnswerResults(newAnswer) {
-    this.state.answersResuls.push(newAnswer);
+    this.state.answersResults.push(newAnswer);
   }
 
   addPlayerResult(newPlayer) {
@@ -45,7 +45,7 @@ class GameModel {
   }
 
   setInitialParams() {
-    this.state.answersResuls = [];
+    this.state.answersResults = [];
     this.state.totalScore = 0;
     this.state.lives = 0;
     this.state.totalTime = 0;
