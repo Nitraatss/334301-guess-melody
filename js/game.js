@@ -1,11 +1,11 @@
 export const MINIMUM_PLAYERS_LIVES = 3;
 export const MINIMUM_PLAYER_TIME = 0;
-
+const APP_ID = `22821421984`;
+const RESULTS_SERVER = `https://es.dump.academy/guess-melody/stats/:${APP_ID}`;
 const DATA_SERVER = `https://es.dump.academy/guess-melody/questions`;
 
-class LoadService {
+class NetworkService {
   constructor() {
-    this.allQuestions = [];
   }
 
   checkLoad(response) {
@@ -14,11 +14,22 @@ class LoadService {
     } else if (response.status === 404) {
       return [];
     }
-    throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+    return this.showError(response.status);
   }
 
+
   showError(error) {
-    throw new Error(`Ошибка ${error}`);
+    const errorMesage = document.querySelector(`.error-message`);
+    errorMesage.style = `display: block;`;
+
+    errorMesage.textContent = `Ошибка: ${error}`;
+  }
+}
+
+class LoadService extends NetworkService {
+  constructor() {
+    super();
+    this.allQuestions = [];
   }
 
   formQuestions(questions) {
@@ -35,3 +46,35 @@ class LoadService {
 }
 
 export const loader = new LoadService();
+
+class StatService extends NetworkService {
+  constructor() {
+    super();
+    this.allPlayers = [];
+  }
+
+  saveResult(result) {
+    fetch(`${RESULTS_SERVER}`, {
+      method: `POST`,
+      body: JSON.stringify(result),
+      headers: {
+        'Content-Type': `application/json`
+      }
+    }).
+        catch(this.showError);
+  }
+
+  formResults(results) {
+    this.allPlayers = results;
+  }
+
+  loadResults() {
+    return fetch(RESULTS_SERVER).then(this.checkLoad).then(this.formResults.bind(this)).catch(this.showError);
+  }
+
+  get allResults() {
+    return this.allPlayers;
+  }
+}
+
+export const stat = new StatService();

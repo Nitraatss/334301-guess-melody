@@ -8,7 +8,6 @@ class GameModel {
       totalScore: 0,
       lives: 0,
       totalTime: 0,
-      allPlayers: [],
       round: STARTING_INDEX,
       timeLimit: TIME_LIMIT,
       questions: []
