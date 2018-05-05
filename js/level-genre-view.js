@@ -1,4 +1,4 @@
-import {AbstractView} from '../js/abstract-view.js';
+import AbstractView from '../js/abstract-view.js';
 import {creatDOMElement} from "../js/create-dom-element.js";
 import {formHeaderMarkup} from '../js/form-header-markup.js';
 import {timer} from '../js/timer.js';
@@ -6,7 +6,7 @@ import {mistakes} from '../js/mistakes.js';
 
 let className = `main main--level main--level-genre`;
 
-export class LevelGenreView extends AbstractView {
+export default class LevelGenreView extends AbstractView {
   constructor(currentGame) {
     super();
     this.currentGame = currentGame;

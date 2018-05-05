@@ -1,12 +1,12 @@
-import {timer} from '../js/timer.js';
-import {MINIMUM_PLAYERS_LIVES} from '../js/game.js';
 import Application from '../js/application.js';
+import {timer} from '../js/timer.js';
+import {MINIMUM_PLAYERS_LIVES} from '../js/game-model.js';
 
 const FIRST_ROUND_INDEX = 2;
 const LAST_INDEX = 11;
 let interval;
 
-export class GamePage {
+export default class GamePage {
   constructor(model) {
     this.model = model;
   }
@@ -61,6 +61,7 @@ export class GamePage {
     } else {
       timer.updateTimerMinutes();
       timer.updateTimerSeconds();
+      timer.changeColor();
     }
   }
 

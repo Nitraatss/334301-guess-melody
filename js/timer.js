@@ -2,7 +2,6 @@ const MINIMUM_TIME = 0;
 
 class Timer {
   constructor() {
-    this.interval = 0;
   }
 
   getTimerMinutes() {
@@ -26,8 +25,8 @@ class Timer {
   }
 
   updateTimerMinutes() {
-    let timerValue = document.querySelector(`.timer-value`);
-    let timerValueMins = timerValue.querySelector(`.timer-value-mins`);
+    this.timerValue = document.querySelector(`.timer-value`);
+    let timerValueMins = this.timerValue.querySelector(`.timer-value-mins`);
     let upMinutes = Math.floor(this.time / 60);
 
     if (upMinutes > 0) {
@@ -37,9 +36,19 @@ class Timer {
     }
   }
 
+  changeColor() {
+    if (this.time <= 30) {
+      if (this.time % 2 === 0) {
+        this.timerValue.style = `color: red;`;
+      } else {
+        this.timerValue.style = `color: #ff9749;`;
+      }
+    }
+  }
+
   updateTimerSeconds() {
-    let timerValue = document.querySelector(`.timer-value`);
-    let timerValueSecs = timerValue.querySelector(`.timer-value-secs`);
+    this.timerValue = document.querySelector(`.timer-value`);
+    let timerValueSecs = this.timerValue.querySelector(`.timer-value-secs`);
     let upSeconds = this.time - Math.floor(this.time / 60) * 60;
 
     if (upSeconds < 10) {

@@ -1,5 +1,3 @@
-export const MINIMUM_PLAYERS_LIVES = 3;
-export const MINIMUM_PLAYER_TIME = 0;
 const APP_ID = `22821421984`;
 const RESULTS_SERVER = `https://es.dump.academy/guess-melody/stats/:${APP_ID}`;
 const DATA_SERVER = `https://es.dump.academy/guess-melody/questions`;

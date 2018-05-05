@@ -1,10 +1,10 @@
-import {GamePage} from '../js/game-page';
-import {timer} from '../js/timer.js';
+import GamePage from '../js/game-page';
 import Application from '../js/application.js';
+import LevelArtistView from '../js/level-artist-view.js';
+import {timer} from '../js/timer.js';
 import {setAnswerResults} from '../js/calculate-score.js';
-import {LevelArtistView} from '../js/level-artist-view.js';
 
-export class ArtistPage extends GamePage {
+export default class ArtistPage extends GamePage {
   constructor(model) {
     super(model);
     this.init();

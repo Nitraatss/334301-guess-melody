@@ -1,3 +1,5 @@
+export const MINIMUM_PLAYERS_LIVES = 3;
+export const MINIMUM_PLAYER_TIME = 0;
 const STARTING_INDEX = 1;
 const TIME_LIMIT = 300;
 
@@ -49,7 +51,6 @@ class GameModel {
     this.state.totalTime = 0;
     this.state.timeLimit = TIME_LIMIT;
     this.state.round = STARTING_INDEX;
-    this.state.questions = [];
   }
 }
 
