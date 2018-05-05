@@ -1,5 +1,4 @@
 import GamePage from '../js/game-page';
-import Application from '../js/application.js';
 import ResultView from '../js/result-view.js';
 
 export default class ResultPage extends GamePage {
@@ -17,6 +16,8 @@ export default class ResultPage extends GamePage {
   }
 
   onMainReplayClickTry() {
-    Application.showWelcome();
+    this.initGame();
+
+    this.showRandomPage();
   }
 }
